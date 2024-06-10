@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* White background */
+    color: #333;
+}
+/*-------------------------------------Hero Section-------------------------------------------- */
+.hero-section h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+.hero-section p {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+}
+.hero-section .btn-primary {
+    background-color: #029e53; /* Green button */
+    border-color: #007d4c;
+}
+.hero-section .btn-primary:hover {
+    background-color: #007d4c;  /* Green button */
+    border-color: #005b37;
+}
+/*-------------------------------------Container Section-------------------------------------------- */
+.container h2 {
+    color: #00A859; /* Green headers */
+}
+/*-------------------------------------Footer Section-------------------------------------------- */
+footer {
+    background-color: #ffffff; /* White background for footer */
+    color: #6c757d;
+    padding: 20px 0;
+}
+footer p {
+    margin: 0;
+}
+
+
