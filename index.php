@@ -11,7 +11,6 @@
 <body>
     <!-- Navbar -->
     <?php include 'helpers/navbar.php'?>
-
     <!-- Hero Section -->
     <header class="hero-section text-center">
         <div class="container">
@@ -20,7 +19,6 @@
             <a href="#" class="btn btn-primary">Get Started</a>
         </div>
     </header>
-
     <!-- Main Content -->
     <div class="container mt-5">
         <div class="row">
@@ -38,12 +36,11 @@
             </div>
         </div>
     </div>
-
     <!-- Footer -->
     <footer class="text-center py-4">
         <p>&copy; 2024 AUST CODE REALM. All rights reserved.</p>
     </footer>
-
+    
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

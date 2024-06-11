@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="../index.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contests</a>
@@ -30,7 +30,7 @@
                     <a class="nav-link" href="#">Rankings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="../pages/profilePage.php">Login</a>
                 </li>
             </ul>
         </div>
