@@ -46,6 +46,22 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('submitButton').addEventListener('click', function(event) {
+            const selectElement = document.getElementById('selectLanguageMode');//seleceted lang object
+            const languageName = selectElement.options[selectElement.selectedIndex].text;//selected lang name
+            const languageId = languageModeIds[languageName];//selected language id
+            const code = editor.getValue();//user written code
+
+            const data = {
+                languageId: languageId,
+                languageName: languageName,
+                code: code
+            };
+            console.log(data);
+        });
+        //same code for run button if needed
+    </script>
     <script src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
