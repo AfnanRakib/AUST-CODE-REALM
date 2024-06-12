@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/navbar.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -21,7 +21,7 @@
                     <a class="nav-link" href="#">Contests</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Problems</a>
+                    <a class="nav-link" href="../pages/problemPage.php">Problems</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Discuss</a>
@@ -35,6 +35,5 @@
             </ul>
         </div>
     </nav>
-    <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
