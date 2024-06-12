@@ -1,0 +1,18 @@
+.problem-description {
+    padding: 20px;
+}
+.editor-container {
+    padding: 20px;
+}
+.editor{
+    height: 70vh;
+}
+#submitButton, #runButton{
+    margin-bottom: 30px;
+    background-color:#00A859;
+}
+@media (max-width: 768px) {
+    .editor-container {
+        margin-top: 20px;
+    }
+}
