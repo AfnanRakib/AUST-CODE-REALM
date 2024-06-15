@@ -1,12 +1,3 @@
-<!doctype html>
-<html>
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <script src="../js/jquery-2.0.3.min.js"></script><!-- https://code.jquery.com/jquery-2.0.3.min.js -->
-    <script src="../js/jquery.glanceyear.min.js"></script>
-    <link rel="stylesheet" href="../css/glanceyear.css">
-</head>
-<body>
     <div class="glanceyear-container">
         <h1 class="glanceyear-header">Glance Year
             <span class="glanceyear-quantity"></span>
@@ -55,5 +46,3 @@
             });
         });      
     </script>
-</body>
-</html>

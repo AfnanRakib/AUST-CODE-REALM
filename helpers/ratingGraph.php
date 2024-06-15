@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/ratingGraph.css">
-    <script src="../js/chart.js"></script><!--https://cdn.jsdelivr.net/npm/chart.js-->
-    <script src="../js/chartjs-adapter-date-fns.js"></script><!--https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns-->
-    <title>Rating Activity Graph</title>
-</head>
-<body>
     <div class="container-graph">
         <canvas id="ratingActivityGraph" width="400" height="300"></canvas>
     </div>
@@ -174,5 +163,3 @@
         });
     });
     </script>
-</body>
-</html>
