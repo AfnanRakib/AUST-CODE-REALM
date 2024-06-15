@@ -10,7 +10,8 @@
 <body>
     <!-- Navbar -->
     <?php include '../helpers/navbar.php'; ?>
-
+    
+    <?php include '../helpers/judge0.php'; ?>
     <!-- Main Content -->
     <div class="container">
         <div class="row">
@@ -45,6 +46,8 @@
                 </div>
             </div>
         </div>
+        <div id="resultDisplay" class="mt-4 p-3 border rounded" style="background-color: #f8f9fa;"></div>
+
     </div>
     <script>
         document.getElementById('submitButton').addEventListener('click', function(event) {
@@ -58,8 +61,45 @@
                 languageName: languageName,
                 code: code
             };
-            console.log(data);
+            fetch('submit_code.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(submissionData => {
+                console.log('Success:', submissionData);
+
+                // Display the result in the resultDisplay div
+                const resultDisplay = document.getElementById('resultDisplay');
+                let displayContent = `<h4>Submission Result</h4>`;
+
+                if (submissionData.stdout) {
+                    displayContent += `<p><strong>Stdout:</strong> ${submissionData.stdout}</p>`;
+                }
+                if (submissionData.stderr) {
+                    displayContent += `<p><strong>Stderr:</strong> ${submissionData.stderr}</p>`;
+                }
+                if (submissionData.compile_output) {
+                    displayContent += `<p><strong>Compile Output:</strong> ${submissionData.compile_output}</p>`;
+                }
+
+                if (!submissionData.stdout && !submissionData.stderr && !submissionData.compile_output) {
+                    displayContent = `<p>No output available.</p>`;
+                }
+
+                resultDisplay.innerHTML = displayContent;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const resultDisplay = document.getElementById('resultDisplay');
+                resultDisplay.innerHTML = `<p>Error occurred while processing the submission.</p>`;
+            });
         });
+
+
         //same code for run button if needed
     </script>
     <script src="../js/bootstrap.bundle.min.js"></script>
