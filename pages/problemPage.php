@@ -39,16 +39,21 @@
             </div>
             <div class="container">
                 <div class="row md-2">
-                <div class="col-12 col-md-4 mb-2 mb-md-0">
-                    <button class="btn btn-primary"id="submitButton">Submit</button>
+                    <div class="col-12 col-md-4 mb-2 mb-md-0">
+                        <button class="btn btn-primary"id="submitButton">Submit</button>
+                    </div>
+                    <div class="col-12 col-md-4 mb-2 mb-md-0">
+                        <button class="btn btn-primary"id="runButton">Run</button>
+                    </div>
                 </div>
-                <div class="col-12 col-md-4 mb-2 mb-md-0">
-                    <button class="btn btn-primary"id="runButton">Run</button>
+                <div class="row">
+                    <div id="resultDisplay" class="mt-4 p-3 border rounded" style="background-color: #f8f9fa;"></div>
                 </div>
             </div>
         </div>
-        <div id="resultDisplay" class="mt-4 p-3 border rounded" style="background-color: #f8f9fa;"></div>
-
+        <div class="row">
+            <div style="height: 10px;"></div>
+        </div>
     </div>
     <script>
         document.getElementById('submitButton').addEventListener('click', function(event) {
