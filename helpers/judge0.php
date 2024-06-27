@@ -1,7 +1,7 @@
 <?php
 $API_KEY = '386d354f6dmsh86c78ca9a27d4f6p1ef2e8jsn41bbc0d8d92d';
 
-function createSubmission($DATA, $stdin = null, $expected_output = null) {
+function createSubmission($DATA, $cpu_time_limit = 5, $memory_limit = 128000, $max_file_size = 10240, $stdin = null, $expected_output = null) {
     global $API_KEY;
     $url = 'https://judge0-ce.p.rapidapi.com/submissions';
 
@@ -10,6 +10,9 @@ function createSubmission($DATA, $stdin = null, $expected_output = null) {
         'source_code' => base64_encode($DATA['code']),
         'stdin' => $stdin ? base64_encode($stdin) : null,
         'expected_output' => $expected_output ? base64_encode($expected_output) : null,
+        'cpu_time_limit' => $cpu_time_limit,
+        'memory_limit' => $memory_limit,
+        'max_file_size' => $max_file_size,
         'base64_encoded' => 'true',
         'wait' => 'false',
         'fields' => '*'
@@ -29,12 +32,17 @@ function createSubmission($DATA, $stdin = null, $expected_output = null) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 
     $response = curl_exec($ch);
-    if(curl_errno($ch)) {
-        echo 'Error:' . curl_error($ch);
-    }
-
+    $err = curl_error($ch);
     curl_close($ch);
-    return json_decode($response, true);
+
+    if ($err) {
+        error_log("cURL Error: " . $err);
+        return ['error' => $err];
+    } else {
+        $decoded_response = json_decode($response, true);
+        error_log("API Response: " . print_r($decoded_response, true));
+        return $decoded_response;
+    }
 }
 
 function getSubmission($token) {

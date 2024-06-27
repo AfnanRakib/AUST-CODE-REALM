@@ -74,7 +74,20 @@
                 },
                 body: JSON.stringify(data)
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text(); // Get the raw text response
+            }).then(text => {
+                console.log('Raw response:', text); // Log the raw response
+                try {
+                    return JSON.parse(text); // Try to parse the JSON
+                } catch (error) {
+                    console.error('JSON parse error:', error);
+                    throw new Error('Invalid JSON response');
+                }
+            })
             .then(submissionData => {
                 console.log('Success:', submissionData);
 
@@ -91,19 +104,39 @@
                 if (submissionData.compile_output) {
                     displayContent += `<p><strong>Compile Output:</strong> ${submissionData.compile_output}</p>`;
                 }
+                if (submissionData.status) {
+                    displayContent += `<p><strong>Status:</strong> ${submissionData.status}</p>`;
+                }
+                if (submissionData.time) {
+                    displayContent += `<p><strong>time:</strong> ${submissionData.time}</p>`;
+                }
+                if (submissionData.memory) {
+                    displayContent += `<p><strong>memory:</strong> ${submissionData.memory}</p>`;
+                }
+                if (submissionData.created_at) {
+                    displayContent += `<p><strong>created_at:</strong> ${submissionData.created_at}</p>`;
+                }
+                if (submissionData.finished_at) {
+                    displayContent += `<p><strong>finished_at:</strong> ${submissionData.finished_at}</p>`;
+                }
+                if (submissionData.token) {
+                    displayContent += `<p><strong>token:</strong> ${submissionData.token}</p>`;
+                }
 
-                if (!submissionData.stdout && !submissionData.stderr && !submissionData.compile_output) {
+                if (!submissionData.stdout && !submissionData.stderr && !submissionData.compile_output&&!submissionData.status &&!submissionData.time &&!submissionData.memory &&!submissionData.created_at&&!submissionData.finished_at) 
+                {
                     displayContent = `<p>No output available.</p>`;
                 }
 
                 resultDisplay.innerHTML = displayContent;
-            })
-            .catch(error => {
+            }).catch(error => {
                 console.error('Error:', error);
                 const resultDisplay = document.getElementById('resultDisplay');
-                resultDisplay.innerHTML = `<p>Error occurred while processing the submission.</p>`;
+                resultDisplay.innerHTML = `<p>Error occurred while processing the submission: ${error.message} </p>`;
             });
         });
+
+
 
 
         //same code for run button if needed
