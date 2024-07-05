@@ -1,13 +1,10 @@
 <?php
 session_start();
-//$basePath = 'http://localhost:3000/';
 $basePath = 'http://localhost/AUST%20CODE%20REALM/';
-//echo json_encode($_SESSION['user']);
 $isLoggedIn = isset($_SESSION['user']);
-$handle=$_SESSION['user']['username'];
+$handle = $isLoggedIn ? $_SESSION['user']['username'] : 'Guest User';
 ?>
 <style>
-    
 </style>
 <nav class="navbar navbar-expand-lg navbar-light">
     <a class="navbar-brand" href="<?php echo $basePath; ?>index.php"><img src="<?php echo $basePath; ?>images/logo.png" alt="ACR"></a>
@@ -33,8 +30,27 @@ $handle=$_SESSION['user']['username'];
             </li>
         </ul>
     </div>
-    <a class="profile-link" href="<?php echo $isLoggedIn ? $basePath . 'pages/profilePage.php' : $basePath . 'pages/login.php'; ?>">
-        <img src="<?php echo $basePath; ?>images/user.png" alt="Profile" class="profile-icon">
-        <p class="handle"><?php echo $isLoggedIn ? $handle:'Guest User';?></p>
-    </a>
+    <?php if ($isLoggedIn): ?>
+        <div class="dropdown profile-dropdown">
+            <div class="profile-link dropdown-toggle" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="<?php echo $basePath; ?>images/user.png" alt="Profile" class="profile-icon">
+                <p class="handle"><?php echo $handle;?></p>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/profilePage.php">Profile</a></li>
+                <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/settings.php">Settings</a></li>
+                <li><a class="dropdown-item" href="<?php echo $basePath; ?>index.php?logout=true">Logout</a></li>
+            </ul>
+        </div>
+    <?php else: ?>
+        <a class="btn btn-primary ms-auto" href="<?php echo $basePath; ?>pages/login.php">Login</a>
+    <?php endif; ?>
 </nav>
+
+<?php
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: {$basePath}index.php");
+    exit();
+}
+?>
