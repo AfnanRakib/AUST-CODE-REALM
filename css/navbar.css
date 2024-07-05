@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 .hero-section {
@@ -34,6 +35,7 @@
     align-items: center;
     padding: 10px;
     margin-right: 10px;
+    text-decoration: none;
 }
 
 .profile-link .profile-icon {
@@ -41,11 +43,23 @@
     height: 30px ;
 }
 
+.handle {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+.handle:hover {
+    color: #00A859;
+}
+
 @media (max-width: 992px) {
     .navbar .profile-link {
         order: 1;
         margin-left: auto;
         margin-right: 10px;
+        text-decoration: none;
     }
 
     .navbar .navbar-toggler {

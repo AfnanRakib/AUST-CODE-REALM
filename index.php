@@ -11,7 +11,6 @@
 <body>
     <!-- Navbar -->
     <?php include 'helpers/navbar.php'; ?>
-    
     <!-- Hero Section -->
     <header class="hero-section text-center">
         <div class="container">
