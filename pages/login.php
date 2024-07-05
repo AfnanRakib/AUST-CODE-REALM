@@ -8,16 +8,21 @@
 </head>
 <body>
     <div class="container">
-        <div class="img-container">
-            <img src="../images/logo.png" alt="Logo">
+        <div class="image-container">
+            <img src="../images/loginbanner.jpg" alt="Side Art">
         </div>
-        <h1>Welcome Back</h1>
-        <form action="login.php" method="post">
-            <input type="text" name="username" placeholder="Username or Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
-        <p><a href="signup.php">Don't have an account? Sign up here</a></p>
+        <div class="form-container">
+            <div class="logo-container">
+                <img src="../images/logo.png" alt="Logo">
+            </div>
+            <h1>Welcome Back</h1>
+            <form action="login.php" method="post">
+                <input type="text" name="username" placeholder="enter your e-mail" required>
+                <input type="password" name="password" placeholder="enter your password" required>
+                <button type="submit">Sign in</button>
+            </form>
+            <p><a href="signup.php">Don't have any account? Register Here</a></p>
+        </div>
     </div>
 </body>
 </html>

@@ -8,19 +8,24 @@
 </head>
 <body>
     <div class="container">
-        <div class="img-container">
-            <img src="../images/logo.png" alt="Logo">
+        <div class="image-container">
+            <img src="../images/loginbanner.jpg" alt="Side Art">
         </div>
-        <h1>Get Started</h1>
-        <form action="signup.php" method="post">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="text" name="fullname" placeholder="Full Name" required>
-            <input type="text" name="address" placeholder="Address" required>
-            <button type="submit">Sign Up</button>
-        </form>
-        <p><a href="login.php">Already have an account? Log in here</a></p>
+        <div class="form-container">
+            <div class="logo-container">
+                <img src="../images/logo.png" alt="Logo">
+            </div>
+            <h1>Get Started</h1>
+            <form action="signup.php" method="post">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="text" name="fullname" placeholder="Full Name" required>
+                <input type="text" name="address" placeholder="Address" required>
+                <button type="submit">Register</button>
+            </form>
+            <p><a href="login.php">Already have an account? Log in here</a></p>
+        </div>
     </div>
 </body>
 </html>
