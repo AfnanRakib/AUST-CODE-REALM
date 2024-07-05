@@ -1,8 +1,14 @@
 <?php
-//session_start();
-$basePath = 'http://localhost:3000/';//'http://localhost/AUST%20CODE%20REALM/';
-$isLoggedIn = false;//isset($_SESSION['user_id']);
+session_start();
+//$basePath = 'http://localhost:3000/';
+$basePath = 'http://localhost/AUST%20CODE%20REALM/';
+//echo json_encode($_SESSION['user']);
+$isLoggedIn = isset($_SESSION['user']);
+$handle=$_SESSION['user']['username'];
 ?>
+<style>
+    
+</style>
 <nav class="navbar navbar-expand-lg navbar-light">
     <a class="navbar-brand" href="<?php echo $basePath; ?>index.php"><img src="<?php echo $basePath; ?>images/logo.png" alt="ACR"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,5 +35,6 @@ $isLoggedIn = false;//isset($_SESSION['user_id']);
     </div>
     <a class="profile-link" href="<?php echo $isLoggedIn ? $basePath . 'pages/profilePage.php' : $basePath . 'pages/login.php'; ?>">
         <img src="<?php echo $basePath; ?>images/user.png" alt="Profile" class="profile-icon">
+        <p class="handle"><?php echo $isLoggedIn ? $handle:'Guest User';?></p>
     </a>
 </nav>

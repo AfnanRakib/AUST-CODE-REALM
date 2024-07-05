@@ -28,6 +28,8 @@
 </html>
 
 <?php
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Database connection
     $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
@@ -35,15 +37,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
+    
     $username = $conn->real_escape_string($_POST['username']);
     $password = $conn->real_escape_string(md5($_POST['password']));
-
+    
     $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
     $result = $conn->query($sql);
-
+    $userData=array(
+        'username'=>$_POST['username'],
+        'password'=>md5($_POST['password'])
+    );
     if ($result->num_rows > 0) {
-        // User authenticated
+        // User authenticated 
+        $_SESSION['user']=$userData;
         header("Location: ../index.php");
     } else {
         echo "<script>alert('Invalid username or password');</script>";
