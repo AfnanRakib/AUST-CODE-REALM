@@ -1,4 +1,5 @@
 <?php
+
 // Function to get the current page URL
     function currentPageURL() {
         $currentURL = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
@@ -36,6 +37,7 @@ function isActive($page) {
                 <a class="nav-link" href="<?php echo $basePath; ?>pages/courses.php">Courses</a>
             </li>
             <li class="nav-item <?php echo isActive('help.php'); ?>">
+
                 <a class="nav-link" href="<?php echo $basePath; ?>pages/help.php">Help</a>
             </li>
         </ul>
@@ -44,10 +46,10 @@ function isActive($page) {
         <img src="<?php echo $basePath; ?>images/user.png" alt="Profile" class="profile-icon">
     </a>
 </nav>
+
 <style>
     /* Style for active link */
     .navbar-nav .nav-item.active a {
         color: rgb(3, 191, 98) !important; 
     }
 </style>
-

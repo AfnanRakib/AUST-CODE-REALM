@@ -6,11 +6,20 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/profilePage.css">
     <link rel="stylesheet" href="../css/ratingGraph.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+
+    <link rel="stylesheet" href="../css/glanceyear.css">
+    <link rel="stylesheet" href="../css/ratingGraph.css">
+    <script src="../js/jquery-2.0.3.min.js"></script><!-- https://code.jquery.com/jquery-2.0.3.min.js -->
+    <script src="../js/jquery.glanceyear.min.js"></script>
+    <script src="../js/chart.js"></script><!--https://cdn.jsdelivr.net/npm/chart.js-->
+    <script src="../js/chartjs-adapter-date-fns.js"></script><!--https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns-->
     <title>AUST CODE REALM</title>
 </head>
 <body>
     <!-- Navbar -->
-    <?php include '../helpers/navbar.php'?>
+    <?php include '../helpers/navbar.php'; ?>
+    
     <!-- Section -->
     <section class="profile-section py-5">
         <div class="container">
@@ -32,7 +41,7 @@
                 <div class="col-md-7" style="padding:10px; margin: auto;">
                     <h3>Activity Graph</h3>
                     <div class="container-graph">
-                        <?php include '../helpers/ratingGraph.php'?>
+                        <?php include'../helpers/ratingGraph.php'?>
                     </div>
                     <div style="height: 10px;"></div>
                     <h3>Problem Solving Activity</h3>
