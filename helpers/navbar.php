@@ -26,7 +26,7 @@ $handle = $isLoggedIn ? $_SESSION['user']['username'] : 'Guest User';
                 <a class="nav-link" href="<?php echo $basePath; ?>pages/courses.php">Courses</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo $basePath; ?>pages/help.php">Help</a>
+                <a class="nav-link" href="<?php echo $basePath; ?>">Help</a>
             </li>
         </ul>
     </div>
@@ -38,12 +38,12 @@ $handle = $isLoggedIn ? $_SESSION['user']['username'] : 'Guest User';
             </div>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                 <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/profilePage.php">Profile</a></li>
-                <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/settings.php">Settings</a></li>
+                <li><a class="dropdown-item" href="<?php echo $basePath; ?>">Settings</a></li>
                 <li><a class="dropdown-item" href="<?php echo $basePath; ?>index.php?logout=true">Logout</a></li>
             </ul>
         </div>
     <?php else: ?>
-        <a class="btn btn-primary ms-auto" href="<?php echo $basePath; ?>pages/login.php">Login</a>
+        <a class="btn btn-primary ms-auto" id="loginbtn" href="<?php echo $basePath; ?>pages/login.php">Login</a>
     <?php endif; ?>
 </nav>
 

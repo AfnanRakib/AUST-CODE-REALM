@@ -73,13 +73,13 @@
     background-color: #00A859;
     color: #ffffff;
 }
-.btn-primary {
+#loginbtn {
     margin-right: 10px;
     font-weight: bold;
     background-color: #029e53; 
     border-color: #007d4c;
 }
-.btn-primary:hover {
+#loginbtn:hover {
     background-color: #007d4c; 
     border-color: #005b37;
 }
