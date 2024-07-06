@@ -14,12 +14,11 @@
     <script src="../js/jquery.glanceyear.min.js"></script>
     <script src="../js/chart.js"></script><!--https://cdn.jsdelivr.net/npm/chart.js-->
     <script src="../js/chartjs-adapter-date-fns.js"></script><!--https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns-->
-    <title>AUST CODE REALM</title>
+    <title>Profile - AUST CODE REALM</title>
 </head>
 <body>
     <!-- Navbar -->
     <?php include '../helpers/navbar.php'; ?>
-    
     <!-- Section -->
     <section class="profile-section py-5">
         <div class="container">
@@ -29,12 +28,12 @@
                         <img src="../images/logo with cover.png" alt="Profile Picture" class="img-fluid rounded-circle mb-3">
                     </div>
                     <div class="container">
-                        <h2 id="username">Afnan Rakib</h2>
+                        <h2 id="username"><?php echo $handle;?></h2>
                         <p id="user-rating">Contest rating: 1165 (max. newbie, 1165)</p>
-                        <a href="#" class="btn btn-link">Change settings</a><br>
-                        <a href="#" class="btn btn-link"><span>afnanhaasdfdsfsfasdsanrakib476@gmail.com (not visible)</span></a><br>
-                        <p id="user-last-visit">Last visit: 32 minutes ago</p>
-                        <p id="user-registered">Registered: 2 years ago</p>
+                        <a href="#" class="btn btn-link">Edit Profile</a><br>
+                        <a href="#" class="btn btn-link"><span><?php echo $_SESSION['user']['email'];?></span></a><br>
+                        <p id="user-full-name"><?php echo $_SESSION['user']['fullname'];?></p>
+                        <p id="user-address"><?php echo $_SESSION['user']['address'];?></p>
                     </div>
                 </div>
                 <div class="col-md-1"></div>

@@ -27,6 +27,7 @@
 </body>
 </html>
 
+
 <?php
 session_start();
 
@@ -43,13 +44,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
     $result = $conn->query($sql);
-    $userData=array(
-        'username'=>$_POST['username'],
-        'password'=>md5($_POST['password'])
-    );
+
     if ($result->num_rows > 0) {
-        // User authenticated 
-        $_SESSION['user']=$userData;
+        $row = $result->fetch_assoc();
+    
+        // User authenticated
+        $_SESSION['user'] = array(
+            'username' => $username,
+            'email' => $row['email'],
+            'fullname' => $row['fullname'],
+            'address'=>$row['address']
+        );
+
         header("Location: ../index.php");
     } else {
         echo "<script>alert('Invalid username or password');</script>";

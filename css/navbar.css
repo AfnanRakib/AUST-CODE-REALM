@@ -7,12 +7,6 @@
     position: relative;
 }
 
-.hero-section {
-    background: #00A859;
-    color: #ffffff;
-    padding: 100px 0;
-}
-
 .navbar-brand img {
     max-height: 50px;
     margin-left: 10px;

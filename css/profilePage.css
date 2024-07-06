@@ -1,14 +1,14 @@
 .profile-section {
-    background: #f9f9f9; /* Light gray background for profile section */
+    background: #f9f9f9;
 }
 .profile-section h2, .profile-section h3, .profile-section h4 {
-    color: #00A859; /* Green color for headings */
+    color: #00A859;
 }
 .profile-section p, .profile-section a {
-    color: #333; /* Dark gray for text */
+    color: #333;
 }
 .profile-section img {
-    border: 3px solid #00A859; /* Green border for profile picture */
+    border: 3px solid #00A859;
 }
 
 .container-graph {
