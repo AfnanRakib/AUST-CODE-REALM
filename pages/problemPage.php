@@ -11,48 +11,73 @@
 <body>
     <!-- Navbar -->
     <?php include '../helpers/navbar.php'; ?>
-    
+
     <?php include '../helpers/judge0.php'; ?>
+
     <!-- Main Content -->
     <div class="container">
-        <div class="row">
-            <div class="col problem-description overflow-auto">
-                <h2 style="text-align: center;color:#00A859;">Problem Name</h2>
-                <h3>Problem description</h3>
-                <pre>Problem description</pre>
-                <h3>Input</h3>
-                <pre>Input</pre>
-                <h3>Output</h3>
-                <pre>Output</pre>
-                <h3>Constraints</h3>
-                <pre>Constraints</pre>
-                <h3>Sample Testcase</h3>
-                <pre>Sample Testcase</pre>
-                <h3>More info</h3>
-                <pre>More info</pre>              
-            </div>
-        </div>
-        <div class="row">
-            <h2 style="text-align: center;color:#00A859;">Submit Code</h2>
-            <div class="col editor-container">
-                <?php include '../helpers/ide.php'; ?>
-            </div>
-            <div class="container">
-                <div class="row md-2">
-                    <div class="col-12 col-md-4 mb-2 mb-md-0">
-                        <button class="btn btn-primary"id="submitButton">Submit</button>
-                    </div>
-                    <div class="col-12 col-md-4 mb-2 mb-md-0">
-                        <button class="btn btn-primary"id="runButton">Run</button>
-                    </div>
-                </div>
+        <ul class="nav nav-tabs" id="problemTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="problem-statement-tab" data-bs-toggle="tab" href="#problem-statement" role="tab" aria-controls="problem-statement" aria-selected="true">Problem Statement</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="submit-tab" data-bs-toggle="tab" href="#submit" role="tab" aria-controls="submit" aria-selected="false">Submit</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="submissions-tab" data-bs-toggle="tab" href="#submissions" role="tab" aria-controls="submissions" aria-selected="false">My Submissions</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="problemTabsContent">
+            <div class="tab-pane fade show active" id="problem-statement" role="tabpanel" aria-labelledby="problem-statement-tab">
                 <div class="row">
-                    <div id="resultDisplay" class="mt-4 p-3 border rounded" style="background-color: #f8f9fa;"></div>
+                    <div class="col problem-description overflow-auto">
+                        <h2 style="text-align: center;color:#00A859;">Problem Name</h2>
+                        <h3>Problem description</h3>
+                        <pre>Problem description</pre>
+                        <h3>Input</h3>
+                        <pre>Input</pre>
+                        <h3>Output</h3>
+                        <pre>Output</pre>
+                        <h3>Constraints</h3>
+                        <pre>Constraints</pre>
+                        <h3>Sample Testcase</h3>
+                        <pre>Sample Testcase</pre>
+                        <h3>More info</h3>
+                        <pre>More info</pre>              
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div style="height: 10px;"></div>
+            <div class="tab-pane fade" id="submit" role="tabpanel" aria-labelledby="submit-tab">
+                <div class="row">
+                    <h2 style="text-align: center;color:#00A859;">Submit Code</h2>
+                    <div class="col editor-container">
+                        <?php include '../helpers/ide.php'; ?>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3 mb-2 mb-md-0">
+                                <button class="btn btn-primary w-100" id="runButton">Run</button>
+                            </div>
+                            <div class="col-md-3 mb-2 mb-md-0">
+                                <button class="btn btn-primary w-100" id="submitButton">Submit</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="resultDisplay" class="mt-4 p-3 border rounded" style="background-color: #f8f9fa;margin-bottom:20px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="submissions" role="tabpanel" aria-labelledby="submissions-tab">
+                <div class="row">
+                    <div class="col">
+                        <h2 style="text-align: center;color:#00A859;">My Submissions</h2>
+                        <div id="mySubmissions">
+                            <!-- Display user's submissions here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -67,7 +92,7 @@
                 languageName: languageName,
                 code: code
             };
-            fetch('submit_code.php', {
+            fetch('../helpers/submit_code.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
