@@ -15,7 +15,6 @@
     <!-- Contest Section -->
     <div class="container mt-5">
         <h1 class="text-center mb-4">Contests</h1>
-        
         <!-- Filter Options -->
         <div class="row mb-3">
             <div class="col-md-6">
@@ -37,6 +36,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Contest</th>
                     <th scope="col">Start Time</th>
+                    <th scope="col">End Time</th>
                     <th scope="col">Duration</th>
                     <th scope="col">Status</th>
                 </tr>

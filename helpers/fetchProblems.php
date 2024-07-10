@@ -16,16 +16,23 @@ $tags = isset($_GET['tags']) ? $_GET['tags'] : '';
 $limit = 10;
 $offset = ($page - 1) * $limit;
 
-$query = "SELECT * FROM problems WHERE 1=1";
+$query = "SELECT problems.*, GROUP_CONCAT(tags.TagName SEPARATOR ', ') AS Tags 
+          FROM problems 
+          LEFT JOIN problem_tags ON problems.ProblemID = problem_tags.ProblemID 
+          LEFT JOIN tags ON problem_tags.TagID = tags.TagID 
+          WHERE 1=1";
+
 if ($search != '') {
-    $query .= " AND Name LIKE '%" . $conn->real_escape_string($search) . "%'";
+    $query .= " AND problems.Name LIKE '%" . $conn->real_escape_string($search) . "%'";
 }
 if ($rating != '') {
-    $query .= " AND RatedFor = " . intval($rating);
+    $query .= " AND problems.RatedFor = " . intval($rating);
 }
 if ($tags != '') {
-    $query .= " AND TagID LIKE '%" . $conn->real_escape_string($tags) . "%'";
+    $query .= " AND problems.ProblemID IN (SELECT ProblemID FROM problem_tags WHERE TagID = '" . $conn->real_escape_string($tags) . "')";
 }
+
+$query .= " GROUP BY problems.ProblemID";
 
 $totalProblemsResult = $conn->query($query);
 if (!$totalProblemsResult) {
@@ -47,7 +54,7 @@ while ($row = $result->fetch_assoc()) {
     $problems .= '<th scope="row">' . $row['ProblemID'] . '</th>';
     $problems .= '<td><a href="problemPage.php?id=' . $row['ProblemID'] . '">' . $row['Name'] . '</a></td>';
     $problems .= '<td>' . $row['RatedFor'] . '</td>';
-    $problems .= '<td>' . $row['TagID'] . '</td>';
+    $problems .= '<td>' . $row['Tags'] . '</td>';
     $problems .= '</tr>';
 }
 
