@@ -31,9 +31,9 @@
                         <h2 id="username"><?php echo $handle;?></h2>
                         <p id="user-rating">Contest rating: 1165 (max. newbie, 1165)</p>
                         <a href="#" class="btn btn-link">Edit Profile</a><br>
-                        <a href="#" class="btn btn-link"><span><?php echo $_SESSION['user']['email'];?></span></a><br>
-                        <p id="user-full-name"><?php echo $_SESSION['user']['fullname'];?></p>
-                        <p id="user-address"><?php echo $_SESSION['user']['address'];?></p>
+                        <a href="#" class="btn btn-link"><span><?php echo $_SESSION['user']['Email'];?></span></a><br>
+                        <p id="user-full-name"><?php echo $_SESSION['user']['Name'];?></p>
+                        <p id="user-DateJoined"><?php echo $_SESSION['user']['DateJoined'];?></p>
                     </div>
                 </div>
                 <div class="col-md-1"></div>

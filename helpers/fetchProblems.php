@@ -18,13 +18,13 @@ $offset = ($page - 1) * $limit;
 
 $query = "SELECT * FROM problems WHERE 1=1";
 if ($search != '') {
-    $query .= " AND problem_name LIKE '%" . $conn->real_escape_string($search) . "%'";
+    $query .= " AND Name LIKE '%" . $conn->real_escape_string($search) . "%'";
 }
 if ($rating != '') {
-    $query .= " AND rating = " . intval($rating);
+    $query .= " AND RatedFor = " . intval($rating);
 }
 if ($tags != '') {
-    $query .= " AND tags LIKE '%" . $conn->real_escape_string($tags) . "%'";
+    $query .= " AND TagID LIKE '%" . $conn->real_escape_string($tags) . "%'";
 }
 
 $totalProblemsResult = $conn->query($query);
@@ -44,10 +44,10 @@ if (!$result) {
 $problems = '';
 while ($row = $result->fetch_assoc()) {
     $problems .= '<tr>';
-    $problems .= '<th scope="row">' . $row['id'] . '</th>';
-    $problems .= '<td><a href="problemPage.php?id=' . $row['id'] . '">' . $row['problem_name'] . '</a></td>';
-    $problems .= '<td>' . $row['rating'] . '</td>';
-    $problems .= '<td>' . $row['tags'] . '</td>';
+    $problems .= '<th scope="row">' . $row['ProblemID'] . '</th>';
+    $problems .= '<td><a href="problemPage.php?id=' . $row['ProblemID'] . '">' . $row['Name'] . '</a></td>';
+    $problems .= '<td>' . $row['RatedFor'] . '</td>';
+    $problems .= '<td>' . $row['TagID'] . '</td>';
     $problems .= '</tr>';
 }
 

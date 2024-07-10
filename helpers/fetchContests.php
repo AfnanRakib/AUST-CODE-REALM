@@ -17,7 +17,7 @@ $offset = ($page - 1) * $limit;
 
 $query = "SELECT * FROM contests WHERE 1=1";
 if ($search != '') {
-    $query .= " AND contest_name LIKE '%" . $conn->real_escape_string($search) . "%'";
+    $query .= " AND Title LIKE '%" . $conn->real_escape_string($search) . "%'";
 }
 if ($status != '') {
     $query .= " AND status = '" . $conn->real_escape_string($status) . "'";
@@ -40,11 +40,11 @@ if (!$result) {
 $contests = '';
 while ($row = $result->fetch_assoc()) {
     $contests .= '<tr>';
-    $contests .= '<th scope="row">' . $row['id'] . '</th>';
-    $contests .= '<td><a href="contestPage.php?id=' . $row['id'] . '">' . $row['contest_name'] . '</a></td>';
-    $contests .= '<td>' . $row['start_time'] . '</td>';
-    $contests .= '<td>' . $row['duration'] . '</td>';
-    $contests .= '<td>' . $row['status'] . '</td>';
+    $contests .= '<th scope="row">' . $row['ContestID'] . '</th>';
+    $contests .= '<td><a href="contestPage.php?id=' . $row['ContestID'] . '">' . $row['Title'] . '</a></td>';
+    $contests .= '<td>' . $row['StartTime'] . '</td>';
+    $contests .= '<td>' . $row['EndDate'] . '</td>';
+    $contests .= '<td>' . $row['Duration'] . '</td>';
     $contests .= '</tr>';
 }
 

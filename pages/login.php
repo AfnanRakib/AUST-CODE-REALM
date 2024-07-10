@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $conn->real_escape_string($_POST['username']);
     $password = $conn->real_escape_string(md5($_POST['password']));
     
-    $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+    $sql = "SELECT * FROM users WHERE Handle='$username' AND User_Password='$password'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -50,10 +50,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
         // User authenticated
         $_SESSION['user'] = array(
-            'username' => $username,
-            'email' => $row['email'],
-            'fullname' => $row['fullname'],
-            'address'=>$row['address']
+            'UserId' => $row['UserId'],
+            'Handle' => $username,
+            'User_Password' => $password,
+            'Email' => $row['Email'],
+            'Name' => $row['Name'],
+            'DateJoined' => $row['DateJoined'],
+            'RatingID' => $row['RatingID'],
+            'User_Role' => $row['User_Role'],
+            'RatingCategory' => $row['RatingCategory'],
+            'LastVisited' => $row['LastVisited'],
+            'Profile_Picture_File_Location' => $row['Profile_Picture_File_Location']
         );
 
         header("Location: ../index.php");

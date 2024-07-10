@@ -2,7 +2,7 @@
 session_start();
 $basePath = 'http://localhost/AUST%20CODE%20REALM/';
 $isLoggedIn = isset($_SESSION['user']);
-$handle = $isLoggedIn ? $_SESSION['user']['username'] : 'Guest User';
+$handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
 ?>
 <style>
 /* Include the updated CSS styles here */

@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullname = $conn->real_escape_string($_POST['fullname']);
     $address = $conn->real_escape_string($_POST['address']);
 
-    $sql = "INSERT INTO users (username, email, password, fullname, address) VALUES ('$username', '$email', '$password', '$fullname', '$address')";
+    $sql = "INSERT INTO users (Handle, Email, User_Password, Name ) VALUES ('$username', '$email', '$password', '$fullname')";
 
     if ($conn->query($sql) === TRUE) {
         echo "<script>alert('Registration successful');</script>";
