@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2024 at 04:37 PM
+-- Generation Time: Jul 10, 2024 at 06:20 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -54,7 +54,7 @@ CREATE TABLE `contests` (
   `Title` varchar(100) NOT NULL,
   `Description` text DEFAULT NULL,
   `StartTime` datetime DEFAULT NULL,
-  `EndDate` datetime DEFAULT NULL,
+  `EndTime` datetime DEFAULT NULL,
   `Duration` varchar(255) DEFAULT NULL,
   `CreatorID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -63,12 +63,12 @@ CREATE TABLE `contests` (
 -- Dumping data for table `contests`
 --
 
-INSERT INTO `contests` (`ContestID`, `Title`, `Description`, `StartTime`, `EndDate`, `Duration`, `CreatorID`) VALUES
-(1, 'Monthly Challenge June', 'A programming contest to test your skills in various algorithms and data structures.', '2024-06-01 09:00:00', '2024-06-30 23:59:59', '0000-00-00 00:00:00', 1),
-(2, 'Weekly Coding Marathon', 'A week-long coding marathon to solve as many problems as possible.', '2024-06-07 00:00:00', '2024-06-13 23:59:59', '0000-00-00 00:00:00', 2),
-(3, 'Weekend Algorithm Sprint', 'A weekend contest focused on algorithmic challenges.', '2024-06-15 10:00:00', '2024-06-16 18:00:00', '0000-00-00 00:00:00', 3),
-(4, 'Summer Hackathon', 'Join us for a summer hackathon to build innovative projects.', '2024-07-01 08:00:00', '2024-07-07 20:00:00', '0000-00-00 00:00:00', 4),
-(5, 'Beginner Bootcamp', 'A contest designed for beginners to get started with competitive programming.', '2024-06-10 12:00:00', '2024-06-10 18:00:00', '0000-00-00 00:00:00', 1);
+INSERT INTO `contests` (`ContestID`, `Title`, `Description`, `StartTime`, `EndTime`, `Duration`, `CreatorID`) VALUES
+(1, 'Monthly Challenge June', 'A programming contest to test your skills in various algorithms and data structures.', '2024-07-07 09:00:00', '2024-08-07 23:59:59', '30 Days', 1),
+(2, 'Weekly Coding Marathon', 'A week-long coding marathon to solve as many problems as possible.', '2024-06-07 00:00:00', '2024-06-13 23:59:59', '7 Days', 2),
+(3, 'Weekend Algorithm Sprint', 'A weekend contest focused on algorithmic challenges.', '2024-06-15 10:00:00', '2024-06-16 18:00:00', '1 Day', 3),
+(4, 'Summer Hackathon', 'Join us for a summer hackathon to build innovative projects.', '2024-08-01 08:00:00', '2024-08-07 20:00:00', '7 Days', 4),
+(5, 'Beginner Bootcamp', 'A contest designed for beginners to get started with competitive programming.', '2024-06-10 12:00:00', '2024-06-10 18:00:00', '6 Hours', 1);
 
 -- --------------------------------------------------------
 
@@ -124,6 +124,32 @@ INSERT INTO `problems` (`ProblemID`, `Name`, `PlmDescription`, `InputSpecificati
 (3, 'Prime Number Check', 'Determine if a given number is prime.', 'An integer n.', 'A single line with \"YES\" or \"NO\".', 'P003', 'Number theory problem.', 1, 128, 1500, 1, '2024-06-03 09:30:00', '3'),
 (4, 'Matrix Multiplication', 'Multiply two matrices.', 'Two matrices A and B.', 'Matrix C which is the product of A and B.', 'P004', 'Matrix algebra problem.', 5, 512, 1800, 3, '2024-06-04 12:45:00', '4'),
 (5, 'Graph Traversal', 'Implement BFS and DFS on a graph.', 'A graph represented as an adjacency list.', 'The order of nodes visited in BFS and DFS.', 'P005', 'Graph theory problem.', 3, 1024, 2000, 4, '2024-06-05 14:00:00', '5');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `problem_tags`
+--
+
+CREATE TABLE `problem_tags` (
+  `ProblemID` int(11) DEFAULT NULL,
+  `TagID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `problem_tags`
+--
+
+INSERT INTO `problem_tags` (`ProblemID`, `TagID`) VALUES
+(1, 1),
+(1, 2),
+(2, 1),
+(3, 3),
+(3, 4),
+(4, 2),
+(4, 3),
+(5, 1),
+(5, 2);
 
 -- --------------------------------------------------------
 
@@ -247,11 +273,66 @@ CREATE TABLE `tags` (
 --
 
 INSERT INTO `tags` (`TagID`, `TagName`) VALUES
-(1, 'Math'),
-(2, 'Strings'),
-(3, 'Number Theory'),
-(4, 'Matrix'),
-(5, 'Graph');
+(1, 'arrays'),
+(2, 'strings'),
+(3, 'dynamic programming'),
+(4, 'greedy algorithms'),
+(5, 'graph theory'),
+(6, 'tree algorithms'),
+(7, 'number theory'),
+(8, 'mathematics'),
+(9, 'combinatorics'),
+(10, 'geometry'),
+(11, 'bit manipulation'),
+(12, 'sorting'),
+(13, 'searching'),
+(14, 'recursion'),
+(15, 'backtracking'),
+(16, 'hashing'),
+(17, 'heap'),
+(18, 'stack'),
+(19, 'queue'),
+(20, 'linked list'),
+(21, 'binary search tree'),
+(22, 'depth-first search'),
+(23, 'breadth-first search'),
+(24, 'disjoint set union'),
+(25, 'segment tree'),
+(26, 'binary indexed tree'),
+(27, 'trie'),
+(28, 'divide and conquer'),
+(29, 'brute force'),
+(30, 'simulation'),
+(31, 'game theory'),
+(32, 'modular arithmetic'),
+(33, 'bitmask'),
+(34, 'sieve of eratosthenes'),
+(35, 'matrix'),
+(36, 'flood fill'),
+(37, 'two pointers'),
+(38, 'sliding window'),
+(39, 'topological sort'),
+(40, 'graph coloring'),
+(41, 'shortest path'),
+(42, 'minimum spanning tree'),
+(43, 'flow network'),
+(44, 'line sweep'),
+(45, 'geometry sweep'),
+(46, 'string matching'),
+(47, 'suffix array'),
+(48, 'prefix sum'),
+(49, 'fenwick tree'),
+(50, 'range query'),
+(51, 'data structures'),
+(52, 'algorithms'),
+(53, 'optimization'),
+(54, 'probability'),
+(55, 'statistics'),
+(56, 'game theory'),
+(57, 'competitive programming'),
+(58, 'interactive problems'),
+(59, 'implementation'),
+(60, 'other');
 
 -- --------------------------------------------------------
 
@@ -307,7 +388,8 @@ INSERT INTO `users` (`UserID`, `Handle`, `Name`, `Email`, `User_Password`, `Prof
 (3, 'bobjones', 'Bob Jones', 'bob.jones@example.com', 'password789', NULL, 'moderator', 3, '2024-03-22 14:45:00', 'Bronze', 8),
 (4, 'alicebrown', 'Alice Brown', 'alice.brown@example.com', 'passwordabc', '/images/alicebrown.jpg', 'user', 4, '2023-11-10 09:05:00', 'Platinum', 20),
 (5, 'charlieblack', 'Charlie Black', 'charlie.black@example.com', 'passworddef', NULL, 'user', 5, '2024-02-18 12:50:00', 'Gold', 5),
-(6, 'Taju366', 'Kazi Zannatul', 'kazizannatultajrin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, NULL, NULL, NULL, NULL);
+(6, 'Taju366', 'Kazi Zannatul', 'kazizannatultajrin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 'AfnanRakib', 'Rakib Hasan', 'afnanrakib476@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -339,6 +421,13 @@ ALTER TABLE `languages`
 ALTER TABLE `problems`
   ADD PRIMARY KEY (`ProblemID`),
   ADD KEY `AuthorID` (`AuthorID`),
+  ADD KEY `TagID` (`TagID`);
+
+--
+-- Indexes for table `problem_tags`
+--
+ALTER TABLE `problem_tags`
+  ADD KEY `ProblemID` (`ProblemID`),
   ADD KEY `TagID` (`TagID`);
 
 --
@@ -436,7 +525,7 @@ ALTER TABLE `submissions`
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `TagID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `TagID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `testcases`
@@ -448,7 +537,7 @@ ALTER TABLE `testcases`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -472,6 +561,13 @@ ALTER TABLE `contests`
 --
 ALTER TABLE `problems`
   ADD CONSTRAINT `problems_ibfk_1` FOREIGN KEY (`AuthorID`) REFERENCES `users` (`UserID`);
+
+--
+-- Constraints for table `problem_tags`
+--
+ALTER TABLE `problem_tags`
+  ADD CONSTRAINT `problem_tags_ibfk_1` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`),
+  ADD CONSTRAINT `problem_tags_ibfk_2` FOREIGN KEY (`TagID`) REFERENCES `tags` (`TagID`);
 
 --
 -- Constraints for table `ratinggraph`
