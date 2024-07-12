@@ -1,152 +1,88 @@
-<?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header("Location: login.php");
-    exit();
-}
-
-// Database connection
-$conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$user = $_SESSION['user'];
-$error_message = "";
-$success_message = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['update_email'])) {
-        $email = $conn->real_escape_string($_POST['email']);
-        $query = "UPDATE `users` SET `Email` = '$email' WHERE `users`.`UserID` = " . $user['UserId'];
-        if ($conn->query($query) === TRUE) {
-            $_SESSION['user']['Email'] = $email;
-            $success_message = "Email updated successfully.";
-        } else {
-            $error_message = "Error updating email: " . $conn->error;
-        }
-    }
-
-    if (isset($_POST['update_name'])) {
-        $name = $conn->real_escape_string($_POST['name']);
-        $query = "UPDATE `users` SET `Name` = '$name' WHERE `users`.`UserID` = " . $user['UserId'];
-        if ($conn->query($query) === TRUE) {
-            $_SESSION['user']['Name'] = $name;
-            $success_message = "Name updated successfully.";
-        } else {
-            $error_message = "Error updating name: " . $conn->error;
-        }
-    }
-
-    if (isset($_POST['update_password'])) {
-        $password = $_POST['password'];
-        $retype_password = $_POST['retype_password'];
-        if ($password !== $retype_password) {
-            $error_message = "Passwords do not match!";
-        } else {
-            $password_hashed = md5($conn->real_escape_string($password));
-            $query = "UPDATE `users` SET `User_Password` = '$password_hashed' WHERE `users`.`UserID` = " . $user['UserId'];
-            if ($conn->query($query) === TRUE) {
-                $_SESSION['user']['User_Password'] = $password_hashed;
-                $success_message = "Password updated successfully.";
-            } else {
-                $error_message = "Error updating password: " . $conn->error;
-            }
-        }
-    }
-
-    if (isset($_POST['update_profile_picture'])) {
-        if ($_FILES['profile_picture']['name']) {
-            $profile_picture = file_get_contents($_FILES['profile_picture']['tmp_name']);
-            $profile_picture_encoded = base64_encode($profile_picture);
-            $query = "UPDATE `users` SET `Profile_Picture` = '$profile_picture_encoded' WHERE `users`.`UserID` = " . $user['UserId'];
-            if ($conn->query($query) === TRUE) {
-                $_SESSION['user']['Profile_Picture'] = $profile_picture_encoded;
-                $success_message = "Profile picture updated successfully.";
-            } else {
-                $error_message = "Error updating profile picture: " . $conn->error;
-            }
-        } else {
-            $error_message = "No profile picture selected.";
-        }
-    }
-}
-
-$conn->close();
-?>
-
+<?php include '../helpers/editProfileHelper.php'; ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/editProfile.css">
-    <link rel="stylesheet" href="../css/navbar.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Edit Profile - AUST CODE REALM</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/editProfile.css">
 </head>
 <body>
     <!-- Navbar -->
     <?php include '../helpers/navbar.php'; ?>
-    <!-- Section -->
-    <section class="edit-profile-section py-5">
-        <div class="container">
-            <h2>Edit Profile</h2>
-            <?php if ($error_message): ?>
-                <div class="alert alert-danger" role="alert">
-                    <?php echo $error_message; ?>
+    <h2 style="text-align: center;color:#00A859;">Edit Profile</h2>
+    <div class="row col-lg-8 border rounded mx-auto mt-5 p-2 shadow-lg justify-content-center">
+        <div class="profile-container">
+            <form method="post" action="editProfile.php" enctype="multipart/form-data" class="mb-3">
+                <div class="profile-picture">
+                    <img src="<?= $user['Profile_Picture'] ?>" id="profile-picture" alt="Profile Picture">
+                    <label for="formFile" class="upload-icon">
+                        <img src="../images/icons/edit.png" alt="Upload Icon" width="24" height="24">
+                        <input class="form-control" type="file" name="profile_picture" id="formFile" onchange="previewImage(event)" style="display:none;">
+                    </label>
                 </div>
-            <?php endif; ?>
-            <?php if ($success_message): ?>
-                <div class="alert alert-success" role="alert">
-                    <?php echo $success_message; ?>
+                <div class="save-button-container">
+                    <button class="btn btn-primary" name="save_picture">Save Profile Picture</button>
                 </div>
-            <?php endif; ?>
-            
-            <!-- Update Email Form -->
-            <form action="editProfile.php" method="post">
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['Email']); ?>" required>
-                </div>
-                <button type="submit" name="update_email" class="btn btn-primary">Update Email</button>
-            </form>
-            <br>
-
-            <!-- Update Name Form -->
-            <form action="editProfile.php" method="post">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" value="<?php echo htmlspecialchars($user['Name']); ?>" required>
-                </div>
-                <button type="submit" name="update_name" class="btn btn-primary">Update Name</button>
-            </form>
-            <br>
-
-            <!-- Update Password Form -->
-            <form action="editProfile.php" method="post">
-                <div class="mb-3">
-                    <label for="password" class="form-label">New Password (leave blank to keep current password)</label>
-                    <input type="password" class="form-control" id="password" name="password">
-                </div>
-                <div class="mb-3">
-                    <label for="retype_password" class="form-label">Retype New Password</label>
-                    <input type="password" class="form-control" id="retype_password" name="retype_password">
-                </div>
-                <button type="submit" name="update_password" class="btn btn-primary">Update Password</button>
-            </form>
-            <br>
-
-            <!-- Update Profile Picture Form -->
-            <form action="editProfile.php" method="post" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="profile_picture" class="form-label">Profile Picture</label>
-                    <input type="file" class="form-control" id="profile_picture" name="profile_picture">
-                </div>
-                <button type="submit" name="update_profile_picture" class="btn btn-primary">Update Profile Picture</button>
             </form>
         </div>
-    </section>
+        <div class="col-md-8">
+            <?php if ($alertMessage): ?>
+                <div class="alert alert-<?= $alertType ?> alert-dismissible fade show" role="alert">
+                    <?= $alertMessage ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+            <form method="post" action="editProfile.php" class="mb-3">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input value="<?= htmlspecialchars($user['Email']) ?>" type="email" class="form-control" name="email" id="email" placeholder="Email">
+                </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input value="<?= htmlspecialchars($user['Name']) ?>" type="text" class="form-control" name="name" id="name" placeholder="Full Name">
+                </div>
+                <div class="mb-3">
+                    <label for="institution" class="form-label">Institution</label>
+                    <input value="<?= isset($user['Institution']) ? htmlspecialchars($user['Institution']) : '' ?>" type="text" class="form-control" name="institution" id="institution" placeholder="Institution">
+                </div>
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select class="form-select" name="gender" id="gender">
+                        <option value="" <?= !isset($user['Gender']) ? 'selected' : '' ?>></option>
+                        <option value="male" <?= isset($user['Gender']) && $user['Gender'] == 'male' ? 'selected' : '' ?>>Male</option>
+                        <option value="female" <?= isset($user['Gender']) && $user['Gender'] == 'female' ? 'selected' : '' ?>>Female</option>
+                        <option value="other" <?= isset($user['Gender']) && $user['Gender'] == 'other' ? 'selected' : '' ?>>Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="dob" class="form-label">Date of Birth</label>
+                    <input value="<?= isset($user['DateOfBirth']) ? htmlspecialchars($user['DateOfBirth']) : '' ?>" type="date" class="form-control" name="dob" id="dob" placeholder="Date of Birth">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                </div>
+                <div class="mb-3">
+                    <label for="retype_password" class="form-label">Retype Password</label>
+                    <input type="password" class="form-control" name="retype_password" id="retype_password" placeholder="Retype Password">
+                </div>
+                <button class="btn btn-primary float-end" name="save_profile">Save Changes</button>
+            </form>
+        </div>
+    </div>
     <script src="../js/bootstrap.bundle.min.js"></script>
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var output = document.getElementById('profile-picture');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 </body>
 </html>

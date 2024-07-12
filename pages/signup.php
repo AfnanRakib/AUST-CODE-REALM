@@ -20,8 +20,8 @@
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="retype_password" placeholder="Retype Password" required>
                 <input type="text" name="fullname" placeholder="Full Name" required>
-                <input type="text" name="address" placeholder="Address" required>
                 <button type="submit">Register</button>
             </form>
             <p><a href="login.php">Already have an account? Log in here</a></p>
@@ -41,17 +41,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $username = $conn->real_escape_string($_POST['username']);
     $email = $conn->real_escape_string($_POST['email']);
-    $password = $conn->real_escape_string(md5($_POST['password']));
+    $password = $conn->real_escape_string($_POST['password']);
+    $retype_password = $conn->real_escape_string($_POST['retype_password']);
     $fullname = $conn->real_escape_string($_POST['fullname']);
-    $address = $conn->real_escape_string($_POST['address']);
 
-    $sql = "INSERT INTO users (Handle, Email, User_Password, Name ) VALUES ('$username', '$email', '$password', '$fullname')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('Registration successful');</script>";
-        header("Location: login.php");
+    // Check if passwords match
+    if ($password != $retype_password) {
+        echo "<script>alert('Passwords do not match');</script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        $hashed_password = md5($password);
+        $current_date = date('Y-m-d H:i:s'); // Get current date and time
+
+        $sql = "INSERT INTO users (Handle, Email, User_Password, Name, DateJoined) VALUES ('$username', '$email', '$hashed_password', '$fullname', '$current_date')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "<script>alert('Registration successful');</script>";
+            header("Location: login.php");
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
     }
 
     $conn->close();

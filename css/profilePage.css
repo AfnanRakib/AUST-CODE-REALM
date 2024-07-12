@@ -1,5 +1,6 @@
 .profile-section {
     background: #f9f9f9;
+    padding: 20px 0;
 }
 .profile-section h2, .profile-section h3, .profile-section h4 {
     color: #00A859;
@@ -11,6 +12,21 @@
     border: 3px solid #00A859;
 }
 
+#profile-img{
+    max-width: 350px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+.user-details {
+    text-align: left;
+    margin-top: 20px;
+}
+.user-details p {
+    font-size: 16px;
+    margin: 5px 0;
+}
 .container-graph {
     max-width: 730px;
     margin: auto;
@@ -20,7 +36,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     height: 100%;
 }
-
 @media (max-width: 1000px) {
     span {
         display: block;
@@ -33,5 +48,3 @@
         box-sizing: border-box;
     }
 }
-
-
