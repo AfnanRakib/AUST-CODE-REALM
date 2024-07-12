@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 $basePath = 'http://localhost/AUST%20CODE%20REALM/';
 $isLoggedIn = isset($_SESSION['user']);
 $handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
@@ -39,7 +41,7 @@ $handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
             </div>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                 <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/profilePage.php"><img src="<?php echo $basePath; ?>images/icons/profile.png" alt="Profile Icon" class="dropdown-icon"> Profile</a></li>
-                <li><a class="dropdown-item" href="<?php echo $basePath; ?>"><img src="<?php echo $basePath; ?>images/icons/settings.png" alt="Settings Icon" class="dropdown-icon"> Settings</a></li>
+                <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/editProfile.php"><img src="<?php echo $basePath; ?>images/icons/settings.png" alt="Settings Icon" class="dropdown-icon"> Settings</a></li>
                 <li><a class="dropdown-item" href="<?php echo $basePath; ?>index.php?logout=true"><img src="<?php echo $basePath; ?>images/icons/logout.png" alt="Logout Icon" class="dropdown-icon"> Logout</a></li>
             </ul>
         </div>

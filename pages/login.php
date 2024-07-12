@@ -60,8 +60,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'User_Role' => $row['User_Role'],
             'RatingCategory' => $row['RatingCategory'],
             'LastVisited' => $row['LastVisited'],
-            'Profile_Picture_File_Location' => $row['Profile_Picture_File_Location']
+            'Profile_Picture' => base64_encode($row['Profile_Picture'])
         );
+
 
         header("Location: ../index.php");
     } else {

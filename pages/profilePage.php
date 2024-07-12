@@ -1,3 +1,9 @@
+<?php
+session_start();
+$user = $_SESSION['user'];
+$profile_picture = base64_decode($user['Profile_Picture']);
+$profile_picture_src = 'data:image/jpeg;base64,' . base64_encode($profile_picture);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,12 +31,12 @@
             <div class="row">
                 <div class="col-md-4 text-center">
                     <div class="container">
-                        <img src="../images/logo with cover.png" alt="Profile Picture" class="img-fluid rounded-circle mb-3">
+                    <img src="<?php echo $profile_picture_src; ?>" alt="Profile Picture" class="img-fluid rounded-circle mb-3">
                     </div>
                     <div class="container">
                         <h2 id="username"><?php echo $handle;?></h2>
                         <p id="user-rating">Contest rating: 1165 (max. newbie, 1165)</p>
-                        <a href="#" class="btn btn-link">Edit Profile</a><br>
+                        <a href="editProfile.php" class="btn btn-link">Edit Profile</a><br>
                         <a href="#" class="btn btn-link"><span><?php echo $_SESSION['user']['Email'];?></span></a><br>
                         <p id="user-full-name"><?php echo $_SESSION['user']['Name'];?></p>
                         <p id="user-DateJoined"><?php echo $_SESSION['user']['DateJoined'];?></p>
