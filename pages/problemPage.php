@@ -1,3 +1,21 @@
+<?php
+    $problemId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+    // Database connection
+    $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    $sql = "SELECT * FROM problems WHERE ProblemID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $problemId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $problem = $result->fetch_assoc();
+    $stmt->close();
+    $conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,23 +47,7 @@
         </ul>
         <div class="tab-content" id="problemTabsContent">
             <div class="tab-pane fade show active" id="problem-statement" role="tabpanel" aria-labelledby="problem-statement-tab">
-                <div class="row">
-                    <div class="col problem-description overflow-auto">
-                        <h2 style="text-align: center;color:#00A859;">Problem Name</h2>
-                        <h3>Problem description</h3>
-                        <pre>Problem description</pre>
-                        <h3>Input</h3>
-                        <pre>Input</pre>
-                        <h3>Output</h3>
-                        <pre>Output</pre>
-                        <h3>Constraints</h3>
-                        <pre>Constraints</pre>
-                        <h3>Sample Testcase</h3>
-                        <pre>Sample Testcase</pre>
-                        <h3>More info</h3>
-                        <pre>More info</pre>              
-                    </div>
-                </div>
+            <?php include '../helpers/problemStatement.php'; ?>
             </div>
             <div class="tab-pane fade" id="submit" role="tabpanel" aria-labelledby="submit-tab">
                 <div class="row">
@@ -80,92 +82,17 @@
             </div>
         </div>
     </div>
-    <script>
-        document.getElementById('submitButton').addEventListener('click', function(event) {
-            const selectElement = document.getElementById('selectLanguageMode');//seleceted lang object
-            const languageName = selectElement.options[selectElement.selectedIndex].text;//selected lang name
-            const languageId = languageModeIds[languageName];//selected language id
-            const code = editor.getValue();//user written code
-
-            const data = {
-                languageId: languageId,
-                languageName: languageName,
-                code: code
-            };
-            fetch('../helpers/submit_code.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text(); // Get the raw text response
-            }).then(text => {
-                console.log('Raw response:', text); // Log the raw response
-                try {
-                    return JSON.parse(text); // Try to parse the JSON
-                } catch (error) {
-                    console.error('JSON parse error:', error);
-                    throw new Error('Invalid JSON response');
-                }
-            })
-            .then(submissionData => {
-                console.log('Success:', submissionData);
-
-                // Display the result in the resultDisplay div
-                const resultDisplay = document.getElementById('resultDisplay');
-                let displayContent = `<h4>Submission Result</h4>`;
-
-                if (submissionData.stdout) {
-                    displayContent += `<p><strong>Stdout:</strong> ${submissionData.stdout}</p>`;
-                }
-                if (submissionData.stderr) {
-                    displayContent += `<p><strong>Stderr:</strong> ${submissionData.stderr}</p>`;
-                }
-                if (submissionData.compile_output) {
-                    displayContent += `<p><strong>Compile Output:</strong> ${submissionData.compile_output}</p>`;
-                }
-                if (submissionData.status) {
-                    displayContent += `<p><strong>Status:</strong> ${submissionData.status}</p>`;
-                }
-                if (submissionData.time) {
-                    displayContent += `<p><strong>time:</strong> ${submissionData.time}</p>`;
-                }
-                if (submissionData.memory) {
-                    displayContent += `<p><strong>memory:</strong> ${submissionData.memory}</p>`;
-                }
-                if (submissionData.created_at) {
-                    displayContent += `<p><strong>created_at:</strong> ${submissionData.created_at}</p>`;
-                }
-                if (submissionData.finished_at) {
-                    displayContent += `<p><strong>finished_at:</strong> ${submissionData.finished_at}</p>`;
-                }
-                if (submissionData.token) {
-                    displayContent += `<p><strong>token:</strong> ${submissionData.token}</p>`;
-                }
-
-                if (!submissionData.stdout && !submissionData.stderr && !submissionData.compile_output&&!submissionData.status &&!submissionData.time &&!submissionData.memory &&!submissionData.created_at&&!submissionData.finished_at) 
-                {
-                    displayContent = `<p>No output available.</p>`;
-                }
-
-                resultDisplay.innerHTML = displayContent;
-            }).catch(error => {
-                console.error('Error:', error);
-                const resultDisplay = document.getElementById('resultDisplay');
-                resultDisplay.innerHTML = `<p>Error occurred while processing the submission: ${error.message} </p>`;
-            });
-        });
-
-
-
-
-        //same code for run button if needed
-    </script>
+    <script src="../js/runcode.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
+    <script>
+        function copyToClipboard(elementId) {
+            var text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Copied to clipboard');
+            }, function(err) {
+                alert('Failed to copy: ', err);
+            });
+        }
+    </script>
 </body>
 </html>
