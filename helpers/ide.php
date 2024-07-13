@@ -20,8 +20,19 @@
         </div>
     </div>
     <div class="editor" id="editor" style="height:800px;"></div>
-
     <script src="../js/ace/ace.js"></script>
+    <!-- <script>
+        window.onload = function() {
+            $mode = languageModeIds[languageName];
+            $code = editor.getValue();
+            editor = ace.edit("editor");
+            editor.setTheme(`ace/theme/monokai`);
+            editor.setFontSize('14px');
+            editor.session.setMode(`ace/mode/{$mode}`);
+            editor.setValue('$code');
+            editor.clearSelection(); 
+        }
+    </script> -->
     <script>
         let editor;
         let languageModeIds = {};
