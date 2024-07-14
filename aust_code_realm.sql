@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2024 at 06:55 PM
+-- Generation Time: Jul 14, 2024 at 06:25 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -99,7 +99,10 @@ INSERT INTO `problems` (`ProblemID`, `Name`, `PlmDescription`, `InputSpecificati
 (2, 'String Reversal', 'Reverse a given string.', 'A single string s.', 'A single string which is the reverse of s.', 'P002', 'String manipulation problem.', 2, 256, 1200, 2),
 (3, 'Prime Number Check', 'Determine if a given number is prime.', 'An integer n.', 'A single line with \"YES\" or \"NO\".', 'P003', 'Number theory problem.', 1, 128, 1500, 1),
 (4, 'Matrix Multiplication', 'Multiply two matrices.', 'Two matrices A and B.', 'Matrix C which is the product of A and B.', 'P004', 'Matrix algebra problem.', 5, 512, 1800, 3),
-(5, 'Graph Traversal', 'Implement BFS and DFS on a graph.', 'A graph represented as an adjacency list.', 'The order of nodes visited in BFS and DFS.', 'P005', 'Graph theory problem.', 3, 1024, 2000, 4);
+(5, 'Graph Traversal', 'Implement BFS and DFS on a graph.', 'A graph represented as an adjacency list.', 'The order of nodes visited in BFS and DFS.', 'P005', 'Graph theory problem.', 3, 1024, 2000, 4),
+(6, 'Double Ended Queue', 'A queue is a data structure based on the principle of \'First In First Out\' (FIFO). There are two ends; one end can be used only to insert an item and the other end to remove an item. A Double Ended Queue is a queue where you can insert an item in both sides as well as you can delete an item from either side.\r\n\r\nThere are mainly four operations available to a double ended queue. They are:\r\n\r\n![Double Ended Queue](CDN_BASE_URL/6c444093f691ab00de2df3aef0808e5d?v=1720739565)\r\n\r\n1. `pushLeft()` inserts an item to the left end of the queue with the exception that the queue is not full.\r\n2. `pushRight()` inserts an item to the right end of the queue with the exception that the queue is not full.\r\n3. `popLeft()` removes an item from the left end of the queue with the exception that the queue is not empty.\r\n4. `popRight()` removes an item from the right end of the queue with the exception that the queue is not empty.\r\n\r\nNow you are given a queue and a list of commands, you have to report the behavior of the queue.', 'Input starts with an integer **T (&le; 20)**, denoting the number of test cases.Each case starts with a line containing two integers **n, m (1 &le; n &le; 10, 1 &le; m &le; 100)**, where **n** denotes the size of the queue and **m** denotes the number of commands. Each of the next **m** lines contains a command which is one of:\r\n\r\n| Operation | Action |\r\n|------------------|--------------------------------------------------------------------|\r\n| pushLeft  **x**  | pushes  **x (-100 &le; x &le; 100)**  to the left end of the queue |\r\n| pushRight **x** | pushes **x (-100 &le; x &le; 100)** to the right end of the queue |\r\n| popLeft               | pops an item from the left end of the queue |\r\n| popRight             | pops an item from the right end of the queue |', 'For each case, print the case number in a line. Then for each operation, show its corresponding output as shown in the sample. Be careful about spelling.', 'A', NULL, 1, 65536, 1000, 7),
+(8, 'aaa', '<table style=\"border-collapse: collapse; width: 100%; border-width: 1px; background-color: #bfedd2; border-color: #000000;\" border=\"1\"><colgroup><col style=\"width: 49.958%;\"><col style=\"width: 49.958%;\"></colgroup>\r\n<tbody>\r\n<tr>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">adfadsfasf</td>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">sfaf</td>\r\n</tr>\r\n<tr>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">asfasfasf</td>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">asfasdfasf</td>\r\n</tr>\r\n</tbody>\r\n</table>', '<p>&sum;A<sub>3</sub></p>', '<p>sdgsdgsagdsdafg<br>DFWSD<br>FSD<br>FSD<br>F<br>SADF<br>ASDF</p>', '111', '<p>gsdfgdfghg</p>', 1, 123, 1000, 7),
+(9, '12132', '<p>asdsfdsfasfafasf<br>SAFAF<br>AS<br><img src=\"https://study.com/cimages/videopreview/videopreview-full/uj16yqmbw4.jpg\" alt=\"\" width=\"715\" height=\"402\"></p>\r\n<p>fsdfsdfsdfsdfsd</p>\r\n<p>dfssd</p>\r\n<p>f</p>\r\n<p>sf</p>\r\n<p>sdf</p>\r\n<p>&nbsp;</p>\r\n<table style=\"border-collapse: collapse; width: 100%; border-width: 1px; background-color: #bfedd2; border-color: #000000;\" border=\"1\"><colgroup><col style=\"width: 49.958%;\"><col style=\"width: 49.958%;\"></colgroup>\r\n<tbody>\r\n<tr>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">adfadsfasf</td>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">sfaf</td>\r\n</tr>\r\n<tr>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">asfasfasf</td>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">asfasdfasf</td>\r\n</tr>\r\n</tbody>\r\n</table>', '<p style=\"text-align: center;\">wrqrfb eryt<a href=\"https://www.google.co.uk/\"><strong>eryER</strong></a><br><a href=\"https://www.google.co.uk/\"><strong>YGHRASDYDRYHG</strong></a><br><a href=\"https://www.google.co.uk/\"><strong>DRGYHDRF</strong></a><br><a href=\"https://www.google.co.uk/\"><strong>GYH</strong></a><br>GD<br>GF</p>\r\n<p>ef</p>\r\n<p>wedf</p>\r\n<p><span style=\"background-color: rgb(241, 196, 15);\">ewf</span></p>\r\n<p dir=\"rtl\"><span style=\"background-color: rgb(241, 196, 15);\">sedfsdfsdfsdfsdfsdfsdfsdfsdfsd</span></p>', '<p>ryhdfhhedrf</p>', '2113', '<p>dsgdfgbdfghdhdf</p>', 1, 1213, 1324, 7);
 
 -- --------------------------------------------------------
 
@@ -469,7 +472,7 @@ ALTER TABLE `contests`
 -- AUTO_INCREMENT for table `problems`
 --
 ALTER TABLE `problems`
-  MODIFY `ProblemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ProblemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `ratinggraph`

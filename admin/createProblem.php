@@ -22,6 +22,7 @@
             contextmenu: 'link image table',
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
             branding: false,
+            promotion: false,
             quickbars_insert_toolbar: '',
             setup: function(editor) {
                 editor.on('change', function() {
