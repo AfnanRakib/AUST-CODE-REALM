@@ -33,8 +33,13 @@ function isActive($page) {
             <li class="nav-item <?php echo isActive('problemSet.php'); ?>">
                 <a class="nav-link" href="<?php echo $basePath; ?>pages/problemSet.php">Problems</a>
             </li>
+<<<<<<< Updated upstream
             <li class="nav-item <?php echo isActive('courses.php'); ?>">
                 <a class="nav-link" href="<?php echo $basePath; ?>pages/courses.php">Courses</a>
+=======
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $basePath; ?>pages/courses/courses.php">Courses</a>
+>>>>>>> Stashed changes
             </li>
             <li class="nav-item <?php echo isActive('help.php'); ?>">
 
