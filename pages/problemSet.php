@@ -22,20 +22,24 @@
                 <input type="text" id="search" class="form-control" placeholder="Search by problem name...">
             </div>
             <div class="col-md-4">
-                <select id="rating" class="form-control">
-                    <option value="">All Ratings</option>
-                    <option value="800">800</option>
-                    <option value="1000">1000</option>
-                    <option value="1200">1200</option>
-                    <!-- Add more rating options as needed -->
-                </select>
+                <input type="text" id="rating" class="form-control" placeholder="Search by problem rating...">
             </div>
             <div class="col-md-4">
                 <select id="tags" class="form-control">
                     <option value="">All Tags</option>
-                    <option value="math">Math</option>
-                    <option value="greedy">Greedy</option>
-                    <!-- Add more tag options as needed -->
+                    <?php
+                    // Fetch all tags from the database
+                    $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+                    $tagQuery = "SELECT * FROM tags";
+                    $tagResult = $conn->query($tagQuery);
+                    while ($tagRow = $tagResult->fetch_assoc()) {
+                        echo '<option value="' . $tagRow['TagID'] . '">' . $tagRow['TagName'] . '</option>';
+                    }
+                    $conn->close();
+                    ?>
                 </select>
             </div>
         </div>
@@ -86,7 +90,6 @@
                         $('<li class="page-item"><a class="page-link" href="#" data-page="' + i + '">' + i + '</a></li>').insertBefore('.pagination .page-item:last');
                     }
                     currentPage = page;
-                    //console.log(response);
                 }
             });
         }

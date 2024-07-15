@@ -17,17 +17,20 @@
             </div>
             <h1>Welcome Back</h1>
             <form action="login.php" method="post">
-                <input type="text" name="username" placeholder="enter your e-mail" required>
-                <input type="password" name="password" placeholder="enter your password" required>
+                <input type="text" name="username" placeholder="Enter your handle" required>
+                <input type="password" name="password" placeholder="Enter your password" required>
                 <button type="submit">Sign in</button>
             </form>
-            <p><a href="signup.php">Don't have any account? Register Here</a></p>
+            <p><a href="signup.php">Don't have an account? Register Here</a></p>
         </div>
     </div>
 </body>
 </html>
 
+
 <?php
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Database connection
     $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
@@ -35,18 +38,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
+    
     $username = $conn->real_escape_string($_POST['username']);
     $password = $conn->real_escape_string(md5($_POST['password']));
-
-    $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+    
+    $sql = "SELECT * FROM users WHERE Handle='$username' AND User_Password='$password'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+    
         // User authenticated
+        $_SESSION['user'] = array(
+            'UserID' => $row['UserID'],
+            'Handle' => $row['Handle'],
+            'Email' => $row['Email'],
+            'Name' => $row['Name'],
+            'DateJoined' => $row['DateJoined'],
+            'RatingID' => $row['RatingID'],
+            'User_Role' => $row['User_Role'],
+            'RatingCategory' => $row['RatingCategory'],
+            'Profile_Picture' => $row['Profile_Picture'],
+            'DateOfBirth' => $row['DateOfBirth'],
+            'MaxRating' => $row['MaxRating'],
+            'Institution' => $row['Institution'],
+            'Gender' => $row['Gender']
+        );
+
         header("Location: ../index.php");
     } else {
-        echo "<script>alert('Invalid username or password');</script>";
+        echo "<script>alert('Invalid handle or password');</script>";
     }
 
     $conn->close();

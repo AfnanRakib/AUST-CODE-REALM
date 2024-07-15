@@ -1,0 +1,34 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #00A859;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 168, 89, 0.05);
+}
+
+.pagination .page-item .page-link {
+    color: #00A859;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #00A859;
+    border-color: #00A859;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: #007d4c;
+    border-color: #007d4c;
+}

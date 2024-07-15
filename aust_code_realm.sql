@@ -3,9 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+
 -- Generation Time: Jul 15, 2024 at 03:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -52,6 +54,7 @@ INSERT INTO `comments` (`id`, `video_id`, `content`, `created_at`, `user_id`) VA
 -- --------------------------------------------------------
 
 --
+
 -- Table structure for table `contestproblems`
 --
 
@@ -101,6 +104,7 @@ INSERT INTO `contests` (`ContestID`, `Title`, `Description`, `StartTime`, `EndTi
 -- --------------------------------------------------------
 
 --
+
 -- Table structure for table `courses`
 --
 
@@ -126,6 +130,7 @@ INSERT INTO `courses` (`id`, `title`, `description`, `image_url`, `created_at`, 
 -- --------------------------------------------------------
 
 --
+
 -- Table structure for table `problems`
 --
 
@@ -260,6 +265,7 @@ INSERT INTO `ratings` (`RatingID`, `UserID`, `TotalScore`, `Ranking`, `LastUpdat
 -- --------------------------------------------------------
 
 --
+
 -- Table structure for table `replies`
 --
 
@@ -284,6 +290,7 @@ INSERT INTO `replies` (`id`, `comment_id`, `video_id`, `user_id`, `content`, `cr
 -- --------------------------------------------------------
 
 --
+
 -- Table structure for table `submissions`
 --
 
@@ -449,6 +456,7 @@ INSERT INTO `users` (`UserID`, `Handle`, `Name`, `Email`, `User_Password`, `Prof
 (5, 'charlieblack', 'Charlie Black', 'charlie.black@example.com', 'passworddef', NULL, 'user', 5, '2024-02-18 12:50:00', 'Gold', NULL, 0, NULL, NULL),
 (6, 'Taju366', 'Kazi Zannatul', 'kazizannatultajrin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'user', NULL, NULL, 'Novice', NULL, 0, NULL, NULL),
 (7, 'AfnanRakib', 'Rakib Hasan', 'afnanrakib476@gmail.com', '202cb962ac59075b964b07152d234b70', '../images/uploads/profile_pictures/7.jpg', 'user', NULL, '2024-07-08 20:33:14', NULL, '0000-00-00', 0, '', 'male'),
+
 (9, 'rakib476', 'Afnan Rakib', 'rakib.cse.20210204027@aust.edu', '827ccb0eea8a706c4c34a16891f84e7b', NULL, 'user', NULL, '2024-07-12 15:34:54', NULL, NULL, 0, NULL, NULL),
 (10, 'ditto', 'shahriar rahaman', 'diptobhuiyan1999@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', NULL, 'user', NULL, '2024-07-14 20:25:58', NULL, NULL, 0, NULL, NULL);
 
@@ -484,11 +492,15 @@ INSERT INTO `videos` (`id`, `course_id`, `title`, `description`, `youtube_embed_
 (9, 1, 'SUBSET SUM & PARTITION PROBLEM : Dynamic Programming', 'In this video I discuss the how to find if sum is a subset sum in a given array and also Leetcode Partition Equal Subset Problem using dynamic programming with proper explanation along with code. It is an example of 0-1 knapsack.', 'https://www.youtube.com/embed/G46kdLkQ_Sw?list=PLauivoElc3gimdmLcIIpafEkzGs4tCQmi', '2024-07-12 13:06:12', 1),
 (10, 1, 'Longest Common Subsequence: Dynamic Programming', 'In this video I discuss the Longest Common Subsequence.', 'https://www.youtube.com/embed/Q0o9sU1r0FY?list=PLauivoElc3gimdmLcIIpafEkzGs4tCQmi', '2024-07-12 13:06:12', 1);
 
+(9, 'rakib476', 'Afnan Rakib', 'rakib.cse.20210204027@aust.edu', '827ccb0eea8a706c4c34a16891f84e7b', NULL, 'user', NULL, '2024-07-12 15:34:54', NULL, NULL, 0, NULL, NULL);
+
+
 --
 -- Indexes for dumped tables
 --
 
 --
+
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
@@ -497,6 +509,7 @@ ALTER TABLE `comments`
   ADD KEY `user_id` (`user_id`);
 
 --
+
 -- Indexes for table `contestproblems`
 --
 ALTER TABLE `contestproblems`
@@ -511,6 +524,7 @@ ALTER TABLE `contests`
   ADD KEY `CreatorID` (`CreatorID`);
 
 --
+
 -- Indexes for table `courses`
 --
 ALTER TABLE `courses`
@@ -518,6 +532,7 @@ ALTER TABLE `courses`
   ADD KEY `user_id` (`user_id`);
 
 --
+
 -- Indexes for table `problems`
 --
 ALTER TABLE `problems`
@@ -552,6 +567,7 @@ ALTER TABLE `ratings`
   ADD PRIMARY KEY (`RatingID`);
 
 --
+
 -- Indexes for table `replies`
 --
 ALTER TABLE `replies`
@@ -561,6 +577,7 @@ ALTER TABLE `replies`
   ADD KEY `user_id` (`user_id`);
 
 --
+
 -- Indexes for table `submissions`
 --
 ALTER TABLE `submissions`
@@ -593,6 +610,7 @@ ALTER TABLE `users`
   ADD KEY `RatingCategory` (`RatingCategory`);
 
 --
+
 -- Indexes for table `videos`
 --
 ALTER TABLE `videos`
@@ -601,28 +619,33 @@ ALTER TABLE `videos`
   ADD KEY `user_id` (`user_id`);
 
 --
+
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
+
 -- AUTO_INCREMENT for table `contests`
 --
 ALTER TABLE `contests`
   MODIFY `ContestID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+
 -- AUTO_INCREMENT for table `problems`
 --
 ALTER TABLE `problems`
@@ -641,12 +664,14 @@ ALTER TABLE `ratings`
   MODIFY `RatingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+
 -- AUTO_INCREMENT for table `replies`
 --
 ALTER TABLE `replies`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
@@ -668,6 +693,7 @@ ALTER TABLE `testcases`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
+
   MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
@@ -676,11 +702,15 @@ ALTER TABLE `users`
 ALTER TABLE `videos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+
 --
 -- Constraints for dumped tables
 --
 
 --
+
 -- Constraints for table `comments`
 --
 ALTER TABLE `comments`
@@ -688,6 +718,7 @@ ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
 --
+
 -- Constraints for table `contestproblems`
 --
 ALTER TABLE `contestproblems`
@@ -701,12 +732,14 @@ ALTER TABLE `contests`
   ADD CONSTRAINT `contests_ibfk_1` FOREIGN KEY (`CreatorID`) REFERENCES `users` (`UserID`);
 
 --
+
 -- Constraints for table `courses`
 --
 ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
 --
+
 -- Constraints for table `problems`
 --
 ALTER TABLE `problems`
@@ -727,6 +760,7 @@ ALTER TABLE `ratinggraph`
   ADD CONSTRAINT `ratinggraph_ibfk_2` FOREIGN KEY (`ContestID`) REFERENCES `contests` (`ContestID`);
 
 --
+
 -- Constraints for table `replies`
 --
 ALTER TABLE `replies`
@@ -735,6 +769,7 @@ ALTER TABLE `replies`
   ADD CONSTRAINT `replies_ibfk_3` FOREIGN KEY (`video_id`) REFERENCES `videos` (`id`) ON DELETE CASCADE;
 
 --
+
 -- Constraints for table `submissions`
 --
 ALTER TABLE `submissions`
@@ -749,11 +784,19 @@ ALTER TABLE `testcases`
   ADD CONSTRAINT `testcases_ibfk_1` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`);
 
 --
+
 -- Constraints for table `videos`
 --
 ALTER TABLE `videos`
   ADD CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `videos_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
+=======
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`RatingID`) REFERENCES `ratings` (`RatingID`),
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`RatingCategory`) REFERENCES `ratingdistribution` (`RatingCategory`);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

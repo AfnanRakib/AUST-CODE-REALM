@@ -1,15 +1,10 @@
 .navbar {
     background-color: #ffffff;
-    border-bottom: 2px solid #00A859; 
+    border-bottom: 2px solid #00A859;
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.hero-section {
-    background: #00A859;
-    color: #ffffff;
-    padding: 100px 0;
+    position: relative;
 }
 
 .navbar-brand img {
@@ -17,11 +12,16 @@
     margin-left: 10px;
 }
 
+.navbar-nav {
+    display: flex;
+    flex-direction: row;
+}
+
 .navbar-nav .nav-link {
-    margin-left: 20px;
+    margin-left: 10px;
     font-weight: bold;
-    margin-right: 20px;
-    padding-right: 20px;
+    margin-right: 10px;
+    padding-right: 10px;
     color: #000000 !important;
 }
 
@@ -29,30 +29,112 @@
     color: #00A859 !important;
 }
 
+.profile-dropdown {
+    position: relative;
+}
+
 .profile-link {
     display: flex;
     align-items: center;
     padding: 10px;
     margin-right: 10px;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .profile-link .profile-icon {
-    width: 30px ;
-    height: 30px ;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.handle {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+
+.handle:hover {
+    color: #00A859;
+}
+
+.dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+.dropdown-item {
+    color: #000000;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item .dropdown-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.dropdown-item:hover {
+    background-color: #ffffff;
+    color: #00A859 !important;
+}
+
+#loginbtn {
+    margin-right: 10px;
+    width: 100px;
+    font-weight: bold;
+    background-color: #029e53;
+    border-color: #007d4c;
+}
+
+#loginbtn:hover {
+    background-color: #007d4c;
+    border-color: #005b37;
 }
 
 @media (max-width: 992px) {
-    .navbar .profile-link {
+    .navbar-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 5px 0;
+    }
+
+    .profile-dropdown {
         order: 1;
         margin-left: auto;
-        margin-right: 10px;
+        margin-right: 5px;
     }
 
-    .navbar .navbar-toggler {
+    #loginbtn {
+        order: 1;
+        margin-left: auto;
+        margin-right: 5px;
+    }
+
+    .navbar-toggler {
         order: 2;
+        margin-right: 5px;
     }
 
-    .navbar .collapse {
+    .collapse {
         order: 3;
+    }
+}
+
+@media (min-width: 992px) {
+    .collapse.navbar-collapse {
+        justify-content: center;
+    }
+
+    .navbar-nav .nav-item {
+        margin-left: 10px;
+        margin-right: 10px;
     }
 }

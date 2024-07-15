@@ -1,3 +1,8 @@
+<?php
+session_start();
+$user = $_SESSION['user'];
+$profile_picture_src = empty($user['Profile_Picture']) ? '../images/uploads/profile_pictures/default.png' : $user['Profile_Picture'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,46 +12,49 @@
     <link rel="stylesheet" href="../css/profilePage.css">
     <link rel="stylesheet" href="../css/ratingGraph.css">
     <link rel="stylesheet" href="../css/navbar.css">
-
     <link rel="stylesheet" href="../css/glanceyear.css">
-    <link rel="stylesheet" href="../css/ratingGraph.css">
-    <script src="../js/jquery-2.0.3.min.js"></script><!-- https://code.jquery.com/jquery-2.0.3.min.js -->
+    <script src="../js/jquery-2.0.3.min.js"></script>
     <script src="../js/jquery.glanceyear.min.js"></script>
-    <script src="../js/chart.js"></script><!--https://cdn.jsdelivr.net/npm/chart.js-->
-    <script src="../js/chartjs-adapter-date-fns.js"></script><!--https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns-->
-    <title>AUST CODE REALM</title>
+    <script src="../js/chart.js"></script>
+    <script src="../js/chartjs-adapter-date-fns.js"></script>
+    <title>Profile - AUST CODE REALM</title>
 </head>
 <body>
     <!-- Navbar -->
     <?php include '../helpers/navbar.php'; ?>
-    
     <!-- Section -->
     <section class="profile-section py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 text-center">
-                    <div class="container">
-                        <img src="../images/logo with cover.png" alt="Profile Picture" class="img-fluid rounded-circle mb-3">
-                    </div>
-                    <div class="container">
-                        <h2 id="username">Afnan Rakib</h2>
-                        <p id="user-rating">Contest rating: 1165 (max. newbie, 1165)</p>
-                        <a href="#" class="btn btn-link">Change settings</a><br>
-                        <a href="#" class="btn btn-link"><span>afnanhaasdfdsfsfasdsanrakib476@gmail.com (not visible)</span></a><br>
-                        <p id="user-last-visit">Last visit: 32 minutes ago</p>
-                        <p id="user-registered">Registered: 2 years ago</p>
+                    <img src="<?php echo $profile_picture_src; ?>" alt="Profile Picture" id="profile-img" class="img-fluid rounded-circle mb-3">
+                    <h2 id="username"><?php echo $user['Handle']; ?></h2>
+                    <p><strong>Rating:</strong> <?php echo "{$user['RatingCategory']} ( Max Rating: {$user['MaxRating']})"; ?></p>
+                    <div class="user-details">
+                        <p><strong>Full Name:</strong> <?php echo $user['Name']; ?></p>
+                        <p><strong>Email:</strong> <?php echo $user['Email']; ?></p>
+                        <p><strong>Date Joined:</strong> <?php echo date("F j, Y", strtotime($user['DateJoined'])); ?></p>
+                        <?php if (!empty($user['Institution'])): ?>
+                            <p><strong>Institution:</strong> <?php echo $user['Institution']; ?></p>
+                        <?php endif; ?>
+                        <?php if (!empty($user['DateOfBirth'])): ?>
+                            <p><strong>Gender:</strong> <?php echo $user['Gender']; ?></p>
+                        <?php endif; ?>
+                        <?php if (!empty($user['DateOfBirth'])): ?>
+                            <p><strong>Date of Birth:</strong> <?php echo date("F j, Y", strtotime($user['DateOfBirth'])); ?></p>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-7" style="padding:10px; margin: auto;">
                     <h3>Activity Graph</h3>
                     <div class="container-graph">
-                        <?php include'../helpers/ratingGraph.php'?>
+                        <?php include '../helpers/ratingGraph.php'; ?>
                     </div>
                     <div style="height: 10px;"></div>
                     <h3>Problem Solving Activity</h3>
                     <div class="container-graph">
-                        <?php include'../helpers/heatmap.php'?>
+                        <?php include '../helpers/heatmap.php'; ?>
                     </div>
                 </div>
             </div>
