@@ -3,11 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-
--- Generation Time: Jul 15, 2024 at 03:49 PM
+-- Generation Time: Jul 15, 2024 at 06:49 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
-
+-- PHP Version: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,7 +26,6 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `comments`
 --
-
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL,
   `video_id` int(11) DEFAULT NULL,
@@ -52,9 +49,7 @@ INSERT INTO `comments` (`id`, `video_id`, `content`, `created_at`, `user_id`) VA
 (26, 1, 'wakanda forever', '2024-07-15 13:37:26', 10);
 
 -- --------------------------------------------------------
-
 --
-
 -- Table structure for table `contestproblems`
 --
 
@@ -128,9 +123,7 @@ INSERT INTO `courses` (`id`, `title`, `description`, `image_url`, `created_at`, 
 (4, 'Sorting', 'Explore various sorting algorithms.', '../../images/Sorting.jfif', '2024-07-12 13:06:12', 1);
 
 -- --------------------------------------------------------
-
 --
-
 -- Table structure for table `problems`
 --
 
@@ -195,6 +188,7 @@ INSERT INTO `problem_tags` (`ProblemID`, `TagID`) VALUES
 --
 
 CREATE TABLE `ratingdistribution` (
+  `RatingDistributionID` int(11) NOT NULL,
   `RatingCategory` varchar(50) NOT NULL,
   `MinimumRating` int(11) DEFAULT NULL,
   `MaximumRating` int(11) DEFAULT NULL
@@ -204,12 +198,12 @@ CREATE TABLE `ratingdistribution` (
 -- Dumping data for table `ratingdistribution`
 --
 
-INSERT INTO `ratingdistribution` (`RatingCategory`, `MinimumRating`, `MaximumRating`) VALUES
-('Expert', 800, 1199),
-('Grandmaster', 1600, 2400),
-('Master', 1200, 1599),
-('Novice', 0, 400),
-('Specialist', 400, 799);
+INSERT INTO `ratingdistribution` (`RatingDistributionID`, `RatingCategory`, `MinimumRating`, `MaximumRating`) VALUES
+(1, 'Expert', 800, 1199),
+(2, 'Grandmaster', 1600, 2400),
+(3, 'Master', 1200, 1599),
+(4, 'Novice', 0, 400),
+(5, 'Specialist', 400, 799);
 
 -- --------------------------------------------------------
 
@@ -288,9 +282,7 @@ INSERT INTO `replies` (`id`, `comment_id`, `video_id`, `user_id`, `content`, `cr
 (3, 26, 1, 10, 'rip black panther', '2024-07-15 13:37:47');
 
 -- --------------------------------------------------------
-
 --
-
 -- Table structure for table `submissions`
 --
 
@@ -437,7 +429,7 @@ CREATE TABLE `users` (
   `User_Role` varchar(20) DEFAULT 'user',
   `RatingID` int(11) DEFAULT NULL,
   `DateJoined` datetime DEFAULT NULL,
-  `RatingCategory` varchar(50) DEFAULT NULL,
+  `RatingCategory` int(11) DEFAULT 1,
   `DateOfBirth` date DEFAULT NULL,
   `MaxRating` int(11) DEFAULT 0,
   `Institution` varchar(255) DEFAULT NULL,
@@ -449,15 +441,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`UserID`, `Handle`, `Name`, `Email`, `User_Password`, `Profile_Picture`, `User_Role`, `RatingID`, `DateJoined`, `RatingCategory`, `DateOfBirth`, `MaxRating`, `Institution`, `Gender`) VALUES
-(1, 'johndoe', 'John Doe', 'john.doe@example.com', 'password123', '/images/johndoe.jpg', 'admin', 1, '2024-01-15 10:30:00', 'Gold', NULL, 0, NULL, NULL),
-(2, 'janesmith', 'Jane Smith', 'jane.smith@example.com', 'password456', '/images/janesmith.jpg', 'user', 2, '2023-12-20 08:15:00', 'Silver', NULL, 0, NULL, NULL),
-(3, 'bobjones', 'Bob Jones', 'bob.jones@example.com', 'password789', NULL, 'moderator', 3, '2024-03-22 14:45:00', 'Bronze', NULL, 0, NULL, NULL),
-(4, 'alicebrown', 'Alice Brown', 'alice.brown@example.com', 'passwordabc', '/images/alicebrown.jpg', 'user', 4, '2023-11-10 09:05:00', 'Platinum', NULL, 0, NULL, NULL),
-(5, 'charlieblack', 'Charlie Black', 'charlie.black@example.com', 'passworddef', NULL, 'user', 5, '2024-02-18 12:50:00', 'Gold', NULL, 0, NULL, NULL),
-(6, 'Taju366', 'Kazi Zannatul', 'kazizannatultajrin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'user', NULL, NULL, 'Novice', NULL, 0, NULL, NULL),
-(7, 'AfnanRakib', 'Rakib Hasan', 'afnanrakib476@gmail.com', '202cb962ac59075b964b07152d234b70', '../images/uploads/profile_pictures/7.jpg', 'user', NULL, '2024-07-08 20:33:14', NULL, '0000-00-00', 0, '', 'male'),
-
-(9, 'rakib476', 'Afnan Rakib', 'rakib.cse.20210204027@aust.edu', '827ccb0eea8a706c4c34a16891f84e7b', NULL, 'user', NULL, '2024-07-12 15:34:54', NULL, NULL, 0, NULL, NULL),
+(1, 'johndoe', 'John Doe', 'john.doe@example.com', 'password123', '/images/johndoe.jpg', 'admin', NULL, '2024-01-15 10:30:00', 1, NULL, 0, NULL, NULL),
+(2, 'janesmith', 'Jane Smith', 'jane.smith@example.com', 'password456', '/images/janesmith.jpg', 'user', NULL, '2023-12-20 08:15:00', 1, NULL, 0, NULL, NULL),
+(3, 'bobjones', 'Bob Jones', 'bob.jones@example.com', 'password789', NULL, 'moderator', NULL, '2024-03-22 14:45:00', 1, NULL, 0, NULL, NULL),
+(4, 'alicebrown', 'Alice Brown', 'alice.brown@example.com', 'passwordabc', '/images/alicebrown.jpg', 'user', NULL, '2023-11-10 09:05:00', 1, NULL, 0, NULL, NULL),
+(5, 'charlieblack', 'Charlie Black', 'charlie.black@example.com', 'passworddef', NULL, 'user', NULL, '2024-02-18 12:50:00', 1, NULL, 0, NULL, NULL),
+(6, 'Taju366', 'Kazi Zannatul', 'kazizannatultajrin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'user', NULL, NULL, 1, NULL, 0, NULL, NULL),
+(7, 'AfnanRakib', 'Rakib Hasan', 'afnanrakib476@gmail.com', '202cb962ac59075b964b07152d234b70', '../images/uploads/profile_pictures/7.jpg', 'user', NULL, '2024-07-08 20:33:14', 1, '0000-00-00', 0, '', 'male'),
+(9, 'rakib476', 'Afnan Rakib', 'rakib.cse.20210204027@aust.edu', '827ccb0eea8a706c4c34a16891f84e7b', NULL, 'user', NULL, '2024-07-12 15:34:54', 1, NULL, 0, NULL, NULL),
 (10, 'ditto', 'shahriar rahaman', 'diptobhuiyan1999@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', NULL, 'user', NULL, '2024-07-14 20:25:58', NULL, NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -492,15 +483,9 @@ INSERT INTO `videos` (`id`, `course_id`, `title`, `description`, `youtube_embed_
 (9, 1, 'SUBSET SUM & PARTITION PROBLEM : Dynamic Programming', 'In this video I discuss the how to find if sum is a subset sum in a given array and also Leetcode Partition Equal Subset Problem using dynamic programming with proper explanation along with code. It is an example of 0-1 knapsack.', 'https://www.youtube.com/embed/G46kdLkQ_Sw?list=PLauivoElc3gimdmLcIIpafEkzGs4tCQmi', '2024-07-12 13:06:12', 1),
 (10, 1, 'Longest Common Subsequence: Dynamic Programming', 'In this video I discuss the Longest Common Subsequence.', 'https://www.youtube.com/embed/Q0o9sU1r0FY?list=PLauivoElc3gimdmLcIIpafEkzGs4tCQmi', '2024-07-12 13:06:12', 1);
 
-(9, 'rakib476', 'Afnan Rakib', 'rakib.cse.20210204027@aust.edu', '827ccb0eea8a706c4c34a16891f84e7b', NULL, 'user', NULL, '2024-07-12 15:34:54', NULL, NULL, 0, NULL, NULL);
-
-
 --
 -- Indexes for dumped tables
 --
-
---
-
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
@@ -509,7 +494,6 @@ ALTER TABLE `comments`
   ADD KEY `user_id` (`user_id`);
 
 --
-
 -- Indexes for table `contestproblems`
 --
 ALTER TABLE `contestproblems`
@@ -532,7 +516,6 @@ ALTER TABLE `courses`
   ADD KEY `user_id` (`user_id`);
 
 --
-
 -- Indexes for table `problems`
 --
 ALTER TABLE `problems`
@@ -550,7 +533,7 @@ ALTER TABLE `problem_tags`
 -- Indexes for table `ratingdistribution`
 --
 ALTER TABLE `ratingdistribution`
-  ADD PRIMARY KEY (`RatingCategory`);
+  ADD PRIMARY KEY (`RatingDistributionID`);
 
 --
 -- Indexes for table `ratinggraph`
@@ -577,7 +560,6 @@ ALTER TABLE `replies`
   ADD KEY `user_id` (`user_id`);
 
 --
-
 -- Indexes for table `submissions`
 --
 ALTER TABLE `submissions`
@@ -619,7 +601,6 @@ ALTER TABLE `videos`
   ADD KEY `user_id` (`user_id`);
 
 --
-
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -631,7 +612,6 @@ ALTER TABLE `comments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
-
 -- AUTO_INCREMENT for table `contests`
 --
 ALTER TABLE `contests`
@@ -645,11 +625,16 @@ ALTER TABLE `courses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
-
 -- AUTO_INCREMENT for table `problems`
 --
 ALTER TABLE `problems`
   MODIFY `ProblemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `ratingdistribution`
+--
+ALTER TABLE `ratingdistribution`
+  MODIFY `RatingDistributionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `ratinggraph`
@@ -671,7 +656,6 @@ ALTER TABLE `replies`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
-
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
@@ -693,7 +677,6 @@ ALTER TABLE `testcases`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-
   MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
@@ -701,8 +684,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `videos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 
 --
@@ -718,7 +699,6 @@ ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
 --
-
 -- Constraints for table `contestproblems`
 --
 ALTER TABLE `contestproblems`
@@ -739,7 +719,6 @@ ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
 --
-
 -- Constraints for table `problems`
 --
 ALTER TABLE `problems`
@@ -769,7 +748,6 @@ ALTER TABLE `replies`
   ADD CONSTRAINT `replies_ibfk_3` FOREIGN KEY (`video_id`) REFERENCES `videos` (`id`) ON DELETE CASCADE;
 
 --
-
 -- Constraints for table `submissions`
 --
 ALTER TABLE `submissions`
@@ -790,13 +768,13 @@ ALTER TABLE `testcases`
 ALTER TABLE `videos`
   ADD CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `videos_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
-=======
+
+--
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`RatingID`) REFERENCES `ratings` (`RatingID`),
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`RatingCategory`) REFERENCES `ratingdistribution` (`RatingCategory`);
-
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`RatingCategory`) REFERENCES `ratingdistribution` (`RatingDistributionID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
