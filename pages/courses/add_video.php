@@ -54,6 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/problemPage.css">
     <link rel="stylesheet" href="../../css/navbar.css">
+    <script src="../../js/tinymce/tinymce.min.js"></script>
+    <script src="../../js/tinyMCEinit.js"></script>
 </head>
 <<body>
     <div class="container mt-4">
@@ -66,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="mb-3">
                 <label for="description" class="form-label">Description:</label>
-                <textarea class="form-control" id="description" name="description" required></textarea>
+                <textarea class="form-control" id="video-description" name="description" required></textarea>
             </div>
 
             <div class="mb-3">
