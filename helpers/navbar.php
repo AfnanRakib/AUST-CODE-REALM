@@ -25,8 +25,10 @@ $handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $basePath; ?>pages/problemSet.php">Problems</a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo $basePath; ?>pages/courses.php">Courses</a>
+                <a class="nav-link" href="<?php echo $basePath; ?>pages/courses/courses.php">Courses</a>
+
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $basePath; ?>admin/createProblem.php">Admin Panel</a>
