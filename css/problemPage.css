@@ -5,7 +5,7 @@
 .editor {
     height: 70vh;
 }
-#submitButton, #runButton {
+#submitButton, #runButton, #copyButton {
     background-color: #00A859;
     margin-right: 10px;
     margin-top: 10px;
@@ -17,3 +17,11 @@
 .nav-tabs .nav-link {
     color: #00A859;
 }
+h1 {
+    color: #00A859;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 168, 89, 0.05);
+}
+

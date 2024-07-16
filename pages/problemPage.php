@@ -1,19 +1,42 @@
 <?php
-    $problemId = isset($_GET['id']) ? intval($_GET['id']) : 0;
-    // Database connection
-    $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
+session_start();
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    $sql = "SELECT * FROM problems WHERE ProblemID = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $problemId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $problem = $result->fetch_assoc();
-    $stmt->close();
-    $conn->close();
+if (!isset($_SESSION['user']['UserID'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$problemId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$userId = $_SESSION['user']['UserID'];
+
+// Database connection
+$conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch problem details
+$sql = "SELECT * FROM problems WHERE ProblemID = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $problemId);
+$stmt->execute();
+$result = $stmt->get_result();
+$problem = $result->fetch_assoc();
+$stmt->close();
+
+// Fetch user submissions for the current problem
+$sql = "SELECT * FROM submissions WHERE UserID = ? AND ProblemID = ? ORDER BY SubmissionTime DESC";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $userId, $problemId);
+$stmt->execute();
+$result = $stmt->get_result();
+$submissions = [];
+while ($row = $result->fetch_assoc()) {
+    $submissions[] = $row;
+}
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +70,7 @@
         </ul>
         <div class="tab-content" id="problemTabsContent">
             <div class="tab-pane fade show active" id="problem-statement" role="tabpanel" aria-labelledby="problem-statement-tab">
-            <?php include '../helpers/problemStatement.php'; ?>
+                <?php include '../helpers/problemStatement.php'; ?>
             </div>
             <div class="tab-pane fade" id="submit" role="tabpanel" aria-labelledby="submit-tab">
                 <div class="row">
@@ -71,28 +94,76 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="submissions" role="tabpanel" aria-labelledby="submissions-tab">
-                <div class="row">
-                    <div class="col">
-                        <h2 style="text-align: center;color:#00A859;">My Submissions</h2>
-                        <div id="mySubmissions">
-                            <!-- Display user's submissions here -->
-                        </div>
-                    </div>
+                <h1 class="text-center mb-4">My Submissions</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Submission ID</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Submission Time</th>
+                            <th scope="col">Time Taken (ms)</th>
+                            <th scope="col">Memory Used (KB)</th>
+                            <th scope="col">Language</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($submissions as $submission): ?>
+                            <tr>
+                                <th scope="row">
+                                    <a href="#" class="submission-id" data-code="<?php echo htmlspecialchars($submission['Code']); ?>" data-lang="<?php echo htmlspecialchars($submission['LanguageID']); ?>">
+                                        <?php echo htmlspecialchars($submission['SubmissionID']); ?>
+                                    </a>
+                                </th>
+                                <td><?php echo htmlspecialchars($submission['Status']); ?></td>
+                                <td><?php echo htmlspecialchars($submission['SubmissionTime']); ?></td>
+                                <td><?php echo htmlspecialchars($submission['TimeTaken']); ?></td>
+                                <td><?php echo htmlspecialchars($submission['MemoryUsed']); ?></td>
+                                <td><?php echo htmlspecialchars($submission['LanguageID']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Modal -->
+    <div class="modal fade" id="codeModal" tabindex="-1" aria-labelledby="codeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="codeModalLabel">Submission Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="codeTextarea" class="form-control" rows="15" readonly></textarea>
+                    <button class="btn btn-primary mt-3" id="copyButton">Copy Code</button>
                 </div>
             </div>
         </div>
     </div>
+
     <script src="../js/runcode.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script>
-        function copyToClipboard(elementId) {
-            var text = document.getElementById(elementId).innerText;
-            navigator.clipboard.writeText(text).then(function() {
-                alert('Copied to clipboard');
-            }, function(err) {
-                alert('Failed to copy: ', err);
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.submission-id').forEach(function(element) {
+                element.addEventListener('click', function() {
+                    const code = this.getAttribute('data-code');
+                    document.getElementById('codeTextarea').value = code;
+                    const modal = new bootstrap.Modal(document.getElementById('codeModal'));
+                    modal.show();
+                });
             });
-        }
+
+            document.getElementById('copyButton').addEventListener('click', function() {
+                const codeTextarea = document.getElementById('codeTextarea');
+                codeTextarea.select();
+                codeTextarea.setSelectionRange(0, 99999); // For mobile devices
+                document.execCommand("copy");
+                alert('Code copied to clipboard');
+            });
+        });
     </script>
 </body>
 </html>
