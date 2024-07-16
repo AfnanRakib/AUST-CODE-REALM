@@ -243,7 +243,7 @@ $comments_result = $comments_stmt->get_result();
 				<span>Drag me</span>
 				<button id="closeButton">&times;</button>
 			</div>
-			<div class="content" style= "border-radius:15px;">
+			<div class="content" style= "border-radius = 15px;">
 					<div class="row">
 						<!--STANDARD INPUT BAR-->
 						<div class="form-group mb-3">
