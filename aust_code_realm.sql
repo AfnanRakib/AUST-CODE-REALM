@@ -120,7 +120,13 @@ INSERT INTO `courses` (`id`, `title`, `description`, `image_url`, `created_at`, 
 (1, 'Dynamic Programming', 'Learn dynamic programming techniques.', '../../images/DynamicPrograming.png', '2024-07-12 13:06:12', 1),
 (2, 'Arrays 101', 'Master array manipulation and algorithms.', '../../images/Arrays 101.png', '2024-07-12 13:06:12', 1),
 (3, 'SQL Language', 'Learn database querying with SQL.', '../../images/SQL Language.png', '2024-07-12 13:06:12', 1),
-(4, 'Sorting', 'Explore various sorting algorithms.', '../../images/Sorting.jfif', '2024-07-12 13:06:12', 1);
+(4, 'Sorting', 'Explore various sorting algorithms.', '../../images/Sorting.jfif', '2024-07-12 13:06:12', 1),
+(5, 'ML', 'about machine learning', 'https://blog.daway.in/wp-content/uploads/2024/01/1_cG6U1qstYDijh9bPL42e-Q.jpg', '2024-07-15 16:04:41', 10),
+(6, 'PHP', 'php full course', 'https://www.thedroptimes.com/sites/thedroptimes.com/files/2024-04/php-card.png', '2024-07-17 07:40:59', 10),
+(7, 'JavaScript Tutorial Full Course - Beginner to Pro (2024)', '\r\n✅ Don\'t worry if you\'re halfway through the course or finished the course, you can skip the lessons you already finished and take the final test to get your Certificate.\r\n❤️ Thanks for supporting SuperSimpleDev!', 'https://www.tutorialrepublic.com/lib/images/javascript-illustration.png', '2024-07-17 07:47:21', 10),
+(8, 'AJAX Tutorial', 'Using AJAX the data could be passed between the browser and server using XMLHttpRequest API without complete reload of the entire webpage', 'https://miro.medium.com/v2/resize:fit:1400/1*QuMR4e-gMbOomdrQQZXtUg.jpeg', '2024-07-17 07:50:03', 10),
+(9, 'Deep Learning for Computer Vision with Python and TensorFlow – Complete Course', 'Learn the basics of computer vision with deep learning and how to implement the algorithms using Tensorflow.', 'https://images.ctfassets.net/3viuren4us1n/14l8OD8yRKAV7hi6qiAH9r/56ab584206079397eaa939fd81315163/Computer_vision_3.jpg', '2024-07-17 07:52:43', 10),
+(10, 'asdasda', 'dasdadasd', 'https://assets.skyfilabs.com/images/blog/what-is-computer-vision.webp', '2024-07-17 07:53:11', 10);
 
 -- --------------------------------------------------------
 --
@@ -481,7 +487,10 @@ INSERT INTO `videos` (`id`, `course_id`, `title`, `description`, `youtube_embed_
 (7, 1, 'Knapsack 2 Atcoder Tutorial With Code: Dynamic Programming', 'In this video I discuss the Knapsack 2 problem of atcoder with proper explanation along with code.', 'https://www.youtube.com/embed/gHVtY5raAQg?list=PLauivoElc3gimdmLcIIpafEkzGs4tCQmi', '2024-07-12 13:06:12', 1),
 (8, 1, 'ROD CUTTING: Dynamic Programming', 'In this video I discuss the Rod cutting dynamic programming with proper explanation along with code. It is an example of unbounded knapsack.', 'https://www.youtube.com/embed/KnzlqtUDfIc?list=PLauivoElc3gimdmLcIIpafEkzGs4tCQmi', '2024-07-12 13:06:12', 1),
 (9, 1, 'SUBSET SUM & PARTITION PROBLEM : Dynamic Programming', 'In this video I discuss the how to find if sum is a subset sum in a given array and also Leetcode Partition Equal Subset Problem using dynamic programming with proper explanation along with code. It is an example of 0-1 knapsack.', 'https://www.youtube.com/embed/G46kdLkQ_Sw?list=PLauivoElc3gimdmLcIIpafEkzGs4tCQmi', '2024-07-12 13:06:12', 1),
-(10, 1, 'Longest Common Subsequence: Dynamic Programming', 'In this video I discuss the Longest Common Subsequence.', 'https://www.youtube.com/embed/Q0o9sU1r0FY?list=PLauivoElc3gimdmLcIIpafEkzGs4tCQmi', '2024-07-12 13:06:12', 1);
+(10, 1, 'Longest Common Subsequence: Dynamic Programming', 'In this video I discuss the Longest Common Subsequence.', 'https://www.youtube.com/embed/Q0o9sU1r0FY?list=PLauivoElc3gimdmLcIIpafEkzGs4tCQmi', '2024-07-12 13:06:12', 1),
+(16, 5, 'GPU bench-marking with image classification | Deep Learning Tutorial 17 (Tensorflow2.0, Python)', 'This video shows performance comparison of using a CPU vs NVIDIA TITAN RTX GPU for deep learning. We are using 60000 small images for classification. These images can be  classified in one of the 10 categories below,', 'https://www.youtube.com/embed/YmDaqXMIoeY?list=PLeo1K3hjS3us_ELKYSj_Fth2tIEkdKXvV', '2024-07-17 05:51:38', 10),
+(17, 6, 'PHP Full Course for non-haters 🐘 (2023)', 'PHP tutorial for beginners full course\r\nThis video will give you and introduction PHP in 4 hours. Afterwords I would recommend learning about: Object Oriented Programming, Exception Handling, and PDO.', 'https://www.youtube.com/embed/zZ6vybT1HQs', '2024-07-17 07:42:08', 10),
+(18, 10, 'leet code', 'hard kill me please', 'https://www.youtube.com/embed/aHZW7TuY_yo', '2024-07-17 07:54:01', 10);
 
 --
 -- Indexes for dumped tables
