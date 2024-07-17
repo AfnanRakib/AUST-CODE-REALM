@@ -43,7 +43,7 @@
             <pre><?php echo $problem['Explanation']; ?></pre>;
         <?php endif; ?>
         <?php if (!empty($problem['Note'])): ?>
-            <h3>Explanation</h3>
+            <h3>Note</h3>
             <pre><?php echo $problem['Note']; ?></pre>
         <?php endif; ?>
         <div class="accordion" id="additionalInfo">
@@ -57,6 +57,7 @@
                     <div class="accordion-body">
                         <p><strong>Time Limit: </strong> <?php echo $problem['TimeLimit']; ?></p>
                         <p><strong>Memory Limit: </strong> <?php echo $problem['MemoryLimit']; ?></p>
+                        <p><strong>Problem Rating: </strong> <?php echo $problem['RatedFor']; ?></p>
                     </div>
                 </div>
             </div>

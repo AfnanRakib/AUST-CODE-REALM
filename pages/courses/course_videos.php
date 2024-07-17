@@ -24,9 +24,22 @@ $course = $course_result->fetch_assoc();
 $is_course_creator = isset($_SESSION['user']['UserID']) && $_SESSION['user']['UserID'] == $course['user_id'];
 
 // Fetch videos for the course
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
 $video_sql = "SELECT * FROM videos WHERE course_id = ?";
+$params = [$course_id];
+$types = "i";
+
+if (!empty($search)) {
+    $video_sql .= " AND (title LIKE ? OR description LIKE ?)";
+    $search_param = "%$search%";
+    $params[] = $search_param;
+    $params[] = $search_param;
+    $types .= "ss";
+}
+
 $video_stmt = $conn->prepare($video_sql);
-$video_stmt->bind_param("i", $course_id);
+$video_stmt->bind_param($types, ...$params);
 $video_stmt->execute();
 $video_result = $video_stmt->get_result();
 
@@ -108,8 +121,7 @@ $video_result = $video_stmt->get_result();
 		.add-video-btn {
 			margin-left: auto;
 		}
-<<<<<<< Updated upstream
-=======
+
 		 .search-form {
 			max-width: 500px;
 			margin: 0 auto;
@@ -129,19 +141,30 @@ $video_result = $video_stmt->get_result();
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
 		}
+
 		.dropdown {
 			position: absolute;
 			top: 10px;
 			right: 10px;
 			z-index: 1000;
 		}
->>>>>>> Stashed changes
 
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <?php include '../../helpers/navbar.php'; ?>
+	<div class="container mt-4">
+		<div class="row justify-content-center mb-4">
+			<div class="col-md-6">
+				<form action="" method="GET" class="d-flex justify-content-center">
+					<input type="text" name="search" class="form-control me-2" style="max-width: 300px;" placeholder="Search videos..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+					<button type="submit" class="btn btn-primary" style="background-color: rgb(3, 191, 98);">Search</button>
+					<input type="hidden" name="course_id" value="<?php echo $course_id; ?>">
+				</form>
+			</div>
+		</div>
+	</div>
 
     <!--card-items-->
     <div class="container mt-4">
@@ -149,6 +172,9 @@ $video_result = $video_stmt->get_result();
 				<h2 style="color: rgb(3, 191, 98)"><?php echo $course['title']; ?></h2>
 				<p>Created by: <?php echo htmlspecialchars($course['creator_name']); ?></p>
 		</div>
+		
+		
+			
 		<div class="row">
 			<div class="col-md-3 col-sm-6 goback">
 				<a href="courses.php" class="btn btn mt-auto" style="background-color: rgb(3, 191, 98); margin-bottom: 40px;">Go back to courses</a>
@@ -221,16 +247,18 @@ $video_result = $video_stmt->get_result();
             });
         });
     </script>
-<<<<<<< Updated upstream
-=======
+
 	<!--search bar-->
+
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
 			const searchInput = document.querySelector('input[name="search"]');
 			const form = document.querySelector('form');
 
 			let typingTimer;
+
 			const doneTypingInterval = 1500; // ms
+
 
 			searchInput.addEventListener('input', function() {
 				clearTimeout(typingTimer);
@@ -247,6 +275,7 @@ $video_result = $video_stmt->get_result();
 			}
 		});
 	</script>
+
 	<!--edit and delete-->
 	<script>
     $(document).ready(function() {
@@ -360,7 +389,8 @@ $video_result = $video_stmt->get_result();
 			</div>
 		</div>
 	</div>
->>>>>>> Stashed changes
+
+
 </body>
 </html>
 <?php

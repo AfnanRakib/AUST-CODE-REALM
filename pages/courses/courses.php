@@ -2,8 +2,29 @@
 session_start();
 require_once 'config.php';
 
-$sql = "SELECT courses.*, users.Handle as creator_name FROM courses JOIN users ON courses.user_id = users.UserID";
-$result = $conn->query($sql);
+
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$search_type = isset($_GET['search_type']) ? $_GET['search_type'] : 'title';
+
+$sql = "SELECT courses.*, users.Handle as creator_name 
+        FROM courses 
+        JOIN users ON courses.user_id = users.UserID";
+
+if (!empty($search)) {
+    if ($search_type == 'title') {
+        $sql .= " WHERE courses.title LIKE ?";
+    } else {
+        $sql .= " WHERE users.Handle LIKE ?";
+    }
+    $stmt = $conn->prepare($sql);
+    $search_param = "%$search%";
+    $stmt->bind_param("s", $search_param);
+} else {
+    $stmt = $conn->prepare($sql);
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
 
 if (!$result) {
     die("Query failed: " . $conn->error);
@@ -82,8 +103,7 @@ if (!$result) {
         .ripple:hover::before {
             opacity: 1;
         }
-<<<<<<< Updated upstream
-=======
+
 		.search-form {
 			max-width: 500px;
 			
@@ -104,24 +124,40 @@ if (!$result) {
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
 		}
+
         .dropdown {
             position: absolute;
             top: 10px;
             right: 10px;
             z-index: 1000;
         }
->>>>>>> Stashed changes
+
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <?php include '../../helpers/navbar.php'; ?>
+	<div class="container mt-4">
+		<div class="row justify-content-center mb-4">
+			<div class="col-md-8">
+				<form action="" method="GET" class="d-flex justify-content-center">
+					<input type="text" name="search" class="form-control me-2" style="max-width: 300px;" placeholder="Search..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+					<select name="search_type" class="form-select me-2" style="width: auto;">
+						<option value="title" <?php echo (isset($_GET['search_type']) && $_GET['search_type'] == 'title') ? 'selected' : ''; ?>>Title</option>
+						<option value="creator" <?php echo (isset($_GET['search_type']) && $_GET['search_type'] == 'creator') ? 'selected' : ''; ?>>Created by</option>
+					</select>
+					<button type="submit" class="btn btn-primary" style="background-color: rgb(3, 191, 98);">Search</button>
+				</form>
+			</div>
+		</div>
+	</div>
 
     <!--card-items-->
     <div class="container mt-4">
         <div class="green-header mb-4">
             <h2 style="color: rgb(3, 191, 98)">Available Courses</h2>
         </div>
+		
         
         <?php if (isset($_SESSION['user']['UserID'])): ?>
             <div class="row mb-4">
@@ -298,8 +334,7 @@ if (!$result) {
             });
         });
     </script>
-<<<<<<< Updated upstream
-=======
+
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
 			const searchInput = document.querySelector('input[name="search"]');
@@ -307,7 +342,9 @@ if (!$result) {
 			const form = document.querySelector('form');
 
 			let typingTimer;
+
 			const doneTypingInterval = 1500; // ms
+
 
 			searchInput.addEventListener('input', function() {
 				clearTimeout(typingTimer);
@@ -326,6 +363,7 @@ if (!$result) {
 			}
 		});
 	</script>
+
 <!--edit secondary-->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -340,7 +378,7 @@ if (!$result) {
             </div>
         </div>
     </div>
->>>>>>> Stashed changes
+
 </body>
 </html>
 <?php
