@@ -1,4 +1,4 @@
-document.getElementById('runButton').addEventListener('click', function(event) {
+document.getElementById('submitButton').addEventListener('click', function(event) {
     const selectElement = document.getElementById('selectLanguageMode'); // selected lang object
     const languageName = selectElement.options[selectElement.selectedIndex].text; // selected lang name
     const languageId = languageModeIds[languageName]; // selected language id
@@ -6,9 +6,55 @@ document.getElementById('runButton').addEventListener('click', function(event) {
 
     const data = {
         languageId: languageId,
-        languageName: languageName,
-        code: code
+        code: code,
+        testcases: testcases,
+        problem: problem,
+        problemId: problemId // Include problemId here
     };
+    fetch('../helpers/submit_code.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(submissionData => {
+        console.log('Success:', submissionData);
+
+        // Display the result in the resultDisplay div
+        const resultDisplay = document.getElementById('resultDisplay');
+        let displayContent = `<h4>Submission Result</h4>`;
+        displayContent += `<p><strong>Status:</strong> ${submissionData.status}</p>`;
+
+        resultDisplay.innerHTML = displayContent;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        const resultDisplay = document.getElementById('resultDisplay');
+        resultDisplay.innerHTML = `<p>Error occurred while processing the submission: ${error.message}</p>`;
+    });
+});
+
+document.getElementById('runButton').addEventListener('click', function(event) {
+    const selectElement = document.getElementById('selectLanguageMode'); // selected lang object
+    const languageName = selectElement.options[selectElement.selectedIndex].text; // selected lang name
+    const languageId = languageModeIds[languageName]; // selected language id
+    const code = editor.getValue(); // user written code
+    
+    const data = {
+        languageId: languageId,
+        languageName: languageName,
+        code: code,
+        testcases: [testcases[0]], // Use only the first test case for the run action
+        problemId: problemId // Include problemId here
+    };
+
     fetch('../helpers/submit_code.php', {
         method: 'POST',
         headers: {
@@ -35,7 +81,7 @@ document.getElementById('runButton').addEventListener('click', function(event) {
 
         // Display the result in the resultDisplay div
         const resultDisplay = document.getElementById('resultDisplay');
-        let displayContent = `<h4>Submission Result</h4>`;
+        let displayContent = `<h4>Run Result</h4>`;
 
         if (submissionData.stdout) {
             displayContent += `<p><strong>Stdout:</strong> ${submissionData.stdout}</p>`;
@@ -50,19 +96,19 @@ document.getElementById('runButton').addEventListener('click', function(event) {
             displayContent += `<p><strong>Status:</strong> ${submissionData.status}</p>`;
         }
         if (submissionData.time) {
-            displayContent += `<p><strong>time:</strong> ${submissionData.time}</p>`;
+            displayContent += `<p><strong>Time:</strong> ${submissionData.time}</p>`;
         }
         if (submissionData.memory) {
-            displayContent += `<p><strong>memory:</strong> ${submissionData.memory}</p>`;
+            displayContent += `<p><strong>Memory:</strong> ${submissionData.memory}</p>`;
         }
         if (submissionData.created_at) {
-            displayContent += `<p><strong>created_at:</strong> ${submissionData.created_at}</p>`;
+            displayContent += `<p><strong>Created At:</strong> ${submissionData.created_at}</p>`;
         }
         if (submissionData.finished_at) {
-            displayContent += `<p><strong>finished_at:</strong> ${submissionData.finished_at}</p>`;
+            displayContent += `<p><strong>Finished At:</strong> ${submissionData.finished_at}</p>`;
         }
         if (submissionData.token) {
-            displayContent += `<p><strong>token:</strong> ${submissionData.token}</p>`;
+            displayContent += `<p><strong>Token:</strong> ${submissionData.token}</p>`;
         }
 
         if (!submissionData.stdout && !submissionData.stderr && !submissionData.compile_output && !submissionData.status && !submissionData.time && !submissionData.memory && !submissionData.created_at && !submissionData.finished_at) {
@@ -73,6 +119,6 @@ document.getElementById('runButton').addEventListener('click', function(event) {
     }).catch(error => {
         console.error('Error:', error);
         const resultDisplay = document.getElementById('resultDisplay');
-        resultDisplay.innerHTML = `<p>Error occurred while processing the submission: ${error.message} </p>`;
+        resultDisplay.innerHTML = `<p>Error occurred while processing the run: ${error.message}</p>`;
     });
 });

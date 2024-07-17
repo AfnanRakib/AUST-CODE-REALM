@@ -1,5 +1,5 @@
 <?php
-$API_KEY = '386d354f6dmsh86c78ca9a27d4f6p1ef2e8jsn41bbc0d8d92d';
+$API_KEY = /*'58db07e382mshb0ba8bdce54360ap16822djsnd7382ff19b11';*/'386d354f6dmsh86c78ca9a27d4f6p1ef2e8jsn41bbc0d8d92d';
 
 function createSubmission($DATA, $cpu_time_limit = 5, $memory_limit = 128000, $max_file_size = 10240, $stdin = null, $expected_output = null) {
     global $API_KEY;

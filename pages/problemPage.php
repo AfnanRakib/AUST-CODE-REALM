@@ -25,6 +25,18 @@ $result = $stmt->get_result();
 $problem = $result->fetch_assoc();
 $stmt->close();
 
+// Fetch test cases for the current problem
+$sql = "SELECT * FROM testcases WHERE ProblemID = ? ORDER BY testCaseNo ASC";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $problemId);
+$stmt->execute();
+$result = $stmt->get_result();
+$testcases = [];
+while ($row = $result->fetch_assoc()) {
+    $testcases[] = $row;
+}
+$stmt->close();
+
 // Fetch user submissions for the current problem
 $sql = "SELECT * FROM submissions WHERE UserID = ? AND ProblemID = ? ORDER BY SubmissionTime DESC";
 $stmt = $conn->prepare($sql);
@@ -52,8 +64,6 @@ $conn->close();
 <body>
     <!-- Navbar -->
     <?php include '../helpers/navbar.php'; ?>
-
-    <?php include '../helpers/judge0.php'; ?>
 
     <!-- Main Content -->
     <div class="container">
@@ -143,6 +153,12 @@ $conn->close();
         </div>
     </div>
 
+    <script>
+        const problem = <?php echo json_encode($problem); ?>;
+        const problemId = <?php echo json_encode($problemId); ?>;
+        const testcases = <?php echo json_encode($testcases); ?>;
+        const userId = <?php echo json_encode($userId); ?>;
+    </script>
     <script src="../js/runcode.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script>
@@ -167,3 +183,4 @@ $conn->close();
     </script>
 </body>
 </html>
+
