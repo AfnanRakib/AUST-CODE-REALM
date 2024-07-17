@@ -38,7 +38,7 @@ $video_result = $video_stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--link rel="stylesheet" href="../css/bootstrap.min.css"-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../../css/problemPage.css">
     <link rel="stylesheet" href="../../css/navbar.css">
     <title><?php echo $course['title']; ?> - AUST CODE REALM</title>
@@ -108,6 +108,34 @@ $video_result = $video_stmt->get_result();
 		.add-video-btn {
 			margin-left: auto;
 		}
+<<<<<<< Updated upstream
+=======
+		 .search-form {
+			max-width: 500px;
+			margin: 0 auto;
+		}
+
+		.input-group {
+			display: flex;
+		}
+
+		.input-group .form-control {
+			flex-grow: 1;
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+
+		.input-group .btn {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+		.dropdown {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			z-index: 1000;
+		}
+>>>>>>> Stashed changes
 
     </style>
 </head>
@@ -138,6 +166,17 @@ $video_result = $video_stmt->get_result();
                 ?>
                 <div class="col-md-3 col-sm-6 course-card">
                     <div class="card">
+						<?php if ($is_course_creator): ?>
+						<div class="dropdown">
+							<button class="btn btn-light btn-sm dropdown-toggle" type="button" style="background-color: rgb(3, 191, 98); margin-bottom: 40px;" id="dropdownMenuButton  <?php echo $video['id']; ?>" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="fas fa-ellipsis-v"></i> 
+							</button>
+							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton<?php echo $video['id']; ?>">
+								<li><a class="dropdown-item edit-video" href="#" data-video-id="<?php echo $video['id']; ?>">Edit</a></li>
+								<li><a class="dropdown-item delete-video" href="#" data-video-id="<?php echo $video['id']; ?>">Delete</a></li>
+							</ul>
+						</div>
+						<?php endif; ?>
                         <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                             <iframe width="100%" height="100%" src="<?php echo $video['youtube_embed_url']; ?>" title="<?php echo $video['title']; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         </div>
@@ -148,17 +187,25 @@ $video_result = $video_stmt->get_result();
                         </div>
                     </div>
                 </div>
-                <?php
-            }
-            ?>
+				<?php 
+			}
+			?>
+            
+            <?php if ($video_result->num_rows === 0): ?>
+            <div class="col-12">
+                <p>No videos found for this course.</p>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
+	
     <footer class="text-center py-4" style="background-color: rgb(3, 191, 98);">
     
         <p style="color: white;">&copy; 2024 AUST CODE REALM. All rights reserved.</p>
     </footer>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             document.querySelectorAll('[data-mdb-ripple-init]').forEach((element) => {
@@ -174,6 +221,146 @@ $video_result = $video_stmt->get_result();
             });
         });
     </script>
+<<<<<<< Updated upstream
+=======
+	<!--search bar-->
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const searchInput = document.querySelector('input[name="search"]');
+			const form = document.querySelector('form');
+
+			let typingTimer;
+			const doneTypingInterval = 1500; // ms
+
+			searchInput.addEventListener('input', function() {
+				clearTimeout(typingTimer);
+				if (this.value === '') {
+					// If the search bar is cleared, immediately submit the form
+					form.submit();
+				} else {
+					typingTimer = setTimeout(doneTyping, doneTypingInterval);
+				}
+			});
+
+			function doneTyping() {
+				form.submit();
+			}
+		});
+	</script>
+	<!--edit and delete-->
+	<script>
+    $(document).ready(function() {
+        // Delete video
+        $('.delete-video').click(function(e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to delete this video?')) {
+                var videoId = $(this).data('video-id');
+                
+                $.ajax({
+                    url: 'delete_video.php',
+                    type: 'POST',
+                    data: { video_id: videoId },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log("Server response:", response);
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            console.error("Error deleting video:", response.error);
+                            alert('Error: ' + response.error);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX request failed:", textStatus, errorThrown);
+                        console.log("Response text:", jqXHR.responseText);
+                        alert('An error occurred while deleting the video.');
+                    }
+                });
+            }
+        });
+
+        // Edit video
+		$('.edit-video').click(function(e) {
+        e.preventDefault();
+        var videoId = $(this).data('video-id');
+        
+        $.ajax({
+            url: 'edit_video.php',
+            type: 'GET',
+            data: { id: videoId },
+            dataType: 'json',
+            success: function(video) {
+                console.log("Received video data:", video);
+                var modalContent = `
+                    <form id="editVideoForm">
+                        <input type="hidden" name="id" value="${video.id}">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" value="${video.title}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description">${video.description}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="youtube_embed_url" class="form-label">YouTube Embed URL</label>
+                            <input type="text" class="form-control" id="youtube_embed_url" name="youtube_embed_url" value="${video.youtube_embed_url}" required>
+                        </div>
+                        <button type="submit" class="btn btn-auto"style="background-color: rgb(3, 191, 98);">Save changes</button>
+                    </form>
+                `;
+                
+                $('#editModal .modal-body').html(modalContent);
+                $('#editModal').modal('show');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX request failed:", textStatus, errorThrown);
+                alert('An error occurred while fetching video details: ' + jqXHR.responseText);
+            }
+        });
+    });
+
+    // Handle edit form submission
+    $(document).on('submit', '#editVideoForm', function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: 'edit_video.php',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    location.reload();
+                } else {
+                    console.error("Error updating video:", response.error);
+                    alert('Error: ' + response.error);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX request failed:", textStatus, errorThrown);
+                alert('An error occurred while updating the video: ' + jqXHR.responseText);
+            }
+        });
+    });
+});
+</script>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="editModalLabel">Edit Item</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<!-- Form will be inserted here dynamically -->
+				</div>
+			</div>
+		</div>
+	</div>
+>>>>>>> Stashed changes
 </body>
 </html>
 <?php

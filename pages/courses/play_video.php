@@ -240,17 +240,17 @@ $comments_result = $comments_stmt->get_result();
     <div class="button-content">Try IDE</div>
 		<div class="expanded-content">
 			<div class="header">
-				<span>Drag me</span>
 				<button id="closeButton">&times;</button>
+				<span>Drag me</span>
 			</div>
-			<div class="content" style= "border-radius = 15px;">
+			<div class="content" >
 					<div class="row">
 						<!--STANDARD INPUT BAR-->
 						<div class="form-group mb-3">
 							<label for="stdin">Standard Input:</label>
 							<textarea class="form-control" id="stdin" rows="3" placeholder="Enter standard input here..."></textarea>
 						</div>
-						<div class="col editor-container style= "border-radius = 15px;">
+						<div class="col editor-container ;">
 							<?php include '../../helpers/ide.php'; ?>
 							 
 						</div>
@@ -462,8 +462,8 @@ $comments_result = $comments_stmt->get_result();
                 return; // Do nothing if it's already expanded
             }
             floatingButton.classList.add('expanded');
-            floatingButton.style.width = '300px'; // Expanded width
-            floatingButton.style.height = '200px'; // Expanded height
+            floatingButton.style.width = '500px'; // Expanded width
+            floatingButton.style.height = '1000px'; // Expanded height
             buttonContent.style.display = 'none';
             expandedContent.style.display = 'flex';
         }
