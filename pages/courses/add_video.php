@@ -25,10 +25,19 @@ if ($course['user_id'] != $_SESSION['user']['UserID']) {
     die("You don't have permission to add videos to this course");
 }
 
+function extractYoutubeEmbedUrl($iframeCode) {
+    $pattern = '/src="([^"]+)"/';
+    if (preg_match($pattern, $iframeCode, $matches)) {
+        return $matches[1];
+    }
+    return '';
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $youtube_embed_url = $_POST['youtube_embed_url'];
+    
+    $youtube_embed_url = extractYoutubeEmbedUrl($_POST['youtube_embed_url']);
     $user_id = $_SESSION['user']['UserID'];
 
     $sql = "INSERT INTO videos (course_id, title, description, youtube_embed_url, user_id) VALUES (?, ?, ?, ?, ?)";
@@ -79,8 +88,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="mb-3">
-                <label for="youtube_embed_url" class="form-label">YouTube Embed URL:</label>
-                <input type="text" class="form-control" id="youtube_embed_url" name="youtube_embed_url" required>
+                <label for="youtube_embed_url" class="form-label">YouTube Embed Code:</label>
+                <textarea class="form-control" id="youtube_embed_url" name="youtube_embed_url" required></textarea>
+                <small class="form-text text-muted">Paste the full iframe code here.</small>
             </div>
 
             <button type="submit" class="btn btn mt-auto" style="background-color: rgb(3, 191, 98); margin-bottom: 40px;">Add Video</button>

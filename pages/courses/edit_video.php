@@ -6,6 +6,14 @@ if (!isset($_SESSION['user']['UserID'])) {
     die(json_encode(['success' => false, 'error' => "Unauthorized access"]));
 }
 
+function extractYoutubeEmbedUrl($iframeCode) {
+    $pattern = '/src="([^"]+)"/';
+    if (preg_match($pattern, $iframeCode, $matches)) {
+        return $matches[1];
+    }
+    return '';
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $video_id = isset($_POST['id']) ? intval($_POST['id']) : 0;
 
@@ -41,9 +49,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($_POST['youtube_embed_url']) && !empty($_POST['youtube_embed_url'])) {
-        $updates[] = "youtube_embed_url = ?";
-        $types .= "s";
-        $params[] = $_POST['youtube_embed_url'];
+        $youtube_embed_url = extractYoutubeEmbedUrl($_POST['youtube_embed_url']);
+        if (!empty($youtube_embed_url)) {
+            $updates[] = "youtube_embed_url = ?";
+            $types .= "s";
+            $params[] = $youtube_embed_url;
+        } else {
+            die(json_encode(['success' => false, 'error' => "Invalid YouTube embed URL"]));
+        }
     }
 
     if (!empty($updates)) {
