@@ -12,6 +12,8 @@ if (!isset($_SESSION['user']['UserID'])) {
     exit();
 }
 
+include 'config.php';
+
 $userId = $_SESSION['user']['UserID'];
 
 require_once '../helpers/judge0.php';
@@ -19,7 +21,7 @@ require_once '../helpers/judge0.php';
 function saveSubmission($conn, $submissionData, $problemId, $userId, $code) {
     $sql = "INSERT INTO submissions (ProblemID, UserID, LanguageID, SubmissionTime,JudgeTime, TimeTaken, MemoryUsed, Code, Status, Score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iiisiissi", $problemId, $userId, $submissionData['language_id'], $submissionData['submission_time'],$submissionData['judge_time'], $submissionData['time'], $submissionData['memory'], $code, $submissionData['status'], $submissionData['score']);
+    $stmt->bind_param("iisssiissi", $problemId, $userId, $submissionData['language_id'], $submissionData['submission_time'],$submissionData['judge_time'], $submissionData['time'], $submissionData['memory'], $code, $submissionData['status'], $submissionData['score']);
     $stmt->execute();
     $stmt->close();
 }
@@ -27,7 +29,7 @@ function saveSubmission($conn, $submissionData, $problemId, $userId, $code) {
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = json_decode(file_get_contents('php://input'), true);
-        
+        $isRun=$data['isRun'];
         $testcases = $data['testcases'];
         $problemId = $data['problemId'];
         $language_id = $data['languageId'];
@@ -36,12 +38,6 @@ try {
         $cpu_time_limit = isset($problem['TimeLimit']) ? $problem['TimeLimit'] : 5;
         $memory_limit = isset($problem['MemoryLimit']) ? $problem['MemoryLimit'] : 128000;
         $max_file_size = isset($problem['MaxFileSize']) ? $problem['MaxFileSize'] : 10240;
-        
-        // Database connection
-        $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-        if ($conn->connect_error) {
-            throw new Exception("Connection failed: " . $conn->connect_error);
-        }
 
         $isAccepted = true;
         $status = 'Accepted';
@@ -66,7 +62,7 @@ try {
             }
 
             // Fetch submission result after a delay
-            sleep(5);  // Wait for some time to let the submission be processed
+            sleep(3);  // Wait for some time to let the submission be processed
             $result = getSubmission($token);
 
             // Decode base64 encoded fields
@@ -79,7 +75,7 @@ try {
             if ($status_description !== 'Accepted') {
                 $cnt= $index + 1;
                 $isAccepted = false;
-                $status = "$status_description' on testcase '$cnt";
+                $status = "$status_description on testcase $cnt";
                 break;
             }
         }
@@ -95,7 +91,9 @@ try {
             'status' => $status,
             'score' => $isAccepted ? 100 : 0// score will be counted based on some conditions later
         ];
-        saveSubmission($conn, $submissionData, $problemId, $userId, $data['code']);
+
+        if(!$isRun)
+            saveSubmission($conn, $submissionData, $problemId, $userId, $data['code']);
 
         echo json_encode([
             'stdout' => $stdout,

@@ -5,12 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $problemId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Database connection
-$conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../helpers/config.php';
 
 // Fetch problem details
 $sql = "SELECT * FROM problems WHERE ProblemID = ?";

@@ -104,47 +104,45 @@
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-12 col-md-6 mb-2 mb-md-0">
-                            <label for="newTag" class="form-label">Create New Tag:</label>
-                            <div class="input-group">
-                                <input type="text" id="newTag" name="newTag" class="form-control">
-                                <button type="button" class="btn btn-primary" onclick="createTag()">Add Tag</button>
-                            </div>
-                            <div id="tagSuccessMessage" class="mt-2 text-success" style="display: none;">
-                                Tag successfully created.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 mb-2 mb-md-0">
-                        <label for="tags" class="form-label">Tags:</label>
-                        <div class="accordion" id="tagsAccordion">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingTags">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTags" aria-expanded="false" aria-controls="collapseTags">
-                                        Select Tags
-                                    </button>
-                                </h2>
-                                <div id="collapseTags" class="accordion-collapse collapse" aria-labelledby="headingTags" data-bs-parent="#tagsAccordion">
-                                    <div class="accordion-body">
-                                        <div id="tags">
-                                            <?php
-                                            // Fetch all tags from the database
-                                            $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-                                            if ($conn->connect_error) {
-                                                die("Connection failed: " . $conn->connect_error);
-                                            }
-                                            $tagQuery = "SELECT * FROM tags";
-                                            $tagResult = $conn->query($tagQuery);
-                                            while ($tagRow = $tagResult->fetch_assoc()) {
-                                                echo '<div class="form-check">';
-                                                echo '<input class="form-check-input" type="checkbox" name="tags[]" value="' . $tagRow['TagID'] . '" id="tag' . $tagRow['TagID'] . '">';
-                                                echo '<label class="form-check-label" for="tag' . $tagRow['TagID'] . '">' . $tagRow['TagName'] . '</label>';
-                                                echo '</div>';
-                                            }
-                                            $conn->close();
-                                            ?>
+                            <label for="tags" class="form-label">Tags:</label>
+                            <div class="accordion" id="tagsAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTags">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTags" aria-expanded="false" aria-controls="collapseTags">
+                                            Select Tags
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTags" class="accordion-collapse collapse" aria-labelledby="headingTags" data-bs-parent="#tagsAccordion">
+                                        <div class="accordion-body">
+                                            <div id="tags">
+                                                <?php
+                                                
+                                                include '../helpers/config.php';
+
+                                                $tagQuery = "SELECT * FROM tags";
+                                                $tagResult = $conn->query($tagQuery);
+                                                while ($tagRow = $tagResult->fetch_assoc()) {
+                                                    echo '<div class="form-check">';
+                                                    echo '<input class="form-check-input" type="checkbox" name="tags[]" value="' . $tagRow['TagID'] . '" id="tag' . $tagRow['TagID'] . '">';
+                                                    echo '<label class="form-check-label" for="tag' . $tagRow['TagID'] . '">' . $tagRow['TagName'] . '</label>';
+                                                    echo '</div>';
+                                                }
+                                                $conn->close();
+                                                ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                            <label for="newTag" class="form-label">Create New Tag:</label>
+                            <div class="input-group">
+                                <input type="text" id="newTag" name="newTag" class="form-control">
+                                <button type="button" class="btn btn-primary" onclick="createTag()">Create</button>
+                            </div>
+                            <div id="tagSuccessMessage" class="mt-2 text-success" style="display: none;">
+                                Tag successfully created.
                             </div>
                         </div>
                     </div>
@@ -193,12 +191,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Database connection
-    $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    
+    include '../helpers/config.php';
 
     $name = $conn->real_escape_string($_POST['name']);
     $description = $conn->real_escape_string($_POST['description']);

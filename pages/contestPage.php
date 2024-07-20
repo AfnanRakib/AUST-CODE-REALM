@@ -1,10 +1,6 @@
 <?php
-// Database connection
-$conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../helpers/config.php';
 
 $contest_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 

@@ -29,10 +29,8 @@
                     <option value="">All Tags</option>
                     <?php
                     // Fetch all tags from the database
-                    $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
+                    include '../helpers/config.php';
+                    
                     $tagQuery = "SELECT * FROM tags";
                     $tagResult = $conn->query($tagQuery);
                     while ($tagRow = $tagResult->fetch_assoc()) {

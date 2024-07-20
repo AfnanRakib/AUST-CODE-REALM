@@ -2,12 +2,7 @@
 session_start();
 header('Content-Type: text/html; charset=UTF-8');
 
-// Database connection
-$conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'config.php';
 
 $searchUsername = isset($_GET['searchUsername']) ? $_GET['searchUsername'] : '';
 $searchProblem = isset($_GET['searchProblem']) ? $_GET['searchProblem'] : '';

@@ -3,13 +3,15 @@ document.getElementById('submitButton').addEventListener('click', function(event
     const languageName = selectElement.options[selectElement.selectedIndex].text; // selected lang name
     const languageId = languageModeIds[languageName]; // selected language id
     const code = editor.getValue(); // user written code
-
+    const isRun = false;
     const data = {
         languageId: languageId,
+        languageName: languageName,
         code: code,
         testcases: testcases,
         problem: problem,
-        problemId: problemId // Include problemId here
+        problemId: problemId, // Include problemId here
+        isRun: isRun
     };
     fetch('../helpers/submit_code.php', {
         method: 'POST',
@@ -22,7 +24,15 @@ document.getElementById('submitButton').addEventListener('click', function(event
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return response.json();
+        return response.text(); // Get the raw text response
+    }).then(text => {
+        console.log('Raw response:', text); // Log the raw response
+        try {
+            return JSON.parse(text); // Try to parse the JSON
+        } catch (error) {
+            console.error('JSON parse error:', error);
+            throw new Error('Invalid JSON response');
+        }
     })
     .then(submissionData => {
         console.log('Success:', submissionData);
@@ -46,13 +56,14 @@ document.getElementById('runButton').addEventListener('click', function(event) {
     const languageName = selectElement.options[selectElement.selectedIndex].text; // selected lang name
     const languageId = languageModeIds[languageName]; // selected language id
     const code = editor.getValue(); // user written code
-    
+    const isRun= true;
     const data = {
         languageId: languageId,
         languageName: languageName,
         code: code,
         testcases: [testcases[0]], // Use only the first test case for the run action
-        problemId: problemId // Include problemId here
+        problemId: problemId, // Include problemId here
+        isRun: isRun
     };
 
     fetch('../helpers/submit_code.php', {
@@ -101,17 +112,8 @@ document.getElementById('runButton').addEventListener('click', function(event) {
         if (submissionData.memory) {
             displayContent += `<p><strong>Memory:</strong> ${submissionData.memory}</p>`;
         }
-        if (submissionData.created_at) {
-            displayContent += `<p><strong>Created At:</strong> ${submissionData.created_at}</p>`;
-        }
-        if (submissionData.finished_at) {
-            displayContent += `<p><strong>Finished At:</strong> ${submissionData.finished_at}</p>`;
-        }
-        if (submissionData.token) {
-            displayContent += `<p><strong>Token:</strong> ${submissionData.token}</p>`;
-        }
 
-        if (!submissionData.stdout && !submissionData.stderr && !submissionData.compile_output && !submissionData.status && !submissionData.time && !submissionData.memory && !submissionData.created_at && !submissionData.finished_at) {
+        if (!submissionData.stdout && !submissionData.stderr && !submissionData.compile_output && !submissionData.status && !submissionData.time && !submissionData.memory ) {
             displayContent = `<p>No output available.</p>`;
         }
 

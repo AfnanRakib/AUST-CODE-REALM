@@ -8,12 +8,7 @@ if (!isset($_SESSION['user']['UserID'])) {
 
 $userId = $_SESSION['user']['UserID'];
 
-// Database connection
-$conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../helpers/config.php';
 
 // Fetch all submissions initially
 $query = "SELECT submissions.*, problems.Name AS ProblemName, users.Handle AS UserHandle

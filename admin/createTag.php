@@ -3,11 +3,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newTag = trim($_POST['newTag']);
 
     if (!empty($newTag)) {
-        $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+       
+        include '../helpers/config.php';
 
         $newTag = $conn->real_escape_string($newTag);
         $sql = "INSERT INTO tags (TagName) VALUES ('$newTag')";

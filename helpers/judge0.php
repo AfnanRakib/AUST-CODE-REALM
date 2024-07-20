@@ -1,9 +1,11 @@
 <?php
 $API_KEY = /*'58db07e382mshb0ba8bdce54360ap16822djsnd7382ff19b11';*/'386d354f6dmsh86c78ca9a27d4f6p1ef2e8jsn41bbc0d8d92d';
-
+$base= 'http://localhost:2358/';//'https://judge0-ce.p.rapidapi.com/';
+//just change eomment in header and url to change api
 function createSubmission($DATA, $cpu_time_limit = 5, $memory_limit = 128000, $max_file_size = 10240, $stdin = null, $expected_output = null) {
     global $API_KEY;
-    $url = 'https://judge0-ce.p.rapidapi.com/submissions';
+    global $base;
+    $url = $base.'submissions';
 
     $data = [
         'language_id' => $DATA['language_id'],
@@ -12,17 +14,20 @@ function createSubmission($DATA, $cpu_time_limit = 5, $memory_limit = 128000, $m
         'expected_output' => $expected_output ? base64_encode($expected_output) : null,
         'cpu_time_limit' => $cpu_time_limit,
         'memory_limit' => $memory_limit,
-        'max_file_size' => $max_file_size,
+        'max_file_size' => 4095,
         'base64_encoded' => 'true',
         'wait' => 'false',
         'fields' => '*'
     ];
 
     $headers = [
-        'Content-Type: application/json',
-        'X-RapidAPI-Key: ' . $API_KEY,
-        'X-RapidAPI-Host: judge0-ce.p.rapidapi.com'
+        'Content-Type: application/json'
     ];
+    // $headers = [
+    //     'Content-Type: application/json',
+    //     'X-RapidAPI-Key: ' . $API_KEY,
+    //     'X-RapidAPI-Host: judge0-ce.p.rapidapi.com'
+    // ];
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -47,7 +52,8 @@ function createSubmission($DATA, $cpu_time_limit = 5, $memory_limit = 128000, $m
 
 function getSubmission($token) {
     global $API_KEY;
-    $url = 'https://judge0-ce.p.rapidapi.com/submissions/' . $token . '?base64_encoded=true&fields=*';
+    global $base;
+    $url =  $base.'submissions/' . $token . '?base64_encoded=true&fields=*';
 
     $headers = [
         'x-rapidapi-key: ' . $API_KEY,
@@ -56,7 +62,7 @@ function getSubmission($token) {
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    //curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
     $response = curl_exec($ch);
     if(curl_errno($ch)) {
@@ -69,7 +75,8 @@ function getSubmission($token) {
 
 function getLanguages() {
     global $API_KEY;
-    $url = 'https://judge0-ce.p.rapidapi.com/languages';
+    global $base;
+    $url = $base.'languages';
 
     $headers = [
         'x-rapidapi-key: ' . $API_KEY,
@@ -78,7 +85,7 @@ function getLanguages() {
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    //curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
     $response = curl_exec($ch);
     if(curl_errno($ch)) {

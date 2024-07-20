@@ -1,12 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-// Database connection
-$conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-
-if ($conn->connect_error) {
-    die(json_encode(["error" => "Connection failed: " . $conn->connect_error]));
-}
+include 'config.php';
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
