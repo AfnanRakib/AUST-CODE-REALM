@@ -46,7 +46,7 @@ $conn->close();
         <div class="row mb-3">
             <div class="col-md-4">
                 <input type="text" id="searchUsername" class="form-control" placeholder="Search by username...">
-                <input type="checkbox" id="showAll" class="form-check-input" checked>
+                <input type="checkbox" id="showAll" class="form-check-input">
                 <label for="showAll" class="form-check-label">Show All Users Submissions</label>
             </div>
             <div class="col-md-4">
@@ -153,26 +153,27 @@ $conn->close();
                 $('#statusFilter').val('');
                 fetchSubmissions();
             });
-            document.addEventListener('DOMContentLoaded', function () {
-                document.querySelectorAll('.submission-id').forEach(function(element) {
-                    element.addEventListener('click', function() {
-                        const code = this.getAttribute('data-code');
-                        document.getElementById('codeTextarea').value = code;
-                        const modal = new bootstrap.Modal(document.getElementById('codeModal'));
-                        modal.show();
-                    });
-                });
-
-                document.getElementById('copyButton').addEventListener('click', function() {
-                    const codeTextarea = document.getElementById('codeTextarea');
-                    codeTextarea.select();
-                    codeTextarea.setSelectionRange(0, 99999); // For mobile devices
-                    document.execCommand("copy");
-                    alert('Code copied to clipboard');
-                });
-            });
         });
     </script>
     <script src="../js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.submission-id').forEach(function(element) {
+                element.addEventListener('click', function() {
+                    const code = this.getAttribute('data-code');
+                    document.getElementById('codeTextarea').value = code;
+                    const modal = new bootstrap.Modal(document.getElementById('codeModal'));
+                    modal.show();
+                });
+            });
+
+            document.getElementById('copyButton').addEventListener('click', function() {
+                const codeTextarea = document.getElementById('codeTextarea');
+                codeTextarea.select();
+                codeTextarea.setSelectionRange(0, 99999); // For mobile devices
+                document.execCommand("copy");
+            });
+        });
+    </script>
 </body>
 </html>

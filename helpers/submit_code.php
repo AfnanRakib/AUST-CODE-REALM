@@ -16,12 +16,14 @@ include 'config.php';
 
 $userId = $_SESSION['user']['UserID'];
 
+//change the comment if want top change api
 require_once '../helpers/judge0.php';
+//require_once '../helpers/hostedJudge0.php';
 
-function saveSubmission($conn, $submissionData, $problemId, $userId, $code) {
+function saveSubmission($conn, $submissionData, $problemId, $userId, $code,$score) {
     $sql = "INSERT INTO submissions (ProblemID, UserID, LanguageID, SubmissionTime,JudgeTime, TimeTaken, MemoryUsed, Code, Status, Score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iisssiissi", $problemId, $userId, $submissionData['language_id'], $submissionData['submission_time'],$submissionData['judge_time'], $submissionData['time'], $submissionData['memory'], $code, $submissionData['status'], $submissionData['score']);
+    $stmt->bind_param("iisssiissi", $problemId, $userId, $submissionData['language_id'], $submissionData['submission_time'],$submissionData['judge_time'], $submissionData['time'], $submissionData['memory'], $code, $submissionData['status'], $score);
     $stmt->execute();
     $stmt->close();
 }
@@ -92,8 +94,35 @@ try {
             'score' => $isAccepted ? 100 : 0// score will be counted based on some conditions later
         ];
 
-        if(!$isRun)
-            saveSubmission($conn, $submissionData, $problemId, $userId, $data['code']);
+        if(!$isRun){
+            // $currentTime = date('Y-m-d H:i:s');
+            // $runStatus = '';
+            // $score='';
+
+            // $query = "SELECT `ContestID` FROM `contestproblems` WHERE `ProblemID`= $problemId";
+            // $result = $conn->query($query);
+            // if (!$result) {
+            //     die(json_encode(["error" => "Query failed: " . $conn->error]));
+            // }
+            // $row = $result->fetch_assoc();
+            
+            // $contest_id=$row['ContestID'];
+
+            // $query = "SELECT * FROM contests WHERE ContestID = $contest_id";
+            // $contestResult = $conn->query($query);
+            // if (!$contestResult) {
+            //     die(json_encode(["error" => "Query failed: " . $conn->error]));
+            // }
+            // $contest = $contestResult->fetch_assoc();
+
+            // if ($contest['StartTime'] <= $currentTime && $contest['EndTime'] >= $currentTime) {
+            //     $runStatus = 'Running';
+            // }
+            // if($runStatus == 'Running'){
+            //     $score='100';
+            // }
+            saveSubmission($conn, $submissionData, $problemId, $userId, $data['code'],$score);
+        }
 
         echo json_encode([
             'stdout' => $stdout,
