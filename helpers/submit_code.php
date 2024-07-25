@@ -12,14 +12,18 @@ if (!isset($_SESSION['user']['UserID'])) {
     exit();
 }
 
+include 'config.php';
+
 $userId = $_SESSION['user']['UserID'];
 
+//change the comment if want top change api
 require_once '../helpers/judge0.php';
+//require_once '../helpers/hostedJudge0.php';
 
-function saveSubmission($conn, $submissionData, $problemId, $contestId, $userId, $code) {
-    $sql = "INSERT INTO submissions (ProblemID, ContestID, UserID, LanguageID, SubmissionTime, TimeTaken, MemoryUsed, Code, Status, Score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+function saveSubmission($conn, $submissionData, $problemId, $userId, $code,$score) {
+    $sql = "INSERT INTO submissions (ProblemID, UserID, LanguageID, SubmissionTime,JudgeTime, TimeTaken, MemoryUsed, Code, Status, Score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iiiisiissi", $problemId, $contestId, $userId, $submissionData['language_id'], $submissionData['submission_time'], $submissionData['time'], $submissionData['memory'], $code, $submissionData['status'], $submissionData['score']);
+    $stmt->bind_param("iisssiissi", $problemId, $userId, $submissionData['language_id'], $submissionData['submission_time'],$submissionData['judge_time'], $submissionData['time'], $submissionData['memory'], $code, $submissionData['status'], $score);
     $stmt->execute();
     $stmt->close();
 }
@@ -27,20 +31,15 @@ function saveSubmission($conn, $submissionData, $problemId, $contestId, $userId,
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = json_decode(file_get_contents('php://input'), true);
-        
+        $isRun=$data['isRun'];
         $testcases = $data['testcases'];
         $problemId = $data['problemId'];
         $language_id = $data['languageId'];
+        $languageName = $data['languageName'];
         $source_code = $data['code'];
         $cpu_time_limit = isset($problem['TimeLimit']) ? $problem['TimeLimit'] : 5;
         $memory_limit = isset($problem['MemoryLimit']) ? $problem['MemoryLimit'] : 128000;
         $max_file_size = isset($problem['MaxFileSize']) ? $problem['MaxFileSize'] : 10240;
-        
-        // Database connection
-        $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-        if ($conn->connect_error) {
-            throw new Exception("Connection failed: " . $conn->connect_error);
-        }
 
         $isAccepted = true;
         $status = 'Accepted';
@@ -65,7 +64,7 @@ try {
             }
 
             // Fetch submission result after a delay
-            sleep(5);  // Wait for some time to let the submission be processed
+            sleep(3);  // Wait for some time to let the submission be processed
             $result = getSubmission($token);
 
             // Decode base64 encoded fields
@@ -76,8 +75,9 @@ try {
 
             // Check if the output matches the expected output
             if ($status_description !== 'Accepted') {
+                $cnt= $index + 1;
                 $isAccepted = false;
-                $status = $status_description . " on testcase " . ($index + 1);
+                $status = "$status_description on testcase $cnt";
                 break;
             }
         }
@@ -85,14 +85,44 @@ try {
         // Save submission details to the database
         $submissionData = [
             'problemId' => $problemId,
-            'language_id' => $language_id,
-            'submission_time' => date('Y-m-d H:i:s'),
+            'language_id' => $languageName,
+            'submission_time' => $result['created_at'],
+            'judge_time' => $result['created_at'],
             'time' => $result['time'] ?? 0,
             'memory' => $result['memory'] ?? 0,
             'status' => $status,
-            'score' => $isAccepted ? 100 : 0
+            'score' => $isAccepted ? 100 : 0// score will be counted based on some conditions later
         ];
-        saveSubmission($conn, $submissionData, $problemId, $problem['ContestID'] ?? null, $userId, $data['code']);
+
+        if(!$isRun){
+            // $currentTime = date('Y-m-d H:i:s');
+            // $runStatus = '';
+            // $score='';
+
+            // $query = "SELECT `ContestID` FROM `contestproblems` WHERE `ProblemID`= $problemId";
+            // $result = $conn->query($query);
+            // if (!$result) {
+            //     die(json_encode(["error" => "Query failed: " . $conn->error]));
+            // }
+            // $row = $result->fetch_assoc();
+            
+            // $contest_id=$row['ContestID'];
+
+            // $query = "SELECT * FROM contests WHERE ContestID = $contest_id";
+            // $contestResult = $conn->query($query);
+            // if (!$contestResult) {
+            //     die(json_encode(["error" => "Query failed: " . $conn->error]));
+            // }
+            // $contest = $contestResult->fetch_assoc();
+
+            // if ($contest['StartTime'] <= $currentTime && $contest['EndTime'] >= $currentTime) {
+            //     $runStatus = 'Running';
+            // }
+            // if($runStatus == 'Running'){
+            //     $score='100';
+            // }
+            saveSubmission($conn, $submissionData, $problemId, $userId, $data['code'],$score);
+        }
 
         echo json_encode([
             'stdout' => $stdout,

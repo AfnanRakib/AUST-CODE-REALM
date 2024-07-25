@@ -1,0 +1,9 @@
+h1 {
+    color: #00A859;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 168, 89, 0.05);
+}
+.btn-primary ,#ClearButton {
+    background-color: #00A859;
+}

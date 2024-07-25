@@ -1,8 +1,5 @@
 <?php
-//change comment if key expired
-$API_KEY = '58db07e382mshb0ba8bdce54360ap16822djsnd7382ff19b11';
-//$API_KEY = '386d354f6dmsh86c78ca9a27d4f6p1ef2e8jsn41bbc0d8d92d';
-$base= 'https://judge0-ce.p.rapidapi.com/';
+$base= 'http://localhost:2358/';
 
 function createSubmission($DATA, $cpu_time_limit = 5, $memory_limit = 128000, $max_file_size = 10240, $stdin = null, $expected_output = null) {
     global $API_KEY;
@@ -16,16 +13,14 @@ function createSubmission($DATA, $cpu_time_limit = 5, $memory_limit = 128000, $m
         'expected_output' => $expected_output ? base64_encode($expected_output) : null,
         'cpu_time_limit' => $cpu_time_limit,
         'memory_limit' => $memory_limit,
-        'max_file_size' => $max_file_size,
+        'max_file_size' => 4095,
         'base64_encoded' => 'true',
         'wait' => 'false',
         'fields' => '*'
     ];
 
     $headers = [
-        'Content-Type: application/json',
-        'X-RapidAPI-Key: ' . $API_KEY,
-        'X-RapidAPI-Host: judge0-ce.p.rapidapi.com'
+        'Content-Type: application/json'
     ];
 
     $ch = curl_init();
@@ -54,14 +49,8 @@ function getSubmission($token) {
     global $base;
     $url =  $base.'submissions/' . $token . '?base64_encoded=true&fields=*';
 
-    $headers = [
-        'x-rapidapi-key: ' . $API_KEY,
-        'x-rapidapi-host: judge0-ce.p.rapidapi.com'
-    ];
-
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
     $response = curl_exec($ch);
     if(curl_errno($ch)) {
@@ -77,14 +66,8 @@ function getLanguages() {
     global $base;
     $url = $base.'languages';
 
-    $headers = [
-        'x-rapidapi-key: ' . $API_KEY,
-        'x-rapidapi-host: judge0-ce.p.rapidapi.com'
-    ];
-
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
     $response = curl_exec($ch);
     if(curl_errno($ch)) {
