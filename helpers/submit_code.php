@@ -95,32 +95,32 @@ try {
         ];
 
         if(!$isRun){
-            // $currentTime = date('Y-m-d H:i:s');
-            // $runStatus = '';
-            // $score='';
+            $currentTime = date('Y-m-d H:i:s');
+            $runStatus = '';
+            $score='';
 
-            // $query = "SELECT `ContestID` FROM `contestproblems` WHERE `ProblemID`= $problemId";
-            // $result = $conn->query($query);
-            // if (!$result) {
-            //     die(json_encode(["error" => "Query failed: " . $conn->error]));
-            // }
-            // $row = $result->fetch_assoc();
+            $query = "SELECT `ContestID` FROM `contestproblems` WHERE `ProblemID`= $problemId";
+            $contest_id_result = $conn->query($query);
+            if (!$contest_id_result) {
+                die(json_encode(["error" => "Query failed: " . $conn->error]));
+            }
+            $row = $contest_id_result->fetch_assoc();
             
-            // $contest_id=$row['ContestID'];
+            $contest_id=$row['ContestID'];
 
-            // $query = "SELECT * FROM contests WHERE ContestID = $contest_id";
-            // $contestResult = $conn->query($query);
-            // if (!$contestResult) {
-            //     die(json_encode(["error" => "Query failed: " . $conn->error]));
-            // }
-            // $contest = $contestResult->fetch_assoc();
+            $query = "SELECT * FROM contests WHERE ContestID = $contest_id";
+            $contestResult = $conn->query($query);
+            if (!$contestResult) {
+                die(json_encode(["error" => "Query failed: " . $conn->error]));
+            }
+            $contest = $contestResult->fetch_assoc();
 
-            // if ($contest['StartTime'] <= $currentTime && $contest['EndTime'] >= $currentTime) {
-            //     $runStatus = 'Running';
-            // }
-            // if($runStatus == 'Running'){
-            //     $score='100';
-            // }
+            if ($contest['StartTime'] <= $currentTime && $contest['EndTime'] >= $currentTime) {
+                $runStatus = 'Running';
+            }
+            if($runStatus == 'Running'){
+                $score='100';
+            }
             saveSubmission($conn, $submissionData, $problemId, $userId, $data['code'],$score);
         }
 
