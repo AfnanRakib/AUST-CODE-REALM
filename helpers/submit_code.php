@@ -28,6 +28,19 @@ function saveSubmission($conn, $submissionData, $problemId, $userId, $code,$scor
     $stmt->close();
 }
 
+function getSubmissionWithPolling($token, $maxAttempts = 5, $interval = 1) {
+    $attempts = 0;
+    while ($attempts < $maxAttempts) {
+        sleep($interval);
+        $result = getSubmission($token);
+        if (isset($result['status']['description']) && $result['status']['description'] == 'Accepted') {
+            return $result;
+        }
+        $attempts++;
+    }
+    return $result;
+}
+
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -63,9 +76,8 @@ try {
                 throw new Exception('No token received from submission. Full response: ' . json_encode($submission_response));
             }
 
-            // Fetch submission result after a delay
-            sleep(3);  // Wait for some time to let the submission be processed
-            $result = getSubmission($token);
+            // Fetch submission result using polling
+            $result = getSubmissionWithPolling($token);
 
             // Decode base64 encoded fields
             $stdout = base64_decode($result['stdout'] ?? '');

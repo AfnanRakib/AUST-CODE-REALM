@@ -11,25 +11,26 @@
             <h3>Constraints</h3>
             <pre></pre>
             <?php
-                $limit=$problem['sampleTestNo'];
-                $i=0;
-                foreach ($testcases as $index => $testcase){
-                    if($limit==1)
+                $limit = $problem['sampleTestNo'];
+                $i = 0;
+                foreach ($testcases as $index => $testcase) {
+                    if ($limit == 1) {
                         echo '<h3>Sample Testcase</h3>';
-                    else
-                        echo '<h3>Sample Testcase '.($i+1).'</h3>';
+                    } else {
+                        echo '<h3>Sample Testcase ' . ($i + 1) . '</h3>';
+                    }
                     echo '<table class="table table-bordered table-hover" style="background-color: rgba(0, 168, 89, 0.1); border-color:grey;">';
-                    echo '<thead class="thead-dark"><tr><th>Input <button class="btn btn-secondary btn-sm"style="margin-left:10px;" onclick="'."copyToClipboard('sample-input')".'">Copy</button></th>';
-                    echo '<th>Output <button class="btn btn-secondary btn-sm"style="margin-left:10px;" onclick="'."copyToClipboard('sample-output')".'">Copy</button></th></tr>';
-                    echo '</thead><tbody><tr><td id="sample-input">';
-                        echo nl2br($testcases[$i]['Input']);
-                    echo '</td><td id="sample-output">';
-                        echo nl2br($testcases[$i]['Output']);
+                    echo '<thead class="thead-dark"><tr><th>Input <button class="btn btn-secondary btn-sm copy-button" data-copy-target="sample-input-' . $i . '" style="margin-left:10px;">Copy</button></th>';
+                    echo '<th>Output <button class="btn btn-secondary btn-sm copy-button" data-copy-target="sample-output-' . $i . '" style="margin-left:10px;">Copy</button></th></tr>';
+                    echo '</thead><tbody><tr><td id="sample-input-' . $i . '">';
+                    echo nl2br(htmlspecialchars($testcases[$i]['Input']));
+                    echo '</td><td id="sample-output-' . $i . '">';
+                    echo nl2br(htmlspecialchars($testcases[$i]['Output']));
                     echo '</td></tr></tbody></table>';
-                    $i=$i+1;
-                    if($i==$limit) break;
+                    $i++;
+                    if ($i == $limit) break;
                 }
-            ?> 
+            ?>
             <?php if (!empty($problem['Explanation'])): ?>
                 <h3>Explanation</h3>
                 <pre><?php echo $problem['Explanation']; ?></pre>;

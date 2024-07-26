@@ -117,7 +117,7 @@ $conn->close();
 
     <script src="../js/jquery-3.1.1.min.js"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             function fetchSubmissions() {
                 let searchUsername = $('#searchUsername').val();
                 let searchProblem = $('#searchProblem').val();
@@ -135,7 +135,18 @@ $conn->close();
                     },
                     success: function(response) {
                         $('#submissionsTableBody').html(response);
+                        bindSubmissionIdClick();
                     }
+                });
+            }
+
+            function bindSubmissionIdClick() {
+                $('.submission-id').on('click', function(event) {
+                    event.preventDefault();
+                    const code = $(this).data('code');
+                    $('#codeTextarea').val(code);
+                    const modal = new bootstrap.Modal(document.getElementById('codeModal'));
+                    modal.show();
                 });
             }
 
@@ -147,33 +158,24 @@ $conn->close();
                 fetchSubmissions();
             });
 
-            document.getElementById('ClearButton').addEventListener('click', function() {
+            $('#ClearButton').on('click', function() {
                 $('#searchUsername').val('');
                 $('#searchProblem').val('');
                 $('#statusFilter').val('');
                 fetchSubmissions();
             });
+
+            // Bind click event to copy button
+            $('#copyButton').on('click', function() {
+                const codeTextarea = $('#codeTextarea');
+                codeTextarea.select();
+                document.execCommand('copy');
+            });
+
+            // Bind click events to submission IDs initially
+            bindSubmissionIdClick();
         });
     </script>
     <script src="../js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.submission-id').forEach(function(element) {
-                element.addEventListener('click', function() {
-                    const code = this.getAttribute('data-code');
-                    document.getElementById('codeTextarea').value = code;
-                    const modal = new bootstrap.Modal(document.getElementById('codeModal'));
-                    modal.show();
-                });
-            });
-
-            document.getElementById('copyButton').addEventListener('click', function() {
-                const codeTextarea = document.getElementById('codeTextarea');
-                codeTextarea.select();
-                codeTextarea.setSelectionRange(0, 99999); // For mobile devices
-                document.execCommand("copy");
-            });
-        });
-    </script>
 </body>
 </html>

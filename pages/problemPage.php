@@ -88,14 +88,14 @@ $conn->close();
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-3 mb-2 mb-md-0">
-                                    <button class="btn btn-primary w-100" id="runButton">Run</button>
+                                    <button class="btn btn-primary w-100" id="runButton">Run on Sample</button>
                                 </div>
                                 <div class="col-md-3 mb-2 mb-md-0">
-                                    <button class="btn btn-primary w-100" id="submitButton">Submit</button>
+                                    <button class="btn btn-primary w-100" id="submitButton">Submit Code</button>
                                 </div>
                             </div>
                             <div class="row">
-                                <div id="resultDisplay" class="mt-4 p-3 border rounded" style="background-color: #f8f9fa;margin-bottom:20px;"></div>
+                                <div id="resultDisplay" class="mt-4 p-3" style="margin-bottom:20px;"></div>
                             </div>
                         </div>
                     </div>
@@ -173,6 +173,23 @@ $conn->close();
     <script src="../js/runcode.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.copy-button').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var targetId = this.getAttribute('data-copy-target');
+                    var content = document.getElementById(targetId).innerText;
+                    
+                    var textarea = document.createElement('textarea');
+                    textarea.value = content;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    
+                    alert('Copied to clipboard: ' + content);
+                });
+            });
+        });
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.submission-id').forEach(function(element) {
                 element.addEventListener('click', function() {
