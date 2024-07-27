@@ -29,7 +29,7 @@ $profile_picture_src = empty($user['Profile_Picture']) ? '../images/uploads/prof
                 <div class="col-md-4 text-center">
                     <img src="<?php echo $profile_picture_src; ?>" alt="Profile Picture" id="profile-img" class="img-fluid rounded-circle mb-3">
                     <h2 id="username"><?php echo $user['Handle']; ?></h2>
-                    <p><strong>Rating:</strong> <?php echo "{$user['RatingCategory']} ( Max Rating: {$user['MaxRating']})"; ?></p>
+                    <p><strong>Rating:</strong> <?php echo "{$user['CurrentRating']} , {$user['RatingCategory']} ( Max Rating: {$user['MaxRating']})"; ?></p>
                     <div class="user-details">
                         <p><strong>Full Name:</strong> <?php echo $user['Name']; ?></p>
                         <p><strong>Email:</strong> <?php echo $user['Email']; ?></p>

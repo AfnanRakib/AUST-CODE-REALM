@@ -32,12 +32,8 @@
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Database connection
-    $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    
+    include '../helpers/config.php';
     
     $username = $conn->real_escape_string($_POST['username']);
     $password = $conn->real_escape_string(md5($_POST['password']));
@@ -55,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'Email' => $row['Email'],
             'Name' => $row['Name'],
             'DateJoined' => $row['DateJoined'],
-            'RatingID' => $row['RatingID'],
+            'CurrentRating' => $row['CurrentRating'],
             'User_Role' => $row['User_Role'],
             'RatingCategory' => $row['RatingCategory'],
             'Profile_Picture' => $row['Profile_Picture'],

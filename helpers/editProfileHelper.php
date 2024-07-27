@@ -5,12 +5,8 @@ $alertMessage = "";
 $alertType = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Database connection
-    $conn = new mysqli('localhost', 'root', '', 'aust_code_realm');
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    
+    include 'config.php';
 
     if (isset($_POST['save_profile'])) {
         // Fetch the updated data from the form
