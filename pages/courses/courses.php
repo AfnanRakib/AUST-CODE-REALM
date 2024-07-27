@@ -37,14 +37,17 @@ if (!$result) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../../css/problemPage.css">
+    
     <link rel="stylesheet" href="../../css/navbar.css">
     <title>AUST CODE REALM</title>
     <style>
+         
+        
         .course-card {
             margin-bottom: 20px;
         }
         .card {
+            
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -65,7 +68,7 @@ if (!$result) {
             flex-grow: 1;
         }
         .card img {
-            height: 200px; /* Adjust this value to your desired height */
+            height: 200px; 
             object-fit: cover;
         }
         .btn {
@@ -203,16 +206,7 @@ if (!$result) {
             }
             ?>
         </div>
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="#"style="color: rgb(3, 191, 98)">1</a></li>
-                <li class="page-item"><a class="page-link" href="#"style="color: rgb(3, 191, 98)">2</a></li>
-                <li class="page-item"><a class="page-link" href="#"style="color: rgb(3, 191, 98)">3</a></li>
-                <li class="page-item"><a class="page-link" href="#"style="color: rgb(3, 191, 98)">4</a></li>
-                <li class="page-item"><a class="page-link" href="#"style="color: rgb(3, 191, 98)">7</a></li>
-                <li class="page-item"><a class="page-link" href="#"style="color: rgb(3, 191, 98)">Next</a></li>
-            </ul>
-        </nav>
+        
     </div>
     <footer class="text-center py-4" style="background-color: rgb(3, 191, 98);">
     

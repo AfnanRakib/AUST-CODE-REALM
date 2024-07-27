@@ -37,9 +37,7 @@ $comments_result = $comments_stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--link rel="stylesheet" href="../css/bootstrap.min.css"-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
     <link rel="stylesheet" href="../../css/problemPage.css">
     <link rel="stylesheet" href="../../css/navbar.css">
 	
@@ -64,9 +62,9 @@ $comments_result = $comments_stmt->get_result();
 
         .comment-section {
             margin-top: 20px;
-            height: 400px; /* Set your desired height */
-            overflow-y: auto; /* Enable vertical scrolling */
-            border: 1px solid #eee; /* Optional: to visually differentiate the scrollable area */
+            height: 400px; 
+            overflow-y: auto; 
+            border: 1px solid #eee; 
             padding: 15px;
         }
         .comment {
@@ -214,6 +212,7 @@ $comments_result = $comments_stmt->get_result();
 			height: 30px;
 			border-radius: 50%;
 			margin-right: 10px;
+			object-fit: cover;
 		}
 
 		.reply {
@@ -227,6 +226,45 @@ $comments_result = $comments_stmt->get_result();
 		}
 		.ace_gutter {
 			width: 50px !important;
+		}
+		.qa-window {
+			position: fixed;
+			top: 0;
+			right: 0;
+			height: 100%;
+			width: 0;
+			background-color: #f8f9fa;
+			overflow-x: hidden;
+
+			transition: 0.5s;
+			padding-top: 60px;
+			box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+		}
+
+		.qa-nav {
+			padding: 10px;
+		}
+
+		.tab-content {
+			padding: 20px;
+		}
+
+		.question, .answer {
+			overflow-y: auto; 
+			border: 1px solid #ddd;
+			padding: 10px;
+			margin-bottom: 10px;
+			border-radius: 5px;
+		}
+
+		pre code {
+			display: block;
+			background-color: #f8f9fa;
+			border: 1px solid #e9ecef;
+			border-radius: 4px;
+			padding: 10px;
+			white-space: pre-wrap;
+			word-wrap: break-word;
 		}
 	</style>
 </head>
@@ -257,7 +295,7 @@ $comments_result = $comments_stmt->get_result();
 						<div class="container">
 							<div class="row md-2">
 								<div class="col-12 col-md-4 mb-2 mb-md-0">
-									<button class="btn btn-primary"id="submitButton">RUN</button>
+									<button class="btn btn-mt-3"id="submitButton">RUN</button>
 								</div>
 							</div>
 							<div class="row">
@@ -285,7 +323,7 @@ $comments_result = $comments_stmt->get_result();
 							code: code,
 							stdin: stdin 
 						};
-						fetch('../../helpers/submit_code.php', {
+						fetch('../../helpers/try_Ide_submit_code.php', {
 							method: 'POST',
 							headers: {
 								'Content-Type': 'application/json',
@@ -358,6 +396,65 @@ $comments_result = $comments_stmt->get_result();
             <iframe width="100%" height="100%" src="<?php echo $video['youtube_embed_url']; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			
         </div>
+		
+		<button id="openQAButton" class="btn btn mt-3" style="background-color: rgb(3, 191, 98); ">Open Q&A</button>
+
+		<!-- sliding window div -->
+		<div id="qaWindow" class="qa-window">
+			<nav class="qa-nav">
+				<ul class="nav nav-tabs">
+
+
+					<li class="nav-item">
+						<a class="nav-link active" data-bs-toggle="tab" href="#dummy">Dummy</a><!-- have to put docs here-->
+					</li>
+
+
+
+					<li class="nav-item">
+						<a class="nav-link" data-bs-toggle="tab" href="#qa">Q&A</a>
+					</li>
+				</ul>
+			</nav>
+			<div class="tab-content">
+				<div class="tab-pane fade show active" id="dummy">
+					<p>This is a dummy tab.</p>
+				</div>
+				<div class="tab-pane fade" id="qa">
+					<h3>Questions and Answers</h3>
+					<button id="askQuestionBtn"class="btn btn mt-3" style="background-color: rgb(3, 191, 98); margin-top: 4px; margin-bottom: 10px;">Ask a Question</button>
+					<div id="questionForm" style="display: none;">
+						<form id="newQuestionForm">
+							<input type="hidden" name="video_id" value="<?php echo $video_id; ?>">
+							<div class="mb-3">
+								<label for="questionTitle" class="form-label">Question Title</label>
+								<input type="text" class="form-control" id="questionTitle" name="title" required>
+							</div>
+							<div class="mb-3">
+								<label for="code" class="form-label">Code (optional)</label>
+								<textarea class="form-control" id="code" name="code" rows="3"></textarea>
+							</div>
+							<div class="mb-3">
+								<label for="errorLog" class="form-label">Error Log (optional)</label>
+								<textarea class="form-control" id="errorLog" name="error_log" rows="3"></textarea>
+							</div>
+							<div class="mb-3">
+								<label for="problemDescription" class="form-label">Problem Description</label>
+								<textarea class="form-control" id="problemDescription" name="problem_description" rows="3" required></textarea>
+							</div>
+							<div class="mb-3">
+								<label for="attemptedSolutions" class="form-label">Attempted Solutions (optional)</label>
+								<textarea class="form-control" id="attemptedSolutions" name="attempted_solutions" rows="3"></textarea>
+							</div>
+							<button type="submit" class="btn btn mt-3" style="background-color: rgb(3, 191, 98); margin-top: 4px; margin-bottom: 10px;">Submit Question</button>
+						</form>
+					</div>
+					<div id="questionsList">
+						<!-- Questions will be loaded here dynamically -->
+					</div>
+				</div>
+			</div>
+		</div>
 			<p class="card-text" style = "flex-grow: 1; font-size: 20px;margin-top:20px"><?php echo "Discription:" . $video['description']; ?></p>
 
         <div class="comment-section">
@@ -423,7 +520,7 @@ $comments_result = $comments_stmt->get_result();
 					<label for="comment">Add a comment:</label>
 					<textarea class="form-control" id="comment" name="content" rows="3" required></textarea>
 				</div>
-				<button type="submit" class="btn btn-primary" style="background-color: rgb(3, 191, 98); margin-top: 4px; margin-bottom: 10px;">Post Comment</button>
+				<button type="submit" class="btn btn mt-3" style="background-color: rgb(3, 191, 98); margin-top: 4px; margin-bottom: 10px;">Post Comment</button>
 			</form>
 	</div>
     <footer class="text-center py-4" style="background-color: rgb(3, 191, 98);">
@@ -518,7 +615,134 @@ $comments_result = $comments_stmt->get_result();
         });
     });
 </script>
+<!--Q&A Script-->
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const qaWindow = document.getElementById('qaWindow');
+		const openQAButton = document.getElementById('openQAButton');
+		const askQuestionBtn = document.getElementById('askQuestionBtn');
+		const questionForm = document.getElementById('questionForm');
+		const newQuestionForm = document.getElementById('newQuestionForm');
+		const questionsList = document.getElementById('questionsList');
 
+		openQAButton.addEventListener('click', function() {
+			if (qaWindow.style.width === '45%') {
+				qaWindow.style.width = '0';
+			} else {
+				qaWindow.style.width = '45%';
+			}
+		});
+
+		
+
+		askQuestionBtn.addEventListener('click', function() {
+			questionForm.style.display = 'block';
+		});
+
+		newQuestionForm.addEventListener('submit', function(e) {
+			e.preventDefault();
+			const formData = new FormData(newQuestionForm);
+			
+			fetch('submit_question.php', {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					alert('Question submitted successfully!');
+					questionForm.style.display = 'none';
+					loadQuestions();
+				} else {
+					alert('Error submitting question. Please try again.');
+				}
+			});
+		});
+		
+		function loadQuestions() {
+			const videoId = <?php echo $video_id; ?>;
+			fetch(`get_questions.php?video_id=${videoId}`)
+			.then(response => response.json())
+			.then(questions => {
+				questionsList.innerHTML = '';
+				questions.forEach(question => {
+					const questionElement = createQuestionElement(question);
+					questionsList.appendChild(questionElement);
+				});
+			});
+		}
+
+		function createQuestionElement(question) {
+			const element = document.createElement('div');
+			element.className = 'question mb-3';
+			element.innerHTML = `
+				<div class="question-header d-flex align-items-center mb-2">
+					<img src="${question.user_profile_picture || '../../images/blank_profile_img.jpg'}" alt="Profile Picture" class="profile-pic-small me-2">
+					<strong>${question.user_handle}</strong>
+				</div>
+				<h4>Title: ${question.title}</h4>
+				<p><strong>problem_description:</strong> ${question.problem_description}</p>
+				${question.code ? `<p><strong> code: <pre><code>${question.code}</code></pre></p>` : ''}
+				${question.error_log ? `<p><strong>Error Log:</strong> ${question.error_log}</p>` : ''}
+				${question.attempted_solutions ? `<p><strong>Attempted Solutions:</strong> ${question.attempted_solutions}</p>` : ''}
+				<button class="btn btn-sm btn-secondary" onclick="showAnswers(${question.id})">Show Answers</button>
+				<div id="answers-${question.id}" class="answers mt-2" style="display: none;"></div>
+				<form class="answer-form mt-2" onsubmit="submitAnswer(event, ${question.id})">
+					<textarea class="form-control" name="content" required></textarea>
+					<button type="submit" class="btn btn-auto mt-3"style="background-color: rgb(3, 191, 98); margin-top: 4px; margin-bottom: 10px;">Submit Answer</button>
+				</form>
+			`;
+			return element;
+		}
+
+		window.showAnswers = function(questionId) {
+			const answersContainer = document.getElementById(`answers-${questionId}`);
+			fetch(`get_answers.php?question_id=${questionId}`)
+			.then(response => response.json())
+			.then(answers => {
+				answersContainer.innerHTML = '';
+				answers.forEach(answer => {
+					const answerElement = document.createElement('div');
+					answerElement.className = 'answer mb-2';
+					answerElement.innerHTML = `
+						<div class="answer-header d-flex align-items-center mb-2">
+							<img src="${answer.user_profile_picture || '../../images/blank_profile_img.jpg'}" alt="Profile Picture" class="profile-pic-small me-2">
+							<strong>${answer.user_handle}</strong>
+						</div>
+						<p>${answer.content}</p>
+						<small>Posted on ${answer.created_at}</small>
+					`;
+					answersContainer.appendChild(answerElement);
+				});
+				answersContainer.style.display = 'block';
+			});
+		};
+
+		window.submitAnswer = function(event, questionId) {
+			event.preventDefault();
+			const form = event.target;
+			const formData = new FormData(form);
+			formData.append('question_id', questionId);
+
+			fetch('submit_answer.php', {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					alert('Answer submitted successfully!');
+					form.reset();
+					showAnswers(questionId);
+				} else {
+					alert('Error submitting answer. Please try again.');
+				}
+			});
+		};
+
+		loadQuestions();
+	});
+</script>
 
 
 
