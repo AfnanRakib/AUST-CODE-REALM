@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `comments`
 --
 
+
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL,
   `video_id` int(11) DEFAULT NULL,
@@ -699,13 +700,8 @@ ALTER TABLE `videos`
   ADD CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `videos_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
+
 --
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`RatingID`) REFERENCES `ratings` (`RatingID`),
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`RatingCategory`) REFERENCES `ratingdistribution` (`RatingDistributionID`);
-=======
 CREATE TABLE `questions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `video_id` int(11) NOT NULL,
@@ -721,9 +717,9 @@ CREATE TABLE `questions` (
   FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 INSERT INTO `questions` (`id`, `video_id`, `user_id`, `title`, `code`, `error_log`, `problem_description`, `attempted_solutions`, `created_at`) VALUES
-(1, 1, 10, 'i don\'t know', '', '', 'sdadasdkjodyudijanhodiuashd', '', '2024-07-27 05:37:17'),
-(2, 1, 10, 'i don\'t know', 'sdaaaaadsadad', 'dasdasdasdasd', 'sdadasdkjodyudijanhodiuashd', 'ddasdada', '2024-07-27 05:38:13'),
-(3, 1, 10, 'having isssue with my life', '.qa-nav {\r\n			padding: 10px;\r\n		}\r\n\r\n		.tab-content {\r\n			padding: 20px;\r\n		}\r\n\r\n		.question, .answer {\r\n			border: 1px solid #ddd;\r\n			padding: 10px;\r\n			margin-bottom: 10px;\r\n			border-radius: 5px;\r\n		}\r\n		\r\n		pre code {\r\n			display: block;\r\n			background-color: #f8f9fa;\r\n			border: 1px solid #e9ecef;\r\n			border-radius: 4px;\r\n			padding: 10px;\r\n			white-space: pre-wrap;\r\n			word-wrap: break-word;\r\n		}', 'error: life not found', 'i am not finding my life', '- did a flip(failed missarebly)\r\n- jump off the roof(didn\'t got scared)', '2024-07-27 06:08:04');
+(1, 1, 10, 'i dont know', '', '', 'sdadasdkjodyudijanhodiuashd', '', '2024-07-27 05:37:17'),
+(2, 1, 10, 'i dont know', 'sdaaaaadsadad', 'dasdasdasdasd', 'sdadasdkjodyudijanhodiuashd', 'ddasdada', '2024-07-27 05:38:13'),
+(3, 1, 10, 'having isssue with my life', '.qa-nav {\r\n			padding: 10px;\r\n		}\r\n\r\n		.tab-content {\r\n			padding: 20px;\r\n		}\r\n\r\n		.question, .answer {\r\n			border: 1px solid #ddd;\r\n			padding: 10px;\r\n			margin-bottom: 10px;\r\n			border-radius: 5px;\r\n		}\r\n		\r\n		pre code {\r\n			display: block;\r\n			background-color: #f8f9fa;\r\n			border: 1px solid #e9ecef;\r\n			border-radius: 4px;\r\n			padding: 10px;\r\n			white-space: pre-wrap;\r\n			word-wrap: break-word;\r\n		}', 'error: life not found', 'i am not finding my life', '- did a flip(failed missarebly)\r\n- jump off the roof(didnt got scared)', '2024-07-27 06:08:04');
 
 CREATE TABLE `answers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
