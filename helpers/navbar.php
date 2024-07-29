@@ -6,9 +6,7 @@ $basePath = 'http://localhost/AUST%20CODE%20REALM/';
 $isLoggedIn = isset($_SESSION['user']);
 $handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
 ?>
-<style>
-/* Include the updated CSS styles here */
-</style>
+
 <nav class="navbar navbar-expand-lg navbar-light">
     <a class="navbar-brand" href="<?php echo $basePath; ?>index.php"><img src="<?php echo $basePath; ?>images/logo.png" alt="ACR"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

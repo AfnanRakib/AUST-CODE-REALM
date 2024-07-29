@@ -80,11 +80,11 @@
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-12 col-md-6 mb-2 mb-md-0">
-                            <label for="memoryLimit" class="form-label">Memory Limit (KB):</label>
+                            <label for="memoryLimit" class="form-label">Memory Limit (kb):</label>
                             <input type="number" id="memoryLimit" name="memoryLimit" class="form-control" required>
                         </div>
                         <div class="col-12 col-md-6 mb-2 mb-md-0">
-                            <label for="timeLimit" class="form-label">Time Limit (ms):</label>
+                            <label for="timeLimit" class="form-label">Time Limit (s):</label>
                             <input type="number" id="timeLimit" name="timeLimit" class="form-control" required>
                         </div>
                     </div>

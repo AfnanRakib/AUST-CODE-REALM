@@ -22,7 +22,7 @@ if ($searchProblem !== '') {
     $query .= " AND problems.Name LIKE '%" . $conn->real_escape_string($searchProblem) . "%'";
 }
 if ($statusFilter !== '') {
-    $query .= " AND submissions.Status = '" . $conn->real_escape_string($statusFilter) . "'";
+    $query .= " AND submissions.Status LIKE '%" . $conn->real_escape_string($statusFilter) . "%'";
 }
 if (!$showAll) {
     $userId = $_SESSION['user']['UserID'];

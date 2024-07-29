@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col problem-description overflow-auto" style="font-size: 20px; font-weight:500;">
+    <div class="col problem-description overflow-auto">
         <?php if ($problem): ?>
             <h2 style='text-align: center;color:#00A859;'><?php echo $problem['Name']; ?></h2>
             <h3>Problem description</h3>

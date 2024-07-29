@@ -56,8 +56,8 @@ $conn->close();
                 <select id="statusFilter" class="form-control">
                     <option value="">All Statuses</option>
                     <option value="Accepted">Accepted</option>
-                    <option value="Rejected">Wrong Answer</option>
-                    <option value="Pending">Time Limit Exceeded</option>
+                    <option value="Wrong Answer">Wrong Answer</option>
+                    <option value="Time Limit">Time Limit Exceeded</option>
                 </select>
             </div>
             <div class="col-md-1">
@@ -73,8 +73,8 @@ $conn->close();
                     <th scope="col">User</th>
                     <th scope="col">Status</th>
                     <th scope="col">Submission Time</th>
-                    <th scope="col">Time Taken</th>
-                    <th scope="col">Memory</th>
+                    <th scope="col">Time Taken (s)</th>
+                    <th scope="col">Memory (kb)</th>
                     <th scope="col">Language</th>
                 </tr>
             </thead>
