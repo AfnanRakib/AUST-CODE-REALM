@@ -16,9 +16,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("iiis", $comment_id, $video_id, $user_id, $content);
 
     if ($stmt->execute()) {
-        header("Location: play_video.php?video_id=" . $video_id);
+        $newReply = [
+            'id' => $stmt->insert_id,
+            'content' => $content,
+            'created_at' => date('Y-m-d H:i:s'),
+            'Handle' => $_SESSION['user']['Handle'],
+            'Profile_Picture' => $_SESSION['user']['Profile_Picture'] ?? null
+        ];
+        echo json_encode(['success' => true, 'reply' => $newReply]);
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo json_encode(['success' => false, 'message' => $conn->error]);
     }
 
     $stmt->close();

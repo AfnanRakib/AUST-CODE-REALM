@@ -16,7 +16,14 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("iis", $question_id, $user_id, $content);
 
 if ($stmt->execute()) {
-    echo json_encode(['success' => true]);
+    $newAnswer = [
+        'id' => $stmt->insert_id,
+        'content' => $content,
+        'created_at' => date('Y-m-d H:i:s'),
+        'user_handle' => $_SESSION['user']['Handle'],
+        'user_profile_picture' => $_SESSION['user']['Profile_Picture'] ?? null
+    ];
+    echo json_encode(['success' => true, 'answer' => $newAnswer]);
 } else {
     echo json_encode(['success' => false, 'message' => $conn->error]);
 }
