@@ -266,8 +266,8 @@ if (!$result) {
                             <input type="text" class="form-control" id="title" name="title" value="${course.title}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" name="description">${course.description}</textarea>
+                            <label for="description" class="form-label">Description:</label>
+                            <textarea class="form-control" id="course-description" name="description">${course.description}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="image_url" class="form-label">Image URL</label>
