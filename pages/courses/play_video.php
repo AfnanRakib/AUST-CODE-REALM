@@ -30,6 +30,16 @@ $comments_stmt = $conn->prepare($comments_sql);
 $comments_stmt->bind_param("i", $video_id);
 $comments_stmt->execute();
 $comments_result = $comments_stmt->get_result();
+
+// Fetch document
+$doc_sql = "SELECT * FROM video_documents WHERE video_id = ?";
+$doc_stmt = $conn->prepare($doc_sql);
+$doc_stmt->bind_param("i", $video_id);
+$doc_stmt->execute();
+$doc_result = $doc_stmt->get_result();
+$document = $doc_result->fetch_assoc();
+// Check if the current user is the author
+$is_author = ($_SESSION['user']['UserID'] == $video['user_id']);
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +50,8 @@ $comments_result = $comments_stmt->get_result();
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../../css/problemPage.css">
     <link rel="stylesheet" href="../../css/navbar.css">
-	
+	<script src="../../js/tinymce/tinymce.min.js"></script>
+    <script src="../../js/tinyMCEinit.js"></script>
     <title><?php echo $video['title']; ?> - AUST CODE REALM</title>
     <style>
         .video-container {
@@ -397,7 +408,7 @@ $comments_result = $comments_stmt->get_result();
 			
         </div>
 		
-		<button id="openQAButton" class="btn btn mt-3" style="background-color: rgb(3, 191, 98); ">Open Q&A</button>
+		<button id="openQAButton" class="btn btn mt-3" style="background-color: rgb(3, 191, 98); ">Open DOCs/Q&A</button>
 
 		<!-- sliding window div -->
 		<div id="qaWindow" class="qa-window">
@@ -406,7 +417,7 @@ $comments_result = $comments_stmt->get_result();
 
 
 					<li class="nav-item">
-						<a class="nav-link active" data-bs-toggle="tab" href="#dummy">Dummy</a><!-- have to put docs here-->
+						<a class="nav-link active" data-bs-toggle="tab" href="#Docs">Documents</a>
 					</li>
 
 
@@ -416,12 +427,42 @@ $comments_result = $comments_stmt->get_result();
 					</li>
 				</ul>
 			</nav>
+			<!-- upload document-->
 			<div class="tab-content">
-				<div class="tab-pane fade show active" id="dummy">
-					<p>This is a dummy tab.</p>
+				<div class="tab-pane fade show active" id="Docs">
+				<div class="mb-3">
+						<label for="document" class="form-label">Provided docs:</label>
+						<?php if ($is_author): ?>
+							<form id="docForm">
+								<textarea class="form-control" id="description" name="document" required><?php echo htmlspecialchars($document['content'] ?? ''); ?></textarea>
+								<button type="submit" class="btn btn mt-3" style="background-color: rgb(3, 191, 98); margin-top: 4px; margin-bottom: 10px;">
+									<?php echo $document ? 'Update' : 'Upload'; ?> Document
+								</button>
+								<?php if ($document): ?>
+									<button type="button" id="deleteDoc" class="btn btn-danger mt-2">Delete Document</button>
+								<?php endif; ?>
+							</form>
+						<?php else: ?>
+							<div class="form-control" style="height: auto; min-height: 100px;">
+								<?php echo nl2br(htmlspecialchars($document['content'] ?? 'No document available.')); ?>
+							</div>
+						<?php endif; ?>
+					</div>
 				</div>
+
+
 				<div class="tab-pane fade" id="qa">
 					<h3>Questions and Answers</h3>
+					<div class="mb-3">
+					<div class="input-group">
+						<input type="text" id="qaSearch" class="form-control" placeholder="Search questions...">
+						<select id="searchType" class="form-select">
+							<option value="title">Title</option>
+							<option value="error_log">Error Log</option>
+							<option value="problem_description">Problem Description</option>
+						</select>
+					</div>
+					</div>
 					<button id="askQuestionBtn"class="btn btn mt-3" style="background-color: rgb(3, 191, 98); margin-top: 4px; margin-bottom: 10px;">Ask a Question</button>
 					<div id="questionForm" style="display: none;">
 						<form id="newQuestionForm">
@@ -625,6 +666,50 @@ $comments_result = $comments_stmt->get_result();
 		const newQuestionForm = document.getElementById('newQuestionForm');
 		const questionsList = document.getElementById('questionsList');
 
+		//Q&A search bar
+		const qaSearch = document.getElementById('qaSearch');
+		const searchType = document.getElementById('searchType');
+		const videoId = <?php echo $video_id; ?>;
+
+		function searchQuestions(query = '', type = 'title') {
+			fetch(`search_questions.php?video_id=${videoId}&search=${encodeURIComponent(query)}&search_type=${type}`)
+			.then(response => response.json())
+			.then(questions => {
+				questionsList.innerHTML = '';
+				if (questions.length === 0) {
+					questionsList.innerHTML = '<p>No questions found.</p>';
+				} else {
+					questions.forEach(question => {
+						const questionElement = createQuestionElement(question);
+						questionsList.appendChild(questionElement);
+					});
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				questionsList.innerHTML = '<p>An error occurred while loading questions.</p>';
+			});
+		}
+
+		let typingTimer;
+		const doneTypingInterval = 300; // ms
+
+		qaSearch.addEventListener('input', function() {
+			clearTimeout(typingTimer);
+			if (this.value === '') {
+				// If the search bar is cleared, immediately load all questions
+				searchQuestions();
+			} else {
+				typingTimer = setTimeout(() => {
+					searchQuestions(this.value, searchType.value);
+				}, doneTypingInterval);
+			}
+		});
+
+		searchType.addEventListener('change', function() {
+			searchQuestions(qaSearch.value, this.value);
+		});
+
 		openQAButton.addEventListener('click', function() {
 			if (qaWindow.style.width === '45%') {
 				qaWindow.style.width = '0';
@@ -744,10 +829,63 @@ $comments_result = $comments_stmt->get_result();
 	});
 </script>
 
+<!-- update and delete document-->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var docForm = document.getElementById('docForm');
+    if (docForm) {
+        docForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var content = document.getElementById('description').value;
+            var videoId = <?php echo json_encode($video_id); ?>;
+            console.log("Sending content:", content); // Debug log
+            console.log("Video ID:", videoId); // Debug log
 
+            fetch('update_document.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'video_id=' + encodeURIComponent(videoId) + '&content=' + encodeURIComponent(content)
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log("Response:", data); // Debug log
+                alert(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error);
+            });
+        });
+    }
 
-
-
+    var deleteDocButton = document.getElementById('deleteDoc');
+    if (deleteDocButton) {
+        deleteDocButton.addEventListener('click', function() {
+            if (confirm('Are you sure you want to delete this document?')) {
+                var videoId = <?php echo json_encode($video_id); ?>;
+                fetch('delete_document.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'video_id=' + encodeURIComponent(videoId)
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                    document.getElementById('description').value = '';
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('An error occurred: ' + error);
+                });
+            }
+        });
+    }
+});
+</script>
 </body>
 </html>
 

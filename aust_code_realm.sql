@@ -737,6 +737,23 @@ INSERT INTO `answers` (`id`, `question_id`, `user_id`, `content`, `created_at`) 
 (4, 1, 1, 'dsaadasdasdasdasdasdasd', '2024-07-27 06:34:55');
 
 
+CREATE TABLE `video_documents` (
+  `id` int(11) NOT NULL,
+  `video_id` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `video_documents`
+--
+
+INSERT INTO `video_documents` (`id`, `video_id`, `content`, `created_at`, `updated_at`) VALUES
+(1, 1, 'ohe bondhu!!', '2024-07-29 07:31:57', '2024-07-29 07:31:57'),
+(5, 16, '<p>hello this is my first docs</p>', '2024-07-29 07:24:24', '2024-07-29 07:25:12'),
+(6, 2, 'ohe bondhu!!', '2024-07-29 07:32:33', '2024-07-29 07:32:33');
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

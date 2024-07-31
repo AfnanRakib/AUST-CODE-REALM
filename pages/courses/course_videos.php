@@ -52,6 +52,8 @@ $video_result = $video_stmt->get_result();
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../../css/navbar.css">
+    <script src="../../js/tinymce/tinymce.min.js"></script>
+    <script src="../../js/tinyMCEinit.js"></script>
     <title><?php echo $course['title']; ?> - AUST CODE REALM</title>
     <style>
         
@@ -277,6 +279,7 @@ $video_result = $video_stmt->get_result();
 	</script>
 
 	<!--edit and delete-->
+    
 	<script>
     $(document).ready(function() {
         // Delete video
@@ -329,7 +332,7 @@ $video_result = $video_stmt->get_result();
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" name="description">${video.description}</textarea>
+                            <textarea class="form-control" id="video-description" name="description">${video.description}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="youtube_embed_url" class="form-label">YouTube Embed URL</label>
@@ -374,6 +377,7 @@ $video_result = $video_stmt->get_result();
         });
     });
 });
+
 </script>
 
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
