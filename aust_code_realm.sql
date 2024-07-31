@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2024 at 09:39 AM
+-- Generation Time: Jul 31, 2024 at 04:59 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.1.25
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,9 +24,32 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comments`
+-- Table structure for table `answers`
 --
 
+CREATE TABLE `answers` (
+  `id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `answers`
+--
+
+INSERT INTO `answers` (`id`, `question_id`, `user_id`, `content`, `created_at`) VALUES
+(1, 1, 10, 'dasdadasdasd', '2024-07-27 05:37:26'),
+(2, 2, 10, 'saSADSAD', '2024-07-27 05:38:25'),
+(3, 1, 1, 'dsaadasdasdasdasdasdasd', '2024-07-27 06:34:25'),
+(4, 1, 1, 'dsaadasdasdasdasdasdasd', '2024-07-27 06:34:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
 
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL,
@@ -161,9 +184,12 @@ INSERT INTO `problems` (`ProblemID`, `Name`, `PlmDescription`, `InputSpecificati
 (4, 'Matrix Multiplication', 'Multiply two matrices.', 'Two matrices A and B.', 'Matrix C which is the product of A and B.', 'P004', 'Matrix algebra problem.', 5, 512, 1800, 3, 1),
 (5, 'Graph Traversal', 'Implement BFS and DFS on a graph.', 'A graph represented as an adjacency list.', 'The order of nodes visited in BFS and DFS.', 'P005', 'Graph theory problem.', 3, 1024, 2000, 4, 1),
 (6, 'Double Ended Queue', 'A queue is a data structure based on the principle of \'First In First Out\' (FIFO). There are two ends; one end can be used only to insert an item and the other end to remove an item. A Double Ended Queue is a queue where you can insert an item in both sides as well as you can delete an item from either side.\r\n\r\nThere are mainly four operations available to a double ended queue. They are:\r\n\r\n![Double Ended Queue](CDN_BASE_URL/6c444093f691ab00de2df3aef0808e5d?v=1720739565)\r\n\r\n1. `pushLeft()` inserts an item to the left end of the queue with the exception that the queue is not full.\r\n2. `pushRight()` inserts an item to the right end of the queue with the exception that the queue is not full.\r\n3. `popLeft()` removes an item from the left end of the queue with the exception that the queue is not empty.\r\n4. `popRight()` removes an item from the right end of the queue with the exception that the queue is not empty.\r\n\r\nNow you are given a queue and a list of commands, you have to report the behavior of the queue.', 'Input starts with an integer **T (&le; 20)**, denoting the number of test cases.Each case starts with a line containing two integers **n, m (1 &le; n &le; 10, 1 &le; m &le; 100)**, where **n** denotes the size of the queue and **m** denotes the number of commands. Each of the next **m** lines contains a command which is one of:\r\n\r\n| Operation | Action |\r\n|------------------|--------------------------------------------------------------------|\r\n| pushLeft  **x**  | pushes  **x (-100 &le; x &le; 100)**  to the left end of the queue |\r\n| pushRight **x** | pushes **x (-100 &le; x &le; 100)** to the right end of the queue |\r\n| popLeft               | pops an item from the left end of the queue |\r\n| popRight             | pops an item from the right end of the queue |', 'For each case, print the case number in a line. Then for each operation, show its corresponding output as shown in the sample. Be careful about spelling.', 'A', NULL, 1, 65536, 1000, 7, 1),
-(8, 'aaa', '<table style=\"border-collapse: collapse; width: 100%; border-width: 1px; background-color: #bfedd2; border-color: #000000;\" border=\"1\"><colgroup><col style=\"width: 49.958%;\"><col style=\"width: 49.958%;\"></colgroup>\r\n<tbody>\r\n<tr>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">adfadsfasf</td>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">sfaf</td>\r\n</tr>\r\n<tr>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">asfasfasf</td>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">asfasdfasf</td>\r\n</tr>\r\n</tbody>\r\n</table>', '<p>&sum;A<sub>3</sub></p>', '<p>sdgsdgsagdsdafg<br>DFWSD<br>FSD<br>FSD<br>F<br>SADF<br>ASDF</p>', '111', '<p>gsdfgdfghg</p>', 1, 123, 1000, 7, 1),
-(9, '12132', '<p>asdsfdsfasfafasf<br>SAFAF<br>AS<br><img src=\"https://study.com/cimages/videopreview/videopreview-full/uj16yqmbw4.jpg\" alt=\"\" width=\"715\" height=\"402\"></p>\r\n<p>fsdfsdfsdfsdfsd</p>\r\n<p>dfssd</p>\r\n<p>f</p>\r\n<p>sf</p>\r\n<p>sdf</p>\r\n<p>&nbsp;</p>\r\n<table style=\"border-collapse: collapse; width: 100%; border-width: 1px; background-color: #bfedd2; border-color: #000000;\" border=\"1\"><colgroup><col style=\"width: 49.958%;\"><col style=\"width: 49.958%;\"></colgroup>\r\n<tbody>\r\n<tr>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">adfadsfasf</td>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">sfaf</td>\r\n</tr>\r\n<tr>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">asfasfasf</td>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">asfasdfasf</td>\r\n</tr>\r\n</tbody>\r\n</table>', '<p style=\"text-align: center;\">wrqrfb eryt<a href=\"https://www.google.co.uk/\"><strong>eryER</strong></a><br><a href=\"https://www.google.co.uk/\"><strong>YGHRASDYDRYHG</strong></a><br><a href=\"https://www.google.co.uk/\"><strong>DRGYHDRF</strong></a><br><a href=\"https://www.google.co.uk/\"><strong>GYH</strong></a><br>GD<br>GF</p>\r\n<p>ef</p>\r\n<p>wedf</p>\r\n<p><span style=\"background-color: rgb(241, 196, 15);\">ewf</span></p>\r\n<p dir=\"rtl\"><span style=\"background-color: rgb(241, 196, 15);\">sedfsdfsdfsdfsdfsdfsdfsdfsdfsd</span></p>', '<p>ryhdfhhedrf</p>', '2113', '<p>dsgdfgbdfghdhdf</p>', 1, 1213, 1324, 7, 1),
-(12, 'waedfweffwe', '<p>aaa</p>', '<p>aaaa</p>', '<p>aaa</p>', '1234', '<p>aaaa</p>', 800, 1, 1200, 7, 1);
+(13, 'Distinct Numbers', '<p>You are given a list of <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">nn</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span></span> integers, and your task is to calculate the number of <em>distinct</em> values in the list.</p>', '<p>The first input line has an integer&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>: the number of values.</p>\r\n<p>The second line has <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">nn</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span></span> integers <span class=\"math inline\"><span class=\"katex\"><em><span class=\"katex-mathml\" style=\"font-family: \'book antiqua\', palatino, serif;\">x<sub>1</sub>,x<sub>2</sub>,&hellip;,x<sub>n</sub></span></em><sub><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></sub></span></span>.</p>', '<p>Print one integer: the number of distinct values.</p>\r\n<h3 id=\"constraints\"><span style=\"font-family: arial, helvetica, sans-serif;\">Constraints</span></h3>\r\n<ul>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> &le; 2&sdot;10<sup>5</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x<sub>i</sub></span></em><sub> </sub>&le; 10<sup>9</sup></span></span></span></li>\r\n</ul>', '1', '', 1, 524288, 1000, 6, 1),
+(14, 'Ferris Wheel', '<p>There are <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>n</em></span> children who want to go to a Ferris wheel, and your task is to find a gondola for each child.</p>\r\n<p>Each gondola may have one or two children in it, and in addition, the total weight in a gondola may not exceed&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span>. You know the weight of every child.</p>\r\n<p>What is the minimum number of gondolas needed for the children?</p>', '<p>The first input line contains two integers&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span>&nbsp;and&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span>: the number of children and the maximum allowed weight.</p>\r\n<p>The next line contains&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>n</em></span>&nbsp;integers <span class=\"math inline\"><span class=\"katex\"><em><span class=\"katex-mathml\" style=\"font-family: \'book antiqua\', palatino, serif;\">p<sub>1</sub>,p<sub>2</sub>,&hellip;,p<sub>n</sub></span></em><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></span></span>: the weight of each child.</p>', '<p>Print one integer: the minimum number of gondolas.</p>\r\n<h3 id=\"constraints\"><span style=\"font-family: arial, helvetica, sans-serif;\">Constraints</span></h3>\r\n<ul>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>n </em></span>&le; 2&sdot;10<sup>5</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span> &le; 10<sup>9</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">p<sub>i </sub></span></em>&le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x</span></em></span></span></span></li>\r\n</ul>', '2', '', 1, 524288, 1000, 6, 1),
+(15, 'Dice Combinations', '<p>Your task is to count the number of ways to construct sum&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> by throwing a dice one or more times. Each throw produces an outcome between <span style=\"font-family: \'book antiqua\', palatino, serif;\">1 </span>and&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\">6</span>.</p>\r\n<p>For example, if <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\"><em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>=<span style=\"font-family: \'book antiqua\', palatino, serif;\">3</span></span></span></span>, there are&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\">4</span>&nbsp;ways:</p>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1+1+1</span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1+2</span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">2+1</span></span></span></li>\r\n<li><span style=\"font-family: \'book antiqua\', palatino, serif;\">3</span></li>\r\n</ul>\r\n<h1 id=\"input\"></h1>', '<p>The only input line has an integer&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>.</p>', '<p>Print the number of ways modulo<span style=\"font-family: \'book antiqua\', palatino, serif;\"> 10<sup>9</sup>+7.</span></p>\r\n<h3 id=\"constraints\">Constraints</h3>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; n &le; 10<sup>6</sup></span></span></span></li>\r\n</ul>', '3', '', 1, 524288, 1200, 6, 1),
+(16, 'Minimizing Coins', '<p>Consider a money system consisting of&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> coins. Each coin has a positive integer value. Your task is to produce a sum of money <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x</span></em>&nbsp;using the available coins in such a way that the number of coins is minimal.</p>\r\n<p>For example, if the coins are <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">{1,5,7}</span></span></span>&nbsp;and the desired sum is <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">11</span></span></span>, an optimal solution is <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">5+5+1</span></span></span> which requires&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\">3</span> coins.</p>', '<p>The first input line has two integers&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x</span></em>: the number of coins and the desired sum of money.</p>\r\n<p>The second line has&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>&nbsp;distinct integers <em><span style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">c<sub>1</sub>,c<sub>2</sub>,&hellip;,c<sub>n</sub></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></span></span>:</span></em> the value of each coin.</p>', '<p>Print one integer: the minimum number of coins. If it is not possible to produce the desired sum, print <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">&minus;1</span></span></span>.</p>\r\n<h1 id=\"constraints\">Constraints</h1>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; n &le; 100</span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; x &le; 10<sup>6</sup></span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; c<sub>i</sub> &le; 10<sup>6</sup></span></span></span></li>\r\n</ul>', '4', '', 1, 524288, 1200, 6, 1),
+(17, 'Labyrinth', '<p>You are given a map of a labyrinth, and your task is to find a path from start to end. You can walk left, right, up and down.</p>', '<p>The first input line has two integers&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">m</span></em>: the height and width of the map.</p>\r\n<p>Then there are <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">nn</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span></span> lines of <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">mm</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">m</span></span></span></span></span> characters describing the labyrinth. Each character is <code>.</code> (floor), <code>#</code> (wall), <code>A</code> (start), or <code>B</code> (end). There is exactly one <code>A</code> and one <code>B</code> in the input.</p>', '<p>First print \"YES\", if there is a path, and \"NO\" otherwise.</p>\r\n<p>If there is a path, print the length of the shortest such path and its description as a string consisting of characters <code>L</code> (left), <code>R</code> (right), <code>U</code> (up), and <code>D</code> (down). You can print any valid solution.</p>\r\n<h1 id=\"constraints\">Constraints</h1>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em>n,m</em> &le; 1000</span></span></span></li>\r\n</ul>', '5', '', 1, 524288, 1300, 6, 1),
+(18, 'Distance Queries', '<p>You are given a tree consisting of&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>&nbsp;nodes.</p>\r\n<p>Your task is to process&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">q</span></em>queries of the form: what is the distance between nodes&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">a</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">b</span></em>?</p>', '<p>The first input line contains two integers&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">q</span></em>: the number of nodes and queries. The nodes are numbered <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1,2,&hellip;,<em>n<sub>1</sub></em></span></span></span><em>.</em></p>\r\n<p>Then there are <em><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">n&minus;</span></span></span></em><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\"><span style=\"font-family: \'book antiqua\', palatino, serif;\">1</span></span></span></span> lines describing the edges. Each line contains two integers <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">a</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">b</span></em>: there is an edge between nodes&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">a</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">b</span></em>.</p>\r\n<p>Finally, there are&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">q</span></em> lines describing the queries. Each line contains two integer <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">a</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">b</span></em>: what is the distance between nodes&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">a</span></em> and <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>b</em></span>?</p>', '<p>Print <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">qq</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">q</span></span></span></span></span> integers: the answer to each query.</p>\r\n<h3>Constraints</h3>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em>n,q</em> &le; 2&sdot;10<sup>5</sup></span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le;&nbsp;<em>a,b</em> &le; <em>n</em></span></span></span></li>\r\n</ul>', '6', '', 1, 524288, 1400, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -190,9 +216,41 @@ INSERT INTO `problem_tags` (`ProblemID`, `TagID`) VALUES
 (4, 3),
 (5, 1),
 (5, 2),
-(12, 3),
-(12, 29),
-(12, 62);
+(13, 12),
+(13, 13),
+(14, 12),
+(14, 13),
+(15, 3),
+(16, 3),
+(17, 5),
+(18, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `questions`
+--
+
+CREATE TABLE `questions` (
+  `id` int(11) NOT NULL,
+  `video_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `code` text DEFAULT NULL,
+  `error_log` text DEFAULT NULL,
+  `problem_description` text NOT NULL,
+  `attempted_solutions` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `questions`
+--
+
+INSERT INTO `questions` (`id`, `video_id`, `user_id`, `title`, `code`, `error_log`, `problem_description`, `attempted_solutions`, `created_at`) VALUES
+(1, 1, 10, 'i dont know', '', '', 'sdadasdkjodyudijanhodiuashd', '', '2024-07-27 05:37:17'),
+(2, 1, 10, 'i dont know', 'sdaaaaadsadad', 'dasdasdasdasd', 'sdadasdkjodyudijanhodiuashd', 'ddasdada', '2024-07-27 05:38:13'),
+(3, 1, 10, 'having isssue with my life', '.qa-nav {\r\n			padding: 10px;\r\n		}\r\n\r\n		.tab-content {\r\n			padding: 20px;\r\n		}\r\n\r\n		.question, .answer {\r\n			border: 1px solid #ddd;\r\n			padding: 10px;\r\n			margin-bottom: 10px;\r\n			border-radius: 5px;\r\n		}\r\n		\r\n		pre code {\r\n			display: block;\r\n			background-color: #f8f9fa;\r\n			border: 1px solid #e9ecef;\r\n			border-radius: 4px;\r\n			padding: 10px;\r\n			white-space: pre-wrap;\r\n			word-wrap: break-word;\r\n		}', 'error: life not found', 'i am not finding my life', '- did a flip(failed missarebly)\r\n- jump off the roof(didnt got scared)', '2024-07-27 06:08:04');
 
 -- --------------------------------------------------------
 
@@ -416,7 +474,7 @@ INSERT INTO `users` (`UserID`, `Handle`, `Name`, `Email`, `User_Password`, `Prof
 (3, 'bobjones', 'Bob Jones', 'bob.jones@example.com', 'password789', NULL, 'moderator', 0, '2024-03-22 14:45:00', 'Novice', NULL, 0, NULL, NULL),
 (4, 'alicebrown', 'Alice Brown', 'alice.brown@example.com', 'passwordabc', '/images/alicebrown.jpg', 'user', 0, '2023-11-10 09:05:00', 'Novice', NULL, 0, NULL, NULL),
 (5, 'charlieblack', 'Charlie Black', 'charlie.black@example.com', 'passworddef', NULL, 'user', 0, '2024-02-18 12:50:00', 'Novice', NULL, 0, NULL, NULL),
-(6, 'Taju366', 'Kazi Zannatul', 'kazizannatultajrin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'user', 0, NULL, 'Novice', NULL, 0, NULL, NULL),
+(6, 'Taju366', 'Kazi Zannatul', 'kazizannatultajrin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'admin', 0, NULL, 'Novice', NULL, 0, NULL, NULL),
 (7, 'AfnanRakib', 'Rakib Hasan', 'afnanrakib476@gmail.com', '202cb962ac59075b964b07152d234b70', '../images/uploads/profile_pictures/7.jpg', 'admin', 0, '2024-07-08 20:33:14', 'Novice', '2001-10-14', 0, 'AUST', 'male'),
 (9, 'rakib476', 'Afnan Rakib', 'rakib.cse.20210204027@aust.edu', '827ccb0eea8a706c4c34a16891f84e7b', NULL, 'user', 0, '2024-07-12 15:34:54', 'Novice', NULL, 0, NULL, NULL),
 (10, 'ditto', 'shahriar rahaman', 'diptobhuiyan1999@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', NULL, 'user', 0, '2024-07-14 20:25:58', 'Novice', NULL, 0, NULL, NULL);
@@ -461,6 +519,14 @@ INSERT INTO `videos` (`id`, `course_id`, `title`, `description`, `youtube_embed_
 --
 
 --
+-- Indexes for table `answers`
+--
+ALTER TABLE `answers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `question_id` (`question_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
@@ -502,6 +568,14 @@ ALTER TABLE `problems`
 ALTER TABLE `problem_tags`
   ADD KEY `ProblemID` (`ProblemID`),
   ADD KEY `TagID` (`TagID`);
+
+--
+-- Indexes for table `questions`
+--
+ALTER TABLE `questions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `video_id` (`video_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `ratinggraph`
@@ -564,6 +638,12 @@ ALTER TABLE `videos`
 --
 
 --
+-- AUTO_INCREMENT for table `answers`
+--
+ALTER TABLE `answers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
@@ -585,7 +665,13 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `problems`
 --
 ALTER TABLE `problems`
-  MODIFY `ProblemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ProblemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ratinggraph`
@@ -634,6 +720,13 @@ ALTER TABLE `videos`
 --
 
 --
+-- Constraints for table `answers`
+--
+ALTER TABLE `answers`
+  ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `answers_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
+
+--
 -- Constraints for table `comments`
 --
 ALTER TABLE `comments`
@@ -645,7 +738,7 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `contestproblems`
   ADD CONSTRAINT `contestproblems_ibfk_1` FOREIGN KEY (`ContestID`) REFERENCES `contests` (`ContestID`),
-  ADD CONSTRAINT `contestproblems_ibfk_2` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`);
+  ADD CONSTRAINT `contestproblems_ibfk_2` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `contests`
@@ -669,8 +762,15 @@ ALTER TABLE `problems`
 -- Constraints for table `problem_tags`
 --
 ALTER TABLE `problem_tags`
-  ADD CONSTRAINT `problem_tags_ibfk_1` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`),
+  ADD CONSTRAINT `problem_tags_ibfk_1` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`) ON DELETE CASCADE,
   ADD CONSTRAINT `problem_tags_ibfk_2` FOREIGN KEY (`TagID`) REFERENCES `tags` (`TagID`);
+
+--
+-- Constraints for table `questions`
+--
+ALTER TABLE `questions`
+  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`video_id`) REFERENCES `videos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
 --
 -- Constraints for table `ratinggraph`
@@ -691,7 +791,7 @@ ALTER TABLE `replies`
 -- Constraints for table `testcases`
 --
 ALTER TABLE `testcases`
-  ADD CONSTRAINT `testcases_ibfk_1` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`);
+  ADD CONSTRAINT `testcases_ibfk_1` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `videos`
@@ -699,45 +799,6 @@ ALTER TABLE `testcases`
 ALTER TABLE `videos`
   ADD CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `videos_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
-
-
---
-CREATE TABLE `questions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `video_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `code` text,
-  `error_log` text,
-  `problem_description` text NOT NULL,
-  `attempted_solutions` text,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`video_id`) REFERENCES `videos` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `questions` (`id`, `video_id`, `user_id`, `title`, `code`, `error_log`, `problem_description`, `attempted_solutions`, `created_at`) VALUES
-(1, 1, 10, 'i dont know', '', '', 'sdadasdkjodyudijanhodiuashd', '', '2024-07-27 05:37:17'),
-(2, 1, 10, 'i dont know', 'sdaaaaadsadad', 'dasdasdasdasd', 'sdadasdkjodyudijanhodiuashd', 'ddasdada', '2024-07-27 05:38:13'),
-(3, 1, 10, 'having isssue with my life', '.qa-nav {\r\n			padding: 10px;\r\n		}\r\n\r\n		.tab-content {\r\n			padding: 20px;\r\n		}\r\n\r\n		.question, .answer {\r\n			border: 1px solid #ddd;\r\n			padding: 10px;\r\n			margin-bottom: 10px;\r\n			border-radius: 5px;\r\n		}\r\n		\r\n		pre code {\r\n			display: block;\r\n			background-color: #f8f9fa;\r\n			border: 1px solid #e9ecef;\r\n			border-radius: 4px;\r\n			padding: 10px;\r\n			white-space: pre-wrap;\r\n			word-wrap: break-word;\r\n		}', 'error: life not found', 'i am not finding my life', '- did a flip(failed missarebly)\r\n- jump off the roof(didnt got scared)', '2024-07-27 06:08:04');
-
-CREATE TABLE `answers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `question_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `answers` (`id`, `question_id`, `user_id`, `content`, `created_at`) VALUES
-(1, 1, 10, 'dasdadasdasd', '2024-07-27 05:37:26'),
-(2, 2, 10, 'saSADSAD', '2024-07-27 05:38:25'),
-(3, 1, 1, 'dsaadasdasdasdasdasdasd', '2024-07-27 06:34:25'),
-(4, 1, 1, 'dsaadasdasdasdasdasdasd', '2024-07-27 06:34:55');
-
-
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

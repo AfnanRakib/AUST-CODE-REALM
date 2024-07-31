@@ -74,7 +74,7 @@
                     <textarea id="outputSpec" name="outputSpecification" class="form-control" required></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="note" class="form-label">Note (Optional):</label>
+                    <label for="note" class="form-label">Explanation (Optional):</label>
                     <textarea id="note" name="note" class="form-control"></textarea>
                 </div>
                 <div class="mb-3">
