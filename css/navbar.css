@@ -1,12 +1,11 @@
 .navbar {
     background-color: #ffffff;
-    border-bottom: 2px solid #00A859;
+    border-bottom: 2px solid #bbb;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
 }
-
 .navbar-brand img {
     max-height: 50px;
     margin-left: 10px;

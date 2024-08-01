@@ -75,9 +75,4 @@ body {
     border-radius: 10px;
     margin-bottom: 20px;
 }
-/*-------------------------------------Footer-------------------------------------------- */
-footer {
-    background: linear-gradient(135deg, #040720 0%, #002d62 100%); /* Secondary color gradient */
-    color: #ffffff;
-    padding: 20px 0;
-}
+
