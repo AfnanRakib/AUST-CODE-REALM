@@ -13,11 +13,13 @@ $profile_picture_src = empty($user['Profile_Picture']) ? '../images/uploads/prof
     <link rel="stylesheet" href="../css/ratingGraph.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/glanceyear.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <script src="../js/jquery-2.0.3.min.js"></script>
     <script src="../js/jquery.glanceyear.min.js"></script>
     <script src="../js/chart.js"></script>
     <script src="../js/chartjs-adapter-date-fns.js"></script>
-    <title>Profile - AUST CODE REALM</title>
+    <title><?php echo $user['Name']; ?> - AUST CODE REALM</title>
 </head>
 <body>
     <!-- Navbar -->
@@ -60,6 +62,7 @@ $profile_picture_src = empty($user['Profile_Picture']) ? '../images/uploads/prof
             </div>
         </div>
     </section>
+    <?php include'../helpers/footer.php'?>
     <script src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

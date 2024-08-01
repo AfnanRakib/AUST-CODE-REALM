@@ -35,6 +35,7 @@ if (isset($_SESSION['user']['UserID'])){
     $stmt->bind_param("ii", $userId, $problemId);
     $stmt->execute();
     $result = $stmt->get_result();
+    $submissioncount = mysqli_num_rows( $result );
     $submissions = [];
     while ($row = $result->fetch_assoc()) {
         $submissions[] = $row;
@@ -53,7 +54,9 @@ $conn->close();
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/problemPage.css">
     <link rel="stylesheet" href="../css/navbar.css">
-    <title>AUST CODE REALM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <title><?php echo $problem['Name']; ?> - AUST CODE REALM</title>
 </head>
 <body>
     <!-- Navbar -->
@@ -95,7 +98,7 @@ $conn->close();
                                 </div>
                             </div>
                             <div class="row">
-                                <div id="resultDisplay" class="mt-4 p-3" style="margin-bottom:20px;"></div>
+                                <div id="resultDisplay" class="mt-4 p-3"></div>
                             </div>
                         </div>
                     </div>
@@ -110,34 +113,40 @@ $conn->close();
             <div class="tab-pane fade" id="submissions" role="tabpanel" aria-labelledby="submissions-tab">
                 <?php if (isset($_SESSION['user'])): ?>
                     <h1 class="text-center mb-4">My Submissions</h1>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Submission ID</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Submission Time</th>
-                                <th scope="col">Time Taken (s)</th>
-                                <th scope="col">Memory Used (kb)</th>
-                                <th scope="col">Language</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($submissions as $submission): ?>
+                    <?php if ($submissioncount>0): ?>
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <th scope="row">
-                                        <a href="#" class="submission-id" data-code="<?php echo htmlspecialchars($submission['Code']); ?>" data-lang="<?php echo htmlspecialchars($submission['LanguageID']); ?>">
-                                            <?php echo htmlspecialchars($submission['SubmissionID']); ?>
-                                        </a>
-                                    </th>
-                                    <td><?php echo htmlspecialchars($submission['Status']); ?></td>
-                                    <td><?php echo htmlspecialchars($submission['SubmissionTime']); ?></td>
-                                    <td><?php echo htmlspecialchars($submission['TimeTaken']); ?></td>
-                                    <td><?php echo htmlspecialchars($submission['MemoryUsed']); ?></td>
-                                    <td><?php echo htmlspecialchars($submission['LanguageID']); ?></td>
+                                    <th scope="col">Submission ID</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Submission Time</th>
+                                    <th scope="col">Time Taken (s)</th>
+                                    <th scope="col">Memory Used (kb)</th>
+                                    <th scope="col">Language</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($submissions as $submission): ?>
+                                    <tr>
+                                        <th scope="row">
+                                            <a href="#" class="submission-id" data-code="<?php echo htmlspecialchars($submission['Code']); ?>" data-lang="<?php echo htmlspecialchars($submission['LanguageID']); ?>">
+                                                <?php echo htmlspecialchars($submission['SubmissionID']); ?>
+                                            </a>
+                                        </th>
+                                        <td><?php echo htmlspecialchars($submission['Status']); ?></td>
+                                        <td><?php echo htmlspecialchars($submission['SubmissionTime']); ?></td>
+                                        <td><?php echo htmlspecialchars($submission['TimeTaken']); ?></td>
+                                        <td><?php echo htmlspecialchars($submission['MemoryUsed']); ?></td>
+                                        <td><?php echo htmlspecialchars($submission['LanguageID']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <div class="text-center">
+                            <h4>Empty</h4>
+                        </div>
+                    <?php endif; ?>
                 <?php else: ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         Login First!!!
@@ -163,6 +172,7 @@ $conn->close();
             </div>
         </div>
     </div>
+    <?php include'../helpers/footer.php'?>
 
     <script>
         const problem = <?php echo json_encode($problem); ?>;

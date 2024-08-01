@@ -56,7 +56,7 @@ function submitCode(isRun) {
 
 function displayRunningMessage() {
     const resultDisplay = document.getElementById('resultDisplay');
-    resultDisplay.innerHTML = '<h4>Processing...</h4>';
+    resultDisplay.innerHTML = '<span class="spinner-border spinner-border-sm text-success" role="status" aria-hidden="true"></span><strong> Processing...</strong>';
 }
 
 function displayResult(data, isRun) {

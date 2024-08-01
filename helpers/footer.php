@@ -1,6 +1,7 @@
   <!-- Site footer -->
+  <br>
   <footer class="site-footer">
-      <div class="container">
+      <div class="container" id="footer-container">
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <h6>About</h6>
@@ -36,7 +37,7 @@
         </div>
         <hr>
       </div>
-      <div class="container">
+      <div class="container" id="footer-container">
         <div class="row">
           <div class="col-md-8 col-sm-6 col-xs-12">
             <p class="copyright-text">Copyright &copy; 2024 All Rights Reserved by 

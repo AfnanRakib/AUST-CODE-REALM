@@ -1,4 +1,5 @@
 .site-footer{
+  margin-top: 20px;
   padding:45px 0 20px;
   font-size:15px;
   line-height:24px;
@@ -12,6 +13,9 @@
 #brandimg{
   max-height: 100px;
   border-color: #ffffff;
+}
+#footer-container{
+  background-color: transparent;
 }
 .site-footer hr.small{
   margin:20px 0
