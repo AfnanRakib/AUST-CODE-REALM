@@ -117,10 +117,7 @@
             </div>
         </div>
     </section>
-    <!-- Footer -->
-    <footer class="text-center py-4">
-        <p>&copy; 2024 AUST CODE REALM. All rights reserved.</p>
-    </footer>
+    <?php include'helpers/footer.php'?>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
