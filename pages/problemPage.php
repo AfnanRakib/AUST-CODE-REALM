@@ -24,10 +24,16 @@ $stmt->execute();
 $result = $stmt->get_result();
 $testcases = [];
 while ($row = $result->fetch_assoc()) {
+    // Read the contents of the files
+    if (file_exists($row['Input']) && file_exists($row['Output'])) {
+        $row['Input'] = file_get_contents($row['Input']);
+        $row['Output'] = file_get_contents($row['Output']);
+    }
     $testcases[] = $row;
 }
 $stmt->close();
-if (isset($_SESSION['user']['UserID'])){
+
+if (isset($_SESSION['user']['UserID'])) {
     $userId = $_SESSION['user']['UserID'];
     // Fetch user submissions for the current problem
     $sql = "SELECT * FROM submissions WHERE UserID = ? AND ProblemID = ? ORDER BY SubmissionTime DESC";
@@ -35,7 +41,7 @@ if (isset($_SESSION['user']['UserID'])){
     $stmt->bind_param("ii", $userId, $problemId);
     $stmt->execute();
     $result = $stmt->get_result();
-    $submissioncount = mysqli_num_rows( $result );
+    $submissioncount = mysqli_num_rows($result);
     $submissions = [];
     while ($row = $result->fetch_assoc()) {
         $submissions[] = $row;
@@ -56,7 +62,7 @@ $conn->close();
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <title><?php echo $problem['Name']; ?> - AUST CODE REALM</title>
+    <title><?php echo htmlspecialchars($problem['Name']); ?> - AUST CODE REALM</title>
 </head>
 <body>
     <!-- Navbar -->
@@ -113,7 +119,7 @@ $conn->close();
             <div class="tab-pane fade" id="submissions" role="tabpanel" aria-labelledby="submissions-tab">
                 <?php if (isset($_SESSION['user'])): ?>
                     <h1 class="text-center mb-4">My Submissions</h1>
-                    <?php if ($submissioncount>0): ?>
+                    <?php if ($submissioncount > 0): ?>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -220,4 +226,3 @@ $conn->close();
     </script>
 </body>
 </html>
-
