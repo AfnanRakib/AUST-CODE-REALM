@@ -23,20 +23,21 @@ require_once '../helpers/judge0.php';
 function saveSubmission($conn, $submissionData, $problemId, $userId, $code,$score) {
     $sql = "INSERT INTO submissions (ProblemID, UserID, LanguageID, SubmissionTime,JudgeTime, TimeTaken, MemoryUsed, Code, Status, Score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iisssiissi", $problemId, $userId, $submissionData['language_id'], $submissionData['submission_time'],$submissionData['judge_time'], $submissionData['time'], $submissionData['memory'], $code, $submissionData['status'], $score);
+    $stmt->bind_param("iisssdissi", $problemId, $userId, $submissionData['language_id'], $submissionData['submission_time'],$submissionData['judge_time'], $submissionData['time'], $submissionData['memory'], $code, $submissionData['status'], $score);
     $stmt->execute();
     $stmt->close();
 }
 
-function getSubmissionWithPolling($token, $maxAttempts = 5, $interval = 1) {
+function getSubmissionWithPolling($token, $maxAttempts = 5, $interval = 3) {
+    sleep(2);
     $attempts = 0;
     while ($attempts < $maxAttempts) {
-        sleep($interval);
         $result = getSubmission($token);
         if (isset($result['status']['description']) && $result['status']['description'] == 'Accepted') {
             return $result;
         }
         $attempts++;
+        sleep($interval);
     }
     return $result;
 }
@@ -44,7 +45,9 @@ function getSubmissionWithPolling($token, $maxAttempts = 5, $interval = 1) {
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = json_decode(file_get_contents('php://input'), true);
-        $isRun=$data['isRun'];
+        error_log(print_r($data, true));
+        $isRun = $data['isRun'];
+        $problem = $data['problem'];
         $testcases = $data['testcases'];
         $problemId = $data['problemId'];
         $language_id = $data['languageId'];
@@ -100,8 +103,8 @@ try {
             'language_id' => $languageName,
             'submission_time' => $result['created_at'],
             'judge_time' => $result['created_at'],
-            'time' => $result['time'] ?? 0,
-            'memory' => $result['memory'] ?? 0,
+            'time' => $result['time'],
+            'memory' => $result['memory'],
             'status' => $status,
             'score' => $isAccepted ? 100 : 0// score will be counted based on some conditions later
         ];

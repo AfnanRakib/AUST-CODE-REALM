@@ -141,8 +141,8 @@ $conn->close();
                                         </th>
                                         <td><?php echo htmlspecialchars($submission['Status']); ?></td>
                                         <td><?php echo htmlspecialchars($submission['SubmissionTime']); ?></td>
-                                        <td><?php echo htmlspecialchars($submission['TimeTaken']); ?></td>
-                                        <td><?php echo htmlspecialchars($submission['MemoryUsed']); ?></td>
+                                        <td><?php echo $submission['TimeTaken']; ?></td>
+                                        <td><?php echo $submission['MemoryUsed']; ?></td>
                                         <td><?php echo htmlspecialchars($submission['LanguageID']); ?></td>
                                     </tr>
                                 <?php endforeach; ?>

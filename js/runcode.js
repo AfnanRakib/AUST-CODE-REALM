@@ -17,6 +17,7 @@ function submitCode(isRun) {
         languageId: languageId,
         languageName: languageName,
         code: code,
+        problem: problem,
         testcases: isRun ? [testcases[0]] : testcases, // Use only the first test case for the run action
         problemId: problemId,
         isRun: isRun
