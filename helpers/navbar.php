@@ -30,7 +30,7 @@ $handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
             </li>
         <?php if(($isLoggedIn) && $_SESSION['user']['User_Role']=='admin'): ?>
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo $basePath; ?>admin/manageTestCase.php">Admin Panel</a>
+                <a class="nav-link" href="<?php echo $basePath; ?>admin/userCreatedProblems.php">Admin Panel</a>
             </li>
         <?php endif; ?>
         </ul>
