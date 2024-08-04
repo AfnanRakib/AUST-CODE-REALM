@@ -67,9 +67,6 @@ function displayResult(data, isRun) {
     
     displayContent += `<p><strong>Status:</strong> <span style="color: ${statusColor};">${data.status}</span></p>`;
     
-    if (data.stdout) {
-        displayContent += `<p><strong>Stdout:</strong> ${data.stdout}</p>`;
-    }
     if (data.stderr) {
         displayContent += `<p><strong>Stderr:</strong> ${data.stderr}</p>`;
     }

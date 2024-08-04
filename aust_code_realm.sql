@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2024 at 08:48 AM
+-- Generation Time: Aug 04, 2024 at 09:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -180,12 +180,12 @@ CREATE TABLE `problems` (
 
 INSERT INTO `problems` (`ProblemID`, `Name`, `PlmDescription`, `InputSpecification`, `OutputSpecification`, `ProblemNumber`, `Note`, `TimeLimit`, `MemoryLimit`, `RatedFor`, `AuthorID`, `sampleTestNo`) VALUES
 (1, 'Sum of Two Numbers', 'Calculate the sum of two given numbers.', 'Two integers a and b.', 'A single integer representing the sum of a and b.', 'P001', 'Basic arithmetic problem.', 1, 512000, 1000, 1, 1),
-(2, 'String Reversal', 'Reverse a given string.', 'A single string s.', 'A single string which is the reverse of s.', 'P002', 'String manipulation problem.', 2, 512000, 1200, 2, 1),
+(2, 'String Reversal', '<p>Reverse a given string.</p>', '<p>A single string s.</p>', '<p>A single string which is the reverse of s.</p>', 'P002', '<p>String manipulation problem.</p>', 2, 512000, 1200, 7, 2),
 (3, 'Prime Number Check', 'Determine if a given number is prime.', 'An integer n.', 'A single line with \"YES\" or \"NO\".', 'P003', 'Number theory problem.', 1, 512000, 1500, 1, 1),
 (4, 'Matrix Multiplication', 'Multiply two matrices.', 'Two matrices A and B.', 'Matrix C which is the product of A and B.', 'P004', 'Matrix algebra problem.', 5, 512000, 1800, 3, 1),
 (5, 'Graph Traversal', 'Implement BFS and DFS on a graph.', 'A graph represented as an adjacency list.', 'The order of nodes visited in BFS and DFS.', 'P005', 'Graph theory problem.', 3, 512000, 2000, 4, 1),
-(6, 'Double Ended Queue', 'A queue is a data structure based on the principle of \'First In First Out\' (FIFO). There are two ends; one end can be used only to insert an item and the other end to remove an item. A Double Ended Queue is a queue where you can insert an item in both sides as well as you can delete an item from either side.\r\n\r\nThere are mainly four operations available to a double ended queue. They are:\r\n\r\n![Double Ended Queue](CDN_BASE_URL/6c444093f691ab00de2df3aef0808e5d?v=1720739565)\r\n\r\n1. `pushLeft()` inserts an item to the left end of the queue with the exception that the queue is not full.\r\n2. `pushRight()` inserts an item to the right end of the queue with the exception that the queue is not full.\r\n3. `popLeft()` removes an item from the left end of the queue with the exception that the queue is not empty.\r\n4. `popRight()` removes an item from the right end of the queue with the exception that the queue is not empty.\r\n\r\nNow you are given a queue and a list of commands, you have to report the behavior of the queue.', 'Input starts with an integer **T (&le; 20)**, denoting the number of test cases.Each case starts with a line containing two integers **n, m (1 &le; n &le; 10, 1 &le; m &le; 100)**, where **n** denotes the size of the queue and **m** denotes the number of commands. Each of the next **m** lines contains a command which is one of:\r\n\r\n| Operation | Action |\r\n|------------------|--------------------------------------------------------------------|\r\n| pushLeft  **x**  | pushes  **x (-100 &le; x &le; 100)**  to the left end of the queue |\r\n| pushRight **x** | pushes **x (-100 &le; x &le; 100)** to the right end of the queue |\r\n| popLeft               | pops an item from the left end of the queue |\r\n| popRight             | pops an item from the right end of the queue |', 'For each case, print the case number in a line. Then for each operation, show its corresponding output as shown in the sample. Be careful about spelling.', 'A', NULL, 1, 512000, 1000, 7, 1),
-(13, 'Distinct Numbers', '<p>You are given a list of <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">nn</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span></span> integers, and your task is to calculate the number of <em>distinct</em> values in the list.</p>', '<p>The first input line has an integer&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>: the number of values.</p>\r\n<p>The second line has <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">nn</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span></span> integers <span class=\"math inline\"><span class=\"katex\"><em><span class=\"katex-mathml\" style=\"font-family: \'book antiqua\', palatino, serif;\">x<sub>1</sub>,x<sub>2</sub>,&hellip;,x<sub>n</sub></span></em><sub><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></sub></span></span>.</p>', '<p>Print one integer: the number of distinct values.</p>\r\n<h3 id=\"constraints\"><span style=\"font-family: arial, helvetica, sans-serif;\">Constraints</span></h3>\r\n<ul>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> &le; 2&sdot;10<sup>5</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x<sub>i</sub></span></em><sub> </sub>&le; 10<sup>9</sup></span></span></span></li>\r\n</ul>', '1', '', 1, 512000, 1000, 6, 1),
+(6, 'Double Ended Queue', 'A queue is a data structure based on the principle of \'First In First Out\' (FIFO). There are two ends; one end can be used only to insert an item and the other end to remove an item. A Double Ended Queue is a queue where you can insert an item in both sides as well as you can delete an item from either side.\r\n\r\nThere are mainly four operations available to a double ended queue. They are:\r\n\r\n![Double Ended Queue](CDN_BASE_URL/6c444093f691ab00de2df3aef0808e5d?v=1720739565)\r\n\r\n1. `pushLeft()` inserts an item to the left end of the queue with the exception that the queue is not full.\r\n2. `pushRight()` inserts an item to the right end of the queue with the exception that the queue is not full.\r\n3. `popLeft()` removes an item from the left end of the queue with the exception that the queue is not empty.\r\n4. `popRight()` removes an item from the right end of the queue with the exception that the queue is not empty.\r\n\r\nNow you are given a queue and a list of commands, you have to report the behavior of the queue.', 'Input starts with an integer **T (&le; 20)**, denoting the number of test cases.Each case starts with a line containing two integers **n, m (1 &le; n &le; 10, 1 &le; m &le; 100)**, where **n** denotes the size of the queue and **m** denotes the number of commands. Each of the next **m** lines contains a command which is one of:\r\n\r\n| Operation | Action |\r\n|------------------|--------------------------------------------------------------------|\r\n| pushLeft  **x**  | pushes  **x (-100 &le; x &le; 100)**  to the left end of the queue |\r\n| pushRight **x** | pushes **x (-100 &le; x &le; 100)** to the right end of the queue |\r\n| popLeft               | pops an item from the left end of the queue |\r\n| popRight             | pops an item from the right end of the queue |', 'For each case, print the case number in a line. Then for each operation, show its corresponding output as shown in the sample. Be careful about spelling.', 'A', '', 1, 512000, 1000, 7, 1),
+(13, 'Distinct Numbers', '<p>You are given a list of <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">nn</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span></span> integers, and your task is to calculate the number of <em>distinct</em> values in the list.</p>', '<p>The first input line has an integer&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>: the number of values.</p>\r\n<p>The second line has <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">nn</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span></span> integers <span class=\"math inline\"><span class=\"katex\"><em><span class=\"katex-mathml\" style=\"font-family: \'book antiqua\', palatino, serif;\">x<sub>1</sub>,x<sub>2</sub>,&hellip;,x<sub>n</sub></span></em><sub><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></sub></span></span>.</p>', '<p>Print one integer: the number of distinct values.</p>\r\n<h3 id=\"constraints\"><span style=\"font-family: arial, helvetica, sans-serif;\">Constraints</span></h3>\r\n<h3 id=\"constraints\"></h3>\r\n<ul>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> &le; 2&sdot;10<sup>5</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x<sub>i</sub></span></em><sub> </sub>&le; 10<sup>9</sup></span></span></span></li>\r\n</ul>', '1', '', 1, 512000, 800, 7, 1),
 (14, 'Ferris Wheel', '<p>There are <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>n</em></span> children who want to go to a Ferris wheel, and your task is to find a gondola for each child.</p>\r\n<p>Each gondola may have one or two children in it, and in addition, the total weight in a gondola may not exceed&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span>. You know the weight of every child.</p>\r\n<p>What is the minimum number of gondolas needed for the children?</p>', '<p>The first input line contains two integers&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span>&nbsp;and&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span>: the number of children and the maximum allowed weight.</p>\r\n<p>The next line contains&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>n</em></span>&nbsp;integers <span class=\"math inline\"><span class=\"katex\"><em><span class=\"katex-mathml\" style=\"font-family: \'book antiqua\', palatino, serif;\">p<sub>1</sub>,p<sub>2</sub>,&hellip;,p<sub>n</sub></span></em><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></span></span>: the weight of each child.</p>', '<p>Print one integer: the minimum number of gondolas.</p>\r\n<h3 id=\"constraints\"><span style=\"font-family: arial, helvetica, sans-serif;\">Constraints</span></h3>\r\n<ul>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>n </em></span>&le; 2&sdot;10<sup>5</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span> &le; 10<sup>9</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">p<sub>i </sub></span></em>&le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x</span></em></span></span></span></li>\r\n</ul>', '2', '', 1, 512000, 1000, 6, 1),
 (15, 'Dice Combinations', '<p>Your task is to count the number of ways to construct sum&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> by throwing a dice one or more times. Each throw produces an outcome between <span style=\"font-family: \'book antiqua\', palatino, serif;\">1 </span>and&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\">6</span>.</p>\r\n<p>For example, if <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\"><em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>=<span style=\"font-family: \'book antiqua\', palatino, serif;\">3</span></span></span></span>, there are&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\">4</span>&nbsp;ways:</p>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1+1+1</span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1+2</span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">2+1</span></span></span></li>\r\n<li><span style=\"font-family: \'book antiqua\', palatino, serif;\">3</span></li>\r\n</ul>\r\n<h1 id=\"input\"></h1>', '<p>The only input line has an integer&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>.</p>', '<p>Print the number of ways modulo<span style=\"font-family: \'book antiqua\', palatino, serif;\"> 10<sup>9</sup>+7.</span></p>\r\n<h3 id=\"constraints\">Constraints</h3>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; n &le; 10<sup>6</sup></span></span></span></li>\r\n</ul>', '3', '', 1, 512000, 1200, 6, 1),
 (16, 'Minimizing Coins', '<p>Consider a money system consisting of&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> coins. Each coin has a positive integer value. Your task is to produce a sum of money <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x</span></em>&nbsp;using the available coins in such a way that the number of coins is minimal.</p>\r\n<p>For example, if the coins are <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">{1,5,7}</span></span></span>&nbsp;and the desired sum is <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">11</span></span></span>, an optimal solution is <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">5+5+1</span></span></span> which requires&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\">3</span> coins.</p>', '<p>The first input line has two integers&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x</span></em>: the number of coins and the desired sum of money.</p>\r\n<p>The second line has&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>&nbsp;distinct integers <em><span style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">c<sub>1</sub>,c<sub>2</sub>,&hellip;,c<sub>n</sub></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></span></span>:</span></em> the value of each coin.</p>', '<p>Print one integer: the minimum number of coins. If it is not possible to produce the desired sum, print <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">&minus;1</span></span></span>.</p>\r\n<h3 id=\"constraints\">Constraints</h3>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; n &le; 100</span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; x &le; 10<sup>6</sup></span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; c<sub>i</sub> &le; 10<sup>6</sup></span></span></span></li>\r\n</ul>', '4', '', 1, 512000, 1200, 6, 1),
@@ -210,21 +210,25 @@ CREATE TABLE `problem_tags` (
 INSERT INTO `problem_tags` (`ProblemID`, `TagID`) VALUES
 (1, 1),
 (1, 2),
-(2, 1),
 (3, 3),
 (3, 4),
 (4, 2),
 (4, 3),
 (5, 1),
 (5, 2),
-(13, 12),
-(13, 13),
 (14, 12),
 (14, 13),
 (15, 3),
 (16, 3),
 (17, 5),
-(18, 6);
+(18, 6),
+(6, 1),
+(6, 3),
+(13, 1),
+(13, 12),
+(13, 13),
+(2, 1),
+(2, 63);
 
 -- --------------------------------------------------------
 
@@ -345,7 +349,9 @@ INSERT INTO `submissions` (`SubmissionID`, `ProblemID`, `UserID`, `LanguageID`, 
 (48, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-02 06:30:27', '2024-08-02 06:30:27', 0, 10208, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
 (51, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-02 06:32:40', '2024-08-02 06:32:40', 0, 1560, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a[5];\r\n    ff(i,n){\r\n        int x;\r\n        cin>>a[x];\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 2', 100),
 (52, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-02 06:33:43', '2024-08-02 06:33:43', 0, 1292, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a[5];\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        a[1000000000]=x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Runtime Error (NZEC) on testcase 1', 100),
-(56, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-02 06:47:03', '2024-08-02 06:47:03', 0.128, 12196, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100);
+(56, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-02 06:47:03', '2024-08-02 06:47:03', 0.128, 12196, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
+(57, 2, 7, 'C++ (GCC 7.4.0)', '2024-08-04 07:51:20', '2024-08-04 07:51:20', 0.003, 1296, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    string s;\r\n    cin>>s;\r\n    reverse(all(s));\r\n    cout<<s<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 2', 100),
+(58, 2, 7, 'C++ (GCC 7.4.0)', '2024-08-04 07:52:47', '2024-08-04 07:52:47', 0.003, 1024, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    string s;\r\n    cin>>s;\r\n    reverse(all(s));\r\n    cout<<s<<endl;\r\n    return 0;\r\n}', 'Accepted', 100);
 
 -- --------------------------------------------------------
 
@@ -423,7 +429,8 @@ INSERT INTO `tags` (`TagID`, `TagName`) VALUES
 (58, 'interactive problems'),
 (59, 'implementation'),
 (60, 'other'),
-(62, 'Digit Dp');
+(62, 'Digit Dp'),
+(63, 'Demo tag');
 
 -- --------------------------------------------------------
 
@@ -444,8 +451,10 @@ CREATE TABLE `testcases` (
 --
 
 INSERT INTO `testcases` (`ID`, `Input`, `Output`, `ProblemID`, `testCaseNo`) VALUES
-(14, '../problems/13/input_1.txt', '../problems/13/output_1.txt', 13, 1),
-(16, '../problems/13/input_2.txt', '../problems/13/output_2.txt', 13, 2);
+(29, '../problems/13/input_1.txt', '../problems/13/output_1.txt', 13, 1),
+(32, '../problems/2/input_1.txt', '../problems/2/output_1.txt', 2, 1),
+(33, '../problems/2/input_2.txt', '../problems/2/output_2.txt', 2, 2),
+(34, '../problems/2/input_3.txt', '../problems/2/output_3.txt', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -694,7 +703,7 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `problems`
 --
 ALTER TABLE `problems`
-  MODIFY `ProblemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `ProblemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `questions`
@@ -718,19 +727,19 @@ ALTER TABLE `replies`
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `SubmissionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `SubmissionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `TagID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `TagID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `testcases`
 --
 ALTER TABLE `testcases`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -780,12 +789,6 @@ ALTER TABLE `contests`
 --
 ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
-
---
--- Constraints for table `problems`
---
-ALTER TABLE `problems`
-  ADD CONSTRAINT `problems_ibfk_1` FOREIGN KEY (`AuthorID`) REFERENCES `users` (`UserID`);
 
 --
 -- Constraints for table `problem_tags`

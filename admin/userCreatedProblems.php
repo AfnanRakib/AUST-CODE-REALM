@@ -20,7 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/problemSet.css">
+    <link rel="stylesheet" href="style.css">
     <title>User Created Problems - AUST CODE REALM</title>
 </head>
 <body>
@@ -29,6 +29,9 @@
 
     <div class="container mt-5">
         <h1 class="text-center mb-4">User Created Problems</h1>
+        <div class="d-flex justify-content-end mb-4">
+            <button class="btn btn-primary" onclick="window.location.href='createBlankProblem.php'">Create Problem</button>
+        </div>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -74,15 +77,19 @@
                 var problemID = $(this).data('problemid');
                 if (confirm('Are you sure you want to delete this problem?')) {
                     $.ajax({
-                        url: '../helpers/deleteProblem.php',
+                        url: 'deleteProblem.php',
                         type: 'POST',
                         data: { problemID: problemID },
+                        dataType: 'json',
                         success: function (response) {
                             if (response.success) {
                                 location.reload();
                             } else {
-                                alert('Error deleting problem.');
+                                alert(response.message || 'Error deleting problem.');
                             }
+                        },
+                        error: function () {
+                            alert('Error deleting problem.');
                         }
                     });
                 }
@@ -91,7 +98,3 @@
     </script>
 </body>
 </html>
-
-<?php
-    $conn->close();
-?>

@@ -7,20 +7,20 @@
         exit();
     }
 
-    include 'config.php';
+    include '../helpers/config.php';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $problemID = intval($_POST['problemID']);
         $userID = $_SESSION['user']['UserID'];
 
-        // Verify if the problem belongs to the user
         $verifyQuery = "SELECT * FROM problems WHERE ProblemID='$problemID' AND AuthorID='$userID'";
         $verifyResult = $conn->query($verifyQuery);
         if ($verifyResult->num_rows > 0) {
             // Delete the problem
-            $conn->query("DELETE FROM problems WHERE ProblemID='$problemID'");
-            $conn->query("DELETE FROM problem_tags WHERE ProblemID='$problemID'");
-            $conn->query("DELETE FROM testcases WHERE ProblemID='$problemID'");
+            $conn->query("DELETE FROM `problems` WHERE ProblemID='$problemID'");
+            $conn->query("DELETE FROM `problem_tags` WHERE ProblemID='$problemID'");
+            $conn->query("DELETE FROM `testcases` WHERE ProblemID='$problemID'");
+            $conn->query("DELETE FROM `contestproblems` WHERE ProblemID='$problemID'");
 
             echo json_encode(['success' => true]);
         } else {
