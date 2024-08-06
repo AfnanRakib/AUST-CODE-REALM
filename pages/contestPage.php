@@ -95,7 +95,7 @@
             var minutes = Math.floor((ms / (1000 * 60)) % 60);
             var hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
             var days = Math.floor(ms / (1000 * 60 * 60 * 24));
-            return " " + days + "d  " + hours + "h  " + minutes + "m  " + seconds + "s";
+            return " " + days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s";
         }
 
         fetchContestDetails();
