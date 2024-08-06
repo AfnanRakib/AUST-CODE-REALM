@@ -35,6 +35,7 @@ $response = [
     'startTime' => $contest['StartTime'],
     'endTime' => $contest['EndTime'],
     'duration' => $contest['Duration'],
+    'description' => $contest['Description'],
     'problems' => $problems
 ];
 
