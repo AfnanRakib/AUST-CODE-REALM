@@ -1,8 +1,35 @@
 <?php
 session_start();
+if (!isset($_SESSION['user']['UserID'])) {
+    header("Location: login.php");
+    exit();
+}
 $user = $_SESSION['user'];
 $profile_picture_src = empty($user['Profile_Picture']) ? '../images/uploads/profile_pictures/default.png' : $user['Profile_Picture'];
+
+include '../helpers/config.php';
+
+$userId = $_SESSION['user']['UserID'];
+$sql = "SELECT DATE_FORMAT(SubmissionTime, '%Y-%c-%e') as date, COUNT(*) as value FROM submissions WHERE UserID = ? GROUP BY DATE(SubmissionTime)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$submissions = array();
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $submissions[] = array('date' => $row['date'], 'value' => $row['value']);
+    }
+} else {
+    $submissions = [];
+}
+
+$stmt->close();
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
