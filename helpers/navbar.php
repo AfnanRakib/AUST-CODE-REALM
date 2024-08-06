@@ -2,9 +2,11 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 $basePath = 'http://localhost/AUST%20CODE%20REALM/';
 $isLoggedIn = isset($_SESSION['user']);
 $handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
+$serverTime = time(); // Get server's current time in seconds since the Unix Epoch
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -23,10 +25,8 @@ $handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $basePath; ?>pages/problemSet.php">Problems</a>
             </li>
-
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $basePath; ?>pages/courses/courses.php">Courses</a>
-
             </li>
         <?php if(($isLoggedIn) && $_SESSION['user']['User_Role']=='admin'): ?>
             <li class="nav-item">
@@ -52,6 +52,28 @@ $handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
         <a class="btn btn-primary" id="loginbtn" href="<?php echo $basePath; ?>pages/login.php">Login</a>
     <?php endif; ?>
 </nav>
+
+<div id="clock" class="text-center mb-4">
+    <span id="clock-text" class="clockTimer">Loading...</span><br>
+    <span>(+6:00) GMT</span><br>
+</div>
+
+<script>
+    var serverTime = <?php echo $serverTime; ?> * 1000; // Server time in milliseconds
+    var clientOffset = new Date().getTime() - serverTime; // Calculate client's offset from the server
+
+    function updateClock() {
+        var now = new Date().getTime() - clientOffset; // Adjust client time to server time
+        var date = new Date(now);
+        var hours = String(date.getHours()).padStart(2, '0');
+        var minutes = String(date.getMinutes()).padStart(2, '0');
+        var seconds = String(date.getSeconds()).padStart(2, '0');
+        document.getElementById('clock-text').textContent = hours + ":" + minutes + ":" + seconds;
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+</script>
 
 <?php
 if (isset($_GET['logout'])) {
