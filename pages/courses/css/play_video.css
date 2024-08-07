@@ -1,0 +1,223 @@
+		.video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(3, 191, 98, 0.3);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+        }
+
+        .comment-section {
+            margin-top: 20px;
+            height: 400px; 
+            overflow-y: auto; 
+            border: 1px solid #eee; 
+            padding: 15px;
+        }
+        .comment {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .reply-form {
+        margin-top: 10px;
+        margin-bottom: 10px;
+		}
+		.reply {
+			margin-left: 20px;
+			border-left: 2px solid #ddd;
+			padding-left: 10px;
+		}
+		.btn {
+            margin-top: auto;
+            overflow: hidden;
+            color: white;
+        }
+        
+        .btn:active {
+            overflow: hidden;
+            transform: none !important;
+        }
+        .bg-image {
+            position: relative;
+            overflow: hidden;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        .ripple::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 0, 0.2);
+            pointer-events: none;
+            transition: opacity 0.3s;
+            opacity: 0;
+        }
+        .ripple:hover::before {
+            opacity: 1;
+        }
+		
+		.floating-button {
+			position: fixed;
+			width: 100px;
+			height: 40px;
+			bottom: 40px;
+			right: 40px;
+			background-color: rgb(3, 191, 98);
+			color: #fff;
+			border-radius: 20px;
+			text-align: center;
+			box-shadow: 2px 2px 3px #999;
+			z-index: 1000;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			overflow: hidden;
+		}
+
+		.floating-button .button-content {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+			font-size: 16px;
+		}
+
+		.floating-button .expanded-content {
+			display: none;
+			flex-direction: column;
+			height: 100%;
+		}
+
+		.floating-button.expanded {
+			width: 300px;
+			height: 200px;
+			border-radius: 10px;
+		}
+
+		.floating-button.expanded .button-content {
+			display: none;
+		}
+
+		.floating-button.expanded .expanded-content {
+			display: flex;
+		}
+
+		.floating-button .header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 10px;
+			background-color: rgba(255, 255, 255, 0.1);
+			cursor: move;
+		}
+
+		.floating-button .content {
+			padding: 10px;
+			flex-grow: 1;
+			overflow-y: auto;
+		}
+
+		.floating-button .resize-handle {
+			width: 10px;
+			height: 10px;
+			background-color: rgba(255, 255, 255, 0.5);
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			cursor: se-resize;
+		}
+
+		#closeButton {
+			background: none;
+			border: none;
+			color: #fff;
+			font-size: 20px;
+			cursor: pointer;
+		}
+		.comment-header, .reply-header {
+			display: flex;
+			align-items: center;
+			margin-bottom: 5px;
+		}
+
+		.profile-pic {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			margin-right: 10px;
+		}
+
+		.profile-pic-small {
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			margin-right: 10px;
+			object-fit: cover;
+		}
+
+		.reply {
+			margin-left: 40px;
+			border-left: 2px solid #ddd;
+			padding-left: 10px;
+			margin-top: 10px;
+		}
+		.ace_editor {
+			padding-left: 10px;
+		}
+		.ace_gutter {
+			width: 50px !important;
+		}
+		.qa-window {
+			position: fixed;
+			top: 0;
+			right: 0;
+			height: 100%;
+			width: 0;
+			background-color: #f8f9fa;
+			overflow-x: hidden;
+
+			transition: 0.5s;
+			padding-top: 60px;
+			box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+		}
+
+		.qa-nav {
+			padding: 10px;
+		}
+
+		.tab-content {
+			padding: 20px;
+		}
+
+		.question, .answer {
+			overflow-y: auto; 
+			border: 1px solid #ddd;
+			padding: 10px;
+			margin-bottom: 10px;
+			border-radius: 5px;
+		}
+
+		pre code {
+			display: block;
+			background-color: #f8f9fa;
+			border: 1px solid #e9ecef;
+			border-radius: 4px;
+			padding: 10px;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
