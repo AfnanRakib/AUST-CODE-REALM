@@ -11,7 +11,9 @@ if (!isset($_SESSION['user']['UserID'])) {
     header("Location: login.php");
     exit();
 }
-
+date_default_timezone_set('Asia/Dhaka'); // Set timezone
+$tz=date_default_timezone_get();
+$ini_tz=ini_get('date.timezone');
 include 'config.php';
 
 $userId = $_SESSION['user']['UserID'];
@@ -60,6 +62,10 @@ try {
         $isAccepted = true;
         $status = 'Accepted';
 
+        $submitTime = date('Y-m-d H:i:s');
+        $timeTaken=0;
+        $memoryTaken=0;
+
         foreach ($testcases as $index => $testcase) {
             $stdin = $testcase['Input'];
             $expected_output = $testcase['Output'];
@@ -88,6 +94,9 @@ try {
             $compile_output = base64_decode($result['compile_output'] ?? '');
             $status_description = $result['status']['description'] ?? '';
 
+            $timeTaken=max($timeTaken,$result['time']);
+            $memoryTaken=max($memoryTaken,$result['memory']);
+
             // Check if the output matches the expected output
             if ($status_description !== 'Accepted') {
                 $cnt= $index + 1;
@@ -96,15 +105,15 @@ try {
                 break;
             }
         }
-
+        $judgeTime = date('Y-m-d H:i:s');
         // Save submission details to the database
         $submissionData = [
             'problemId' => $problemId,
             'language_id' => $languageName,
-            'submission_time' => $result['created_at'],
-            'judge_time' => $result['created_at'],
-            'time' => $result['time'],
-            'memory' => $result['memory'],
+            'submission_time' => $submitTime,
+            'judge_time' => $judgeTime,
+            'time' => $timeTaken,
+            'memory' => $memoryTaken,
             'status' => $status,
             'score' => $isAccepted ? 100 : 0// score will be counted based on some conditions later
         ];
@@ -136,6 +145,7 @@ try {
             if($runStatus == 'Running'){
                 $score='100';
             }
+            $submissionData['score']=$score;
             saveSubmission($conn, $submissionData, $problemId, $userId, $data['code'],$score);
         }
 
@@ -144,11 +154,11 @@ try {
             'stderr' => $stderr,
             'compile_output' => $compile_output,
             'status' => $status,
-            'created_at' => $result['created_at'] ?? '',
-            'finished_at' => $result['finished_at'] ?? '',
+            'created_at' => $submitTime,
+            'finished_at' => $judgeTime ,
             'token' => $token,
-            'time' => $result['time'] ?? '',
-            'memory' => $result['memory'] ?? ''
+            'time' => $timeTaken,
+            'memory' => $memoryTaken
         ]);
     }
 } catch (Exception $e) {

@@ -125,7 +125,7 @@ $conn->close();
                                 <tr>
                                     <th scope="col">Submission ID</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Submission Time (GMT)</th>
+                                    <th scope="col">Submission Time</th>
                                     <th scope="col">Time Taken (s)</th>
                                     <th scope="col">Memory Used (kb)</th>
                                     <th scope="col">Language</th>

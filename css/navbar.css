@@ -96,6 +96,7 @@
 }
 
 #clock {
+    color: black;
     position: fixed;
     right: 10px;
     bottom: 0;
@@ -115,13 +116,6 @@
     -ms-user-select: none;
     user-select: none !important;
 }
-.clockTimer {
-    font-weight: 600;
-    font-size: larger;
-    color: inherit;
-    display: inline-block;
-}
-
 
 @media (max-width: 992px) {
     .navbar-nav {

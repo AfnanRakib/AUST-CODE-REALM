@@ -73,7 +73,7 @@ $conn->close();
                     <th scope="col">ID</th>
                     <th scope="col">Problem</th>
                     <th scope="col">User</th>
-                    <th scope="col">Submission Time (GMT)</th>
+                    <th scope="col">Submission Time</th>
                     <th scope="col">Time Taken (s)</th>
                     <th scope="col">Memory (kb)</th>
                     <th scope="col">Language</th>
