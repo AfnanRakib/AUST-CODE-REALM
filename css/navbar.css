@@ -9,6 +9,7 @@
 .navbar-brand img {
     max-height: 50px;
     margin-left: 10px;
+    content:url('../images/logo.png');
 }
 
 .navbar-nav {
@@ -94,7 +95,6 @@
     background-color: #007d4c;
     border-color: #005b37;
 }
-
 #clock {
     color: black;
     position: fixed;
@@ -104,10 +104,10 @@
     height: 80px;
     margin: 0;
     padding: 20px 0;
-    background-image: url('../images/clockbg.png');
+    background-image: url('../images/clockbg2.png');
     background-size: 160px;
     text-align: center;
-    line-height: 20px;
+    line-height: 18px;
     font-size: 15px;
     cursor: pointer;
     z-index: 50;
@@ -115,7 +115,26 @@
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none !important;
+    transition: transform 0.3s ease-in-out;
 }
+
+#toggle-btn {
+    position: fixed;
+    right: 167px;
+    bottom: 24px;
+    border: 2px solid black;
+    border-right-color: transparent;
+    border-radius: 20px;
+    background-color: grey;
+    color: black;
+    padding: 5px 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 51;
+    font-weight: bold;
+    transition: transform 0.3s ease-in-out;
+}
+
 
 @media (max-width: 992px) {
     .navbar-nav {
@@ -146,6 +165,13 @@
 
     .collapse {
         order: 3;
+    }
+}
+@media (max-width: 450px) {
+    .navbar-brand img {
+        max-height: 50px;
+        margin-left: 10px;
+        content:url('../images/logosm.png');
     }
 }
 

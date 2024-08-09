@@ -13,7 +13,7 @@ $gmtOffset = date('P'); // Get server's GMT offset
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light">
-    <a class="navbar-brand" href="<?php echo $basePath; ?>index.php"><img src="<?php echo $basePath; ?>images/logo.png" alt="ACR"></a>
+    <a class="navbar-brand" href="<?php echo $basePath; ?>index.php"><img src="" alt="ACR"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -55,9 +55,16 @@ $gmtOffset = date('P'); // Get server's GMT offset
         <a class="btn btn-primary" id="loginbtn" href="<?php echo $basePath; ?>pages/login.php">Login</a>
     <?php endif; ?>
 </nav>
-
-<a href="https://www.timeanddate.com/worldclock/" target="_blank">
-    <div id="clock" class="text-center mb-4">
+<?php
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: {$basePath}index.php");
+    exit();
+}
+?>
+<a id="toggleClockBtn" href="javascript:void(0)" onclick="toggleClock()" class="text-center">
+    <div id="toggle-btn" class="text-center">◀</div>
+    <div id="clock" class="text-center">
         <span id="clock-text" style="font-weight: 600;font-size: larger;">Loading...</span>
         <span id="gmt-offset" style="font-size:smaller;"></span><br>
         <span id="date"></span><br>
@@ -87,15 +94,23 @@ $gmtOffset = date('P'); // Get server's GMT offset
         document.getElementById('date').textContent = formattedDate;
     }
 
+    function toggleClock() {
+        var clock = document.getElementById('clock');
+        var toggleBtn = document.getElementById('toggle-btn');
+        
+        if (clock.style.transform === "translateX(160px)") {
+            clock.style.transform = "translateX(0)";
+            toggleBtn.style.transform = "translateX(0)";
+            toggleBtn.textContent = "◀";
+        } else {
+            clock.style.transform = "translateX(160px)";
+            toggleBtn.style.transform = "translateX(167px)";
+            toggleBtn.textContent = "▶";
+        }
+    }
+
     updateClock();
     setInterval(updateClock, 1000);
 </script>
 
 
-<?php
-if (isset($_GET['logout'])) {
-    session_destroy();
-    header("Location: {$basePath}index.php");
-    exit();
-}
-?>
