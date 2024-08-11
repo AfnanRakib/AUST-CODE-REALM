@@ -11,21 +11,26 @@ if (!isset($_SESSION['user']['UserID'])) {
     header("Location: login.php");
     exit();
 }
-date_default_timezone_set('Asia/Dhaka'); // Set timezone
-$tz=date_default_timezone_get();
-$ini_tz=ini_get('date.timezone');
+date_default_timezone_set('Asia/Dhaka');
 include 'config.php';
 
 $userId = $_SESSION['user']['UserID'];
-
-//change the comment if want top change api
 require_once '../helpers/judge0.php';
-//require_once '../helpers/hostedJudge0.php';
 
-function saveSubmission($conn, $submissionData, $problemId, $userId, $code,$score) {
-    $sql = "INSERT INTO submissions (ProblemID, UserID, LanguageID, SubmissionTime,JudgeTime, TimeTaken, MemoryUsed, Code, Status, Score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+function saveSubmission($conn, $submissionData, $problemId, $userId, $code, $score) {
+    $sql = "INSERT INTO submissions (ProblemID, UserID, LanguageID, SubmissionTime, JudgeTime, TimeTaken, MemoryUsed, Code, Status, Score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iisssdissi", $problemId, $userId, $submissionData['language_id'], $submissionData['submission_time'],$submissionData['judge_time'], $submissionData['time'], $submissionData['memory'], $code, $submissionData['status'], $score);
+    $stmt->bind_param("iisssdissi", $problemId, $userId, $submissionData['language_id'], $submissionData['submission_time'], $submissionData['judge_time'], $submissionData['time'], $submissionData['memory'], $code, $submissionData['status'], $score);
+    $stmt->execute();
+    $submissionId = $stmt->insert_id;
+    $stmt->close();
+    return $submissionId;
+}
+
+function saveContestSubmission($conn, $contestId, $userId, $problemId, $submissionId, $status, $attempts, $penalty) {
+    $sql = "INSERT INTO contest_submissions (ContestID, UserID, ProblemID, SubmissionID, SubmissionTime, Status, attempts, penalty) VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iiissii", $contestId, $userId, $problemId, $submissionId, $status, $attempts, $penalty);
     $stmt->execute();
     $stmt->close();
 }
@@ -47,7 +52,6 @@ function getSubmissionWithPolling($token, $maxAttempts = 5, $interval = 3) {
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = json_decode(file_get_contents('php://input'), true);
-        error_log(print_r($data, true));
         $isRun = $data['isRun'];
         $problem = $data['problem'];
         $testcases = $data['testcases'];
@@ -63,14 +67,23 @@ try {
         $status = 'Accepted';
 
         $submitTime = date('Y-m-d H:i:s');
-        $timeTaken=0;
-        $memoryTaken=0;
+        $timeTaken = 0;
+        $memoryTaken = 0;
+
+        // Determine the number of previous attempts
+        $sql = "SELECT COUNT(*) as attempts FROM contest_submissions WHERE ContestID = ? AND UserID = ? AND ProblemID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iii", $contest_id, $userId, $problemId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $attempts = $row['attempts'] + 1;
+        $stmt->close();
 
         foreach ($testcases as $index => $testcase) {
             $stdin = $testcase['Input'];
             $expected_output = $testcase['Output'];
 
-            // Create a submission
             $submission_response = createSubmission([
                 'language_id' => $language_id,
                 'code' => $source_code
@@ -85,28 +98,27 @@ try {
                 throw new Exception('No token received from submission. Full response: ' . json_encode($submission_response));
             }
 
-            // Fetch submission result using polling
             $result = getSubmissionWithPolling($token);
 
-            // Decode base64 encoded fields
             $stdout = base64_decode($result['stdout'] ?? '');
             $stderr = base64_decode($result['stderr'] ?? '');
             $compile_output = base64_decode($result['compile_output'] ?? '');
             $status_description = $result['status']['description'] ?? '';
 
-            $timeTaken=max($timeTaken,$result['time']);
-            $memoryTaken=max($memoryTaken,$result['memory']);
+            $timeTaken = max($timeTaken, $result['time']);
+            $memoryTaken = max($memoryTaken, $result['memory']);
 
-            // Check if the output matches the expected output
             if ($status_description !== 'Accepted') {
-                $cnt= $index + 1;
+                $cnt = $index + 1;
                 $isAccepted = false;
                 $status = "$status_description on testcase $cnt";
                 break;
             }
         }
         $judgeTime = date('Y-m-d H:i:s');
-        // Save submission details to the database
+
+        // Calculate the penalty
+        $penalty = ($attempts - 1) * 20 * 60; // Each failed attempt adds 20 minutes of penalty
         $submissionData = [
             'problemId' => $problemId,
             'language_id' => $languageName,
@@ -115,22 +127,20 @@ try {
             'time' => $timeTaken,
             'memory' => $memoryTaken,
             'status' => $status,
-            'score' => $isAccepted ? 100 : 0// score will be counted based on some conditions later
+            'score' => $isAccepted ? 100 : 0
         ];
 
-        if(!$isRun){
+        if (!$isRun) {
             $currentTime = date('Y-m-d H:i:s');
             $runStatus = '';
-            $score='';
 
-            $query = "SELECT `ContestID` FROM `contestproblems` WHERE `ProblemID`= $problemId";
+            $query = "SELECT ContestID FROM contestproblems WHERE ProblemID = $problemId";
             $contest_id_result = $conn->query($query);
             if (!$contest_id_result) {
                 die(json_encode(["error" => "Query failed: " . $conn->error]));
             }
             $row = $contest_id_result->fetch_assoc();
-            
-            $contest_id=$row['ContestID'];
+            $contest_id = $row['ContestID'];
 
             $query = "SELECT * FROM contests WHERE ContestID = $contest_id";
             $contestResult = $conn->query($query);
@@ -142,11 +152,12 @@ try {
             if ($contest['StartTime'] <= $currentTime && $contest['EndTime'] >= $currentTime) {
                 $runStatus = 'Running';
             }
-            if($runStatus == 'Running'){
-                $score='100';
+            if ($runStatus == 'Running') {
+                $submissionData['score'] = 100;
             }
-            $submissionData['score']=$score;
-            saveSubmission($conn, $submissionData, $problemId, $userId, $data['code'],$score);
+
+            $submissionId = saveSubmission($conn, $submissionData, $problemId, $userId, $data['code'], $submissionData['score']);
+            saveContestSubmission($conn, $contest_id, $userId, $problemId, $submissionId, $status, $attempts, $penalty);
         }
 
         echo json_encode([
@@ -155,7 +166,7 @@ try {
             'compile_output' => $compile_output,
             'status' => $status,
             'created_at' => $submitTime,
-            'finished_at' => $judgeTime ,
+            'finished_at' => $judgeTime,
             'token' => $token,
             'time' => $timeTaken,
             'memory' => $memoryTaken

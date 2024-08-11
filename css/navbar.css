@@ -98,7 +98,7 @@
 #clock {
     color: black;
     position: fixed;
-    right: 10px;
+    right: 0px;
     bottom: 0;
     width: 160px;
     height: 80px;
@@ -120,11 +120,10 @@
 
 #toggle-btn {
     position: fixed;
-    right: 167px;
+    right: 160px;
     bottom: 24px;
     border: 2px solid black;
-    border-right-color: transparent;
-    border-radius: 20px;
+    border-radius: 50%;
     background-color: grey;
     color: black;
     padding: 5px 5px;

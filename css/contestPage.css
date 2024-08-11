@@ -34,3 +34,7 @@ body {
 h1, h2 {
     color: #00A859;
 }
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+}
