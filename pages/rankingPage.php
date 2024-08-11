@@ -7,104 +7,108 @@
     <link rel="stylesheet" href="../css/contestPage.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <title>Contest Rankings</title>
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle !important;
+        }
+        .accepted { color: green; font-weight: bold; }
+        .attempted { color: red; font-weight: bold; }
+        .unattempted { color: #ccc; }
+        .problem-cell {
+            min-width: 80px;
+        }
+    </style>
 </head>
 <body>
 <?php include '../helpers/navbar.php'; ?>
-<div class="container mt-4">
-    <h1 class="text-center">Contest Rankings</h1>
-    <table class="table table-bordered mt-4">
-        <thead>
-        <tr>
-            <th>Rank</th>
-            <th>User Handle</th>
-            <th>Problems Solved</th>
-            <th>Total Penalty</th>
-            <th>Details</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        include '../helpers/config.php';
-        $contest_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+<div class="container">
+    <h1 class="text-center mb-4">Contest Rankings</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Rank</th>
+                    <th>Who</th>
+                    <th>=</th>
+                    <th>Penalty</th>
+                    <?php
+                    include '../helpers/config.php';
+                    // Fetch problem IDs for this contest
+                    $contest_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+                    $problem_sql = "SELECT ProblemID FROM contestproblems WHERE ContestID = ? ORDER BY ProblemID";
+                    $problem_stmt = $conn->prepare($problem_sql);
+                    $problem_stmt->bind_param("i", $contest_id);
+                    $problem_stmt->execute();
+                    $problem_result = $problem_stmt->get_result();
+                    while ($problem = $problem_result->fetch_assoc()) {
+                        echo "<th class='problem-cell'>{$problem['ProblemID']}</th>";
+                    }
+                    $problem_stmt->close();
+                    ?>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            // Fetch overall rankings
+            $sql = "SELECT u.Handle, cr.problems_solved, cr.total_penalty, cr.rank
+                    FROM contest_rankings cr
+                    JOIN users u ON cr.UserID = u.UserID
+                    WHERE cr.ContestID = ?
+                    ORDER BY cr.rank ASC";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $contest_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $rank = 1;
 
-        // Fetch overall rankings
-        $sql = "SELECT u.Handle, COUNT(cs.ProblemID) as problems_solved, 
-                       SUM(TIME_TO_SEC(TIMEDIFF(cs.SubmissionTime, c.StartTime)) + (cs.attempts - 1) * 20 * 60) as total_penalty 
-                FROM users u 
-                JOIN contest_submissions cs ON u.UserID = cs.UserID 
-                JOIN contests c ON cs.ContestID = c.ContestID 
-                WHERE cs.Status = 'Accepted' AND cs.ContestID = ?
-                GROUP BY u.UserID 
-                ORDER BY problems_solved DESC, total_penalty ASC";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $contest_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $rank = 1;
-
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>
-                    <td>{$rank}</td>
-                    <td>{$row['Handle']}</td>
-                    <td>{$row['problems_solved']}</td>
-                    <td>{$row['total_penalty']}</td>
-                    <td><button class='btn btn-info' data-handle='{$row['Handle']}' data-contest='{$contest_id}'>Details</button></td>
-                  </tr>";
-            $rank++;
-        }
-        $stmt->close();
-        ?>
-        </tbody>
-    </table>
-</div>
-
-<!-- Modal to show details -->
-<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailsModalLabel">Submission Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Problem ID</th>
-                            <th>Status</th>
-                            <th>Penalty</th>
-                        </tr>
-                    </thead>
-                    <tbody id="detailsTableBody">
-                        <!-- Details will be loaded here via AJAX -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                        <td>{$row['rank']}</td>
+                        <td>{$row['Handle']}</td>
+                        <td>{$row['problems_solved']}</td>
+                        <td>{$row['total_penalty']}</td>";
+                
+                // Fetch submission details for each problem
+                $problem_sql = "SELECT ProblemID, Status, attempts, 
+                                FLOOR(TIME_TO_SEC(TIMEDIFF(SubmissionTime, c.StartTime)) / 60) as time_taken
+                                FROM contest_submissions cs
+                                JOIN contests c ON cs.ContestID = c.ContestID
+                                WHERE cs.ContestID = ? AND cs.UserID = (SELECT UserID FROM users WHERE Handle = ?)
+                                ORDER BY ProblemID";
+                $problem_stmt = $conn->prepare($problem_sql);
+                $problem_stmt->bind_param("is", $contest_id, $row['Handle']);
+                $problem_stmt->execute();
+                $problem_result = $problem_stmt->get_result();
+                
+                $submissions = [];
+                while ($sub = $problem_result->fetch_assoc()) {
+                    $submissions[$sub['ProblemID']] = $sub;
+                }
+                
+                foreach ($submissions as $problemId => $sub) {
+                    if ($sub['Status'] == 'Accepted') {
+                        echo "<td class='accepted'>+{$sub['attempts']}";
+                        echo "<br>{$sub['time_taken']}</td>";
+                    } elseif ($sub['attempts'] > 0) {
+                        echo "<td class='attempted'>-{$sub['attempts']}</td>";
+                    } else {
+                        echo "<td class='unattempted'>.</td>";
+                    }
+                }         
+                echo "</tr>";
+                $rank++;
+            }
+            $stmt->close();
+            ?>
+            </tbody>
+        </table>
     </div>
 </div>
-
 <script src="../js/jquery-3.1.1.min.js"></script>
 <script src="../js/bootstrap.bundle.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('.btn-info').on('click', function() {
-        var handle = $(this).data('handle');
-        var contestId = $(this).data('contest');
-        $.ajax({
-            url: '../helpers/fetchRanking.php',
-            type: 'GET',
-            data: {
-                handle: handle,
-                contestId: contestId
-            },
-            success: function(response) {
-                $('#detailsTableBody').html(response);
-                $('#detailsModal').modal('show');
-            }
-        });
-    });
-});
-</script>
 </body>
 </html>
