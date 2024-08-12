@@ -15,6 +15,7 @@ date_default_timezone_set('Asia/Dhaka');
 include 'config.php';
 
 $userId = $_SESSION['user']['UserID'];
+
 require_once '../helpers/judge0.php';
 
 function saveSubmission($conn, $submissionData, $problemId, $userId, $code, $score) {
@@ -41,19 +42,89 @@ function saveContestSubmission($conn, $contestId, $userId, $problemId, $submissi
     // Calculate time since contest start in minutes
     $timeDiff = $startTime->diff($submissionTime);
     $minutesSinceStart = $timeDiff->days * 24 * 60 + $timeDiff->h * 60 + $timeDiff->i;
-    
     // Calculate penalty
-    $penalty = $minutesSinceStart + ($attempts - 1) * 20;
+    $penalty = 0;
+    if ($status == 'Accepted') {
+        $penalty = $minutesSinceStart + ($attempts - 1) * 50;
+    } else {
+        $penalty = ($attempts - 1) * 50; // Only add 50 minutes per failed attempt
+    }
 
-    $sql = "INSERT INTO contest_submissions (ContestID, UserID, ProblemID, SubmissionID, SubmissionTime, Status, attempts, penalty) VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)";
+    $sql = "SELECT * FROM contest_submissions WHERE ContestID = ? AND UserID = ? AND ProblemID = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iiissii", $contestId, $userId, $problemId, $submissionId, $status, $attempts, $penalty);
+    $stmt->bind_param("iii", $contestId, $userId, $problemId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        // Update existing record
+        $sql = "UPDATE contest_submissions SET 
+                SubmissionID = ?, SubmissionTime = NOW(), Status = ?, attempts = attempts + 1, penalty = penalty + ?
+                WHERE ContestID = ? AND UserID = ? AND ProblemID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("issiii", $submissionId, $status, $penalty, $contestId, $userId, $problemId);
+    } else {
+        // Insert new record
+        $sql = "INSERT INTO contest_submissions (ContestID, UserID, ProblemID, SubmissionID, SubmissionTime, Status, attempts, penalty) 
+                VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iiiisii", $contestId, $userId, $problemId, $submissionId, $status, $attempts, $penalty);
+    }
+    $stmt->execute();
+    $stmt->close();
+
+    $sql = "INSERT INTO contest_rankings (ContestID, UserID, problems_solved, total_penalty) 
+            VALUES (?, ?, 
+                (SELECT COUNT(DISTINCT ProblemID) FROM contest_submissions 
+                WHERE ContestID = ? AND UserID = ? AND Status = 'Accepted'), 
+                (SELECT SUM(penalty) FROM contest_submissions 
+                WHERE ContestID = ? AND UserID = ?)
+            ) 
+            ON DUPLICATE KEY UPDATE 
+            problems_solved = (
+                SELECT COUNT(DISTINCT ProblemID) FROM contest_submissions 
+                WHERE ContestID = ? AND UserID = ? AND Status = 'Accepted'
+            ),
+            total_penalty = (
+                SELECT SUM(penalty) FROM contest_submissions 
+                WHERE ContestID = ? AND UserID = ?
+            )";
+    $stmt = $conn->prepare($sql);
+    //$stmt->bind_param("iiiiiiiiii",$contestId,$userId,$contestId,$userId,$contestId,$userId,$contestId,$userId,$contestId,$userId);
+    $stmt->bind_param("iiiiiiiiii", 
+        $contestId, 
+        $userId, 
+        $contestId,
+        $userId,
+        $contestId,
+        $userId,
+        $contestId,
+        $userId,
+        $contestId,
+        $userId
+    );
+    $stmt->execute();
+    $stmt->close();
+
+    $sql = "SET @rank = 0";
+    $conn->query($sql);
+
+    $sql = "UPDATE contest_rankings cr1,
+                (SELECT ContestID, UserID,
+                        @rank := @rank + 1 AS new_rank
+                    FROM contest_rankings
+                    WHERE ContestID = ?
+                    ORDER BY problems_solved DESC, total_penalty ASC) cr2
+            SET cr1.rank = cr2.new_rank
+            WHERE cr1.ContestID = cr2.ContestID AND cr1.UserID = cr2.UserID";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $contestId);
     $stmt->execute();
     $stmt->close();
 }
 
-function getSubmissionWithPolling($token, $maxAttempts = 5, $interval = 3) {
-    sleep(2);
+function getSubmissionWithPolling($token, $maxAttempts = 5, $interval = 2) {
+    sleep(1);
     $attempts = 0;
     while ($attempts < $maxAttempts) {
         $result = getSubmission($token);
@@ -86,6 +157,14 @@ try {
         $submitTime = date('Y-m-d H:i:s');
         $timeTaken = 0;
         $memoryTaken = 0;
+
+        $query = "SELECT ContestID FROM contestproblems WHERE ProblemID = $problemId";
+        $contest_id_result = $conn->query($query);
+        if (!$contest_id_result) {
+            die(json_encode(["error" => "Query failed: " . $conn->error]));
+        }
+        $row = $contest_id_result->fetch_assoc();
+        $contest_id = $row['ContestID'];
 
         // Determine the number of previous attempts
         $sql = "SELECT COUNT(*) as attempts FROM contest_submissions WHERE ContestID = ? AND UserID = ? AND ProblemID = ?";
@@ -152,14 +231,6 @@ try {
             $currentTime = date('Y-m-d H:i:s');
             $runStatus = '';
 
-            $query = "SELECT ContestID FROM contestproblems WHERE ProblemID = $problemId";
-            $contest_id_result = $conn->query($query);
-            if (!$contest_id_result) {
-                die(json_encode(["error" => "Query failed: " . $conn->error]));
-            }
-            $row = $contest_id_result->fetch_assoc();
-            $contest_id = $row['ContestID'];
-
             $query = "SELECT * FROM contests WHERE ContestID = $contest_id";
             $contestResult = $conn->query($query);
             if (!$contestResult) {
@@ -169,39 +240,12 @@ try {
 
             if ($contest['StartTime'] <= $currentTime && $contest['EndTime'] >= $currentTime) {
                 $runStatus = 'Running';
-            }
-            if ($runStatus == 'Running') {
                 $submissionData['score'] = 100;
             }
-
-            $sql = "INSERT INTO contest_rankings (ContestID, UserID, problems_solved, total_penalty) 
-                    VALUES (?, ?, IF(? = 'Accepted', 1, 0), ?) 
-                    ON DUPLICATE KEY UPDATE 
-                    problems_solved = problems_solved + IF(? = 'Accepted' AND problems_solved < (SELECT COUNT(*) FROM contestproblems WHERE ContestID = ?), 1, 0),
-                    total_penalty = total_penalty + ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("iiisisi", $contest_id, $userId, $status, $penalty, $status, $contest_id, $penalty);
-            $stmt->execute();
-            $stmt->close();
-
-            $sql = "SET @rank = 0";
-            $conn->query($sql);
-
-            $sql = "UPDATE contest_rankings cr1,
-                        (SELECT ContestID, UserID,
-                                @rank := @rank + 1 AS new_rank
-                            FROM contest_rankings
-                            WHERE ContestID = ?
-                            ORDER BY problems_solved DESC, total_penalty ASC) cr2
-                    SET cr1.rank = cr2.new_rank
-                    WHERE cr1.ContestID = cr2.ContestID AND cr1.UserID = cr2.UserID";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $contest_id);
-            $stmt->execute();
-            $stmt->close();
-
             $submissionId = saveSubmission($conn, $submissionData, $problemId, $userId, $data['code'], $submissionData['score']);
-            saveContestSubmission($conn, $contest_id, $userId, $problemId, $submissionId, $status, $attempts, $penalty);
+            if ($runStatus == 'Running'){
+                saveContestSubmission($conn, $contest_id, $userId, $problemId, $submissionId, $status, $attempts, $penalty);
+            }
         }
 
         echo json_encode([
