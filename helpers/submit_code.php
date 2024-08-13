@@ -244,7 +244,17 @@ try {
             }
             $submissionId = saveSubmission($conn, $submissionData, $problemId, $userId, $data['code'], $submissionData['score']);
             if ($runStatus == 'Running'){
-                saveContestSubmission($conn, $contest_id, $userId, $problemId, $submissionId, $status, $attempts, $penalty);
+                // Only save contest submission if the problem hasn't been accepted before
+                $checkSql = "SELECT Status FROM contest_submissions 
+                             WHERE ContestID = ? AND UserID = ? AND ProblemID = ? AND Status = 'Accepted'";
+                $checkStmt = $conn->prepare($checkSql);
+                $checkStmt->bind_param("iii", $contest_id, $userId, $problemId);
+                $checkStmt->execute();
+                $checkResult = $checkStmt->get_result();
+                
+                if ($checkResult->num_rows == 0) {
+                    saveContestSubmission($conn, $contest_id, $userId, $problemId, $submissionId, $status, $attempts, $penalty);
+                }
             }
         }
 
