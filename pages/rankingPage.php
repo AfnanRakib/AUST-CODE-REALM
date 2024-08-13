@@ -39,13 +39,22 @@
                     include '../helpers/config.php';
                     // Fetch problem IDs for this contest
                     $contest_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-                    $problem_sql = "SELECT ProblemID FROM contestproblems WHERE ContestID = ? ORDER BY ProblemID";
+
+                    $problem_sql = "SELECT p.ProblemNumber, cp.ProblemID 
+                                    FROM contestproblems cp
+                                    JOIN problems p ON cp.ProblemID = p.ProblemID
+                                    WHERE cp.ContestID = ? 
+                                    ORDER BY p.ProblemNumber";
                     $problem_stmt = $conn->prepare($problem_sql);
                     $problem_stmt->bind_param("i", $contest_id);
                     $problem_stmt->execute();
                     $problem_result = $problem_stmt->get_result();
+
+                    // Create an array to store problem numbers and IDs
+                    $problems = [];
                     while ($problem = $problem_result->fetch_assoc()) {
-                        echo "<th class='problem-cell'>{$problem['ProblemID']}</th>";
+                        $problems[$problem['ProblemID']] = $problem['ProblemNumber'];
+                        echo "<th class='problem-cell'><a href=".'problemPage.php?id='.$problem['ProblemID'].">{$problem['ProblemNumber']}</a></th>";
                     }
                     $problem_stmt->close();
                     ?>
@@ -89,16 +98,22 @@
                     $submissions[$sub['ProblemID']] = $sub;
                 }
                 
-                foreach ($submissions as $problemId => $sub) {
-                    if ($sub['Status'] == 'Accepted') {
-                        echo "<td class='accepted'>+{$sub['attempts']}";
-                        echo "<br>{$sub['time_taken']}</td>";
-                    } elseif ($sub['attempts'] > 0) {
-                        echo "<td class='attempted'>-{$sub['attempts']}</td>";
+                foreach ($problems as $problemId => $problemNumber) {
+                    if (isset($submissions[$problemId])) {
+                        $sub = $submissions[$problemId];
+                        if ($sub['Status'] == 'Accepted' && $sub['attempts'] == 1) {
+                            echo "<td class='accepted'>+<br>{$sub['time_taken']}</td>";
+                        } else if ($sub['Status'] == 'Accepted') {
+                            echo "<td class='accepted'>+".($sub['attempts']-1)."<br>{$sub['time_taken']}</td>";
+                        } elseif ($sub['attempts'] > 0) {
+                            echo "<td class='attempted'>-{$sub['attempts']}</td>";
+                        } else {
+                            echo "<td class='unattempted'>.</td>";
+                        }
                     } else {
                         echo "<td class='unattempted'>.</td>";
                     }
-                }         
+                }      
                 echo "</tr>";
                 $rank++;
             }
