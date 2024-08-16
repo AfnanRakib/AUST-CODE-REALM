@@ -83,7 +83,7 @@
                 
                 // Fetch submission details for each problem
                 $problem_sql = "SELECT ProblemID, Status, attempts, 
-                                FLOOR(TIME_TO_SEC(TIMEDIFF(SubmissionTime, c.StartTime)) / 60) as time_taken
+                                SEC_TO_TIME(TIME_TO_SEC(TIMEDIFF(SubmissionTime, c.StartTime))) as time_taken
                                 FROM contest_submissions cs
                                 JOIN contests c ON cs.ContestID = c.ContestID
                                 WHERE cs.ContestID = ? AND cs.UserID = (SELECT UserID FROM users WHERE Handle = ?)
@@ -101,10 +101,12 @@
                 foreach ($problems as $problemId => $problemNumber) {
                     if (isset($submissions[$problemId])) {
                         $sub = $submissions[$problemId];
+                        $time_taken = "<span style='color: blue; font-size: smaller;'>{$sub['time_taken']}</span>";
+                        
                         if ($sub['Status'] == 'Accepted' && $sub['attempts'] == 1) {
-                            echo "<td class='accepted'>+<br>{$sub['time_taken']}</td>";
+                            echo "<td class='accepted'>+<br>{$time_taken}</td>";
                         } else if ($sub['Status'] == 'Accepted') {
-                            echo "<td class='accepted'>+".($sub['attempts']-1)."<br>{$sub['time_taken']}</td>";
+                            echo "<td class='accepted'>+".($sub['attempts']-1)."<br>{$time_taken}</td>";
                         } elseif ($sub['attempts'] > 0) {
                             echo "<td class='attempted'>-{$sub['attempts']}</td>";
                         } else {
@@ -113,7 +115,7 @@
                     } else {
                         echo "<td class='unattempted'>.</td>";
                     }
-                }      
+                }     
                 echo "</tr>";
                 $rank++;
             }

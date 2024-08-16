@@ -63,7 +63,7 @@ if (isset($_GET['logout'])) {
 }
 ?>
 <a id="toggleClockBtn" href="javascript:void(0)" onclick="toggleClock()" class="text-center">
-    <div id="toggle-btn" class="text-center">▶</div>
+    <div id="toggle-btn" class="text-center">〉</div>
 </a>
 <a href="https://www.timeanddate.com/worldclock/" target="_blank">
     <div id="clock" class="text-center">
@@ -103,11 +103,11 @@ if (isset($_GET['logout'])) {
         if (clock.style.transform === "translateX(160px)") {
             clock.style.transform = "translateX(0)";
             toggleBtn.style.transform = "translateX(0)";
-            toggleBtn.textContent = "▶";
+            toggleBtn.textContent = "〉";
         } else {
             clock.style.transform = "translateX(160px)";
             toggleBtn.style.transform = "translateX(160px)";
-            toggleBtn.textContent = "◀";
+            toggleBtn.textContent = "〈";
         }
     }
 
