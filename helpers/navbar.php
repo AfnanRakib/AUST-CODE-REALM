@@ -30,7 +30,6 @@ $handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
                 <a class="nav-link" href="<?php echo $basePath; ?>pages/courses/courses.php">Courses</a>
 
             </li>
-        <?php if(($isLoggedIn) && $_SESSION['user']['User_Role']=='admin'): ?>
             <li class="nav-item">
 <<<<<<< Updated upstream
 =======
@@ -41,7 +40,6 @@ $handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
 >>>>>>> Stashed changes
                 <a class="nav-link" href="<?php echo $basePath; ?>admin/createProblem.php">Admin Panel</a>
             </li>
-        <?php endif; ?>
         </ul>
     </div>
     <?php if ($isLoggedIn): ?>
