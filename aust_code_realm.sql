@@ -201,85 +201,6 @@ INSERT INTO `courses` (`id`, `title`, `description`, `image_url`, `created_at`, 
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `posts`
---
-
-CREATE TABLE `posts` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `image_url` varchar(255) DEFAULT NULL,
-  `video_url` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `posts`
---
-
-INSERT INTO `posts` (`id`, `user_id`, `title`, `content`, `image_url`, `video_url`, `created_at`, `updated_at`) VALUES
-(2, 7, 'janina', 'blah blah', NULL, NULL, '2024-08-20 06:51:25', '2024-08-20 06:51:25'),
-(3, 6, 'dhuttturi', 'dhetteri', NULL, NULL, '2024-08-20 06:51:25', '2024-08-20 06:51:25'),
-(6, 7, 'janina', 'blah blah', NULL, NULL, '2024-08-20 06:51:55', '2024-08-20 06:51:55'),
-(7, 6, 'dhuttturi', 'dhetteri', NULL, NULL, '2024-08-20 06:51:55', '2024-08-20 06:51:55'),
-(10, 10, 'janiaa', 'dasdadasdasd', NULL, NULL, '2024-08-25 05:09:46', '2024-08-25 05:09:46'),
-(12, 10, 'dasd', 'dasdad', NULL, 'uploads/videos/66cac21de48f5.mp4', '2024-08-25 05:33:17', '2024-08-25 05:33:17'),
-(13, 10, 'dasdasd', '<p>asdadasd</p>', 'uploads/images/66cac282c2eb0.png', 'uploads/videos/66cac282c2f9f.mp4', '2024-08-25 05:34:58', '2024-08-25 05:34:58'),
-(15, 10, 'asdasdasdasd', '<p>dsaddasdasdasd</p>', 'uploads/images/66cac5396290a.png', 'uploads/videos/66cac53962a80.mp4', '2024-08-25 05:46:33', '2024-08-25 05:46:33'),
-(16, 10, 'asdd', 'dasdad', 'uploads/images/66cac5db443e3.png', 'uploads/videos/66cac5db444c4.mp4', '2024-08-25 05:49:15', '2024-08-25 05:49:15');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `post_comments`
---
-
-CREATE TABLE `post_comments` (
-  `id` int(11) NOT NULL,
-  `post_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `post_comments`
---
-
-INSERT INTO `post_comments` (`id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
-(1, 6, 10, 'fsddsf', '2024-08-20 06:52:12'),
-(2, 6, 10, 'kokok', '2024-08-20 06:52:48'),
-(3, 6, 10, 'das', '2024-08-21 05:55:36'),
-(4, 6, 10, 'das', '2024-08-25 05:06:25'),
-(5, 6, 10, 'das', '2024-08-25 05:07:37');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `post_comment_replies`
---
-
-CREATE TABLE `post_comment_replies` (
-  `id` int(11) NOT NULL,
-  `comment_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `post_comment_replies`
---
-
-INSERT INTO `post_comment_replies` (`id`, `comment_id`, `user_id`, `content`, `created_at`) VALUES
-(1, 1, 10, 'dasda', '2024-08-20 06:52:15'),
-(2, 2, 10, 'lplplplp', '2024-08-20 06:52:56'),
-(3, 3, 10, 'dasdad', '2024-08-21 05:55:40'),
-(4, 4, 10, 'dasd', '2024-08-25 05:06:32'),
-(5, 5, 10, 'das', '2024-08-25 05:07:41');
 
 -- --------------------------------------------------------
 
@@ -973,25 +894,6 @@ ALTER TABLE `contest_submissions`
 ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
---
--- Constraints for table `posts`
---
-ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
-
---
--- Constraints for table `post_comments`
---
-ALTER TABLE `post_comments`
-  ADD CONSTRAINT `post_comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `post_comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
-
---
--- Constraints for table `post_comment_replies`
---
-ALTER TABLE `post_comment_replies`
-  ADD CONSTRAINT `post_comment_replies_ibfk_1` FOREIGN KEY (`comment_id`) REFERENCES `post_comments` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `post_comment_replies_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
 --
 -- Constraints for table `problem_tags`
@@ -1034,6 +936,138 @@ ALTER TABLE `testcases`
 ALTER TABLE `videos`
   ADD CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `videos_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
+
+
+
+--
+-- Table structure for table `posts`
+--
+CREATE TABLE `posts` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `video_url` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `user_id`, `title`, `content`, `image_url`, `video_url`, `created_at`, `updated_at`) VALUES
+(2, 7, 'janina', 'blah blah', NULL, NULL, '2024-08-20 06:51:25', '2024-08-20 06:51:25'),
+(3, 6, 'dhuttturi', 'dhetteri', NULL, NULL, '2024-08-20 06:51:25', '2024-08-20 06:51:25'),
+(6, 7, 'janina', 'blah blah', NULL, NULL, '2024-08-20 06:51:55', '2024-08-20 06:51:55'),
+(7, 6, 'dhuttturi', 'dhetteri', NULL, NULL, '2024-08-20 06:51:55', '2024-08-20 06:51:55'),
+(10, 10, 'janiaa', 'dasdadasdasd', NULL, NULL, '2024-08-25 05:09:46', '2024-08-25 05:09:46'),
+(12, 10, 'dasd', 'dasdad', NULL, 'uploads/videos/66cac21de48f5.mp4', '2024-08-25 05:33:17', '2024-08-25 05:33:17'),
+(13, 10, 'dasdasd', '<p>asdadasd</p>', 'uploads/images/66cac282c2eb0.png', 'uploads/videos/66cac282c2f9f.mp4', '2024-08-25 05:34:58', '2024-08-25 05:34:58'),
+(15, 10, 'asdasdasdasd', '<p>dsaddasdasdasd</p>', 'uploads/images/66cac5396290a.png', 'uploads/videos/66cac53962a80.mp4', '2024-08-25 05:46:33', '2024-08-25 05:46:33'),
+(16, 10, 'asdd', 'dasdad', 'uploads/images/66cac5db443e3.png', 'uploads/videos/66cac5db444c4.mp4', '2024-08-25 05:49:15', '2024-08-25 05:49:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_comments`
+--
+
+CREATE TABLE `post_comments` (
+  `id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `post_comments`
+--
+
+INSERT INTO `post_comments` (`id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
+(1, 6, 10, 'fsddsf', '2024-08-20 06:52:12'),
+(2, 6, 10, 'kokok', '2024-08-20 06:52:48'),
+(3, 6, 10, 'das', '2024-08-21 05:55:36'),
+(4, 6, 10, 'das', '2024-08-25 05:06:25'),
+(5, 6, 10, 'das', '2024-08-25 05:07:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_comment_replies`
+--
+
+CREATE TABLE `post_comment_replies` (
+  `id` int(11) NOT NULL,
+  `comment_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `post_comment_replies`
+--
+
+INSERT INTO `post_comment_replies` (`id`, `comment_id`, `user_id`, `content`, `created_at`) VALUES
+(1, 1, 10, 'dasda', '2024-08-20 06:52:15'),
+(2, 2, 10, 'lplplplp', '2024-08-20 06:52:56'),
+(3, 3, 10, 'dasdad', '2024-08-21 05:55:40'),
+(4, 4, 10, 'dasd', '2024-08-25 05:06:32'),
+(5, 5, 10, 'das', '2024-08-25 05:07:41');
+--
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `post_comment_replies`
+--
+ALTER TABLE `post_comment_replies`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `comment_id` (`comment_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+ --
+-- Constraints for table `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
+
+--
+-- Constraints for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  ADD CONSTRAINT `post_comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `post_comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
+
+--
+-- Constraints for table `post_comment_replies`
+--
+ALTER TABLE `post_comment_replies`
+  ADD CONSTRAINT `post_comment_replies_ibfk_1` FOREIGN KEY (`comment_id`) REFERENCES `post_comments` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `post_comment_replies_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
+ 
+  
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
