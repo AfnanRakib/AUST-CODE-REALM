@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2024 at 09:39 AM
+-- Generation Time: Aug 25, 2024 at 08:06 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.1.25
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `aust_code_realm`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `answers`
+--
+
+CREATE TABLE `answers` (
+  `id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `answers`
+--
+
+INSERT INTO `answers` (`id`, `question_id`, `user_id`, `content`, `created_at`) VALUES
+(1, 1, 10, 'dasdadasdasd', '2024-07-27 05:37:26'),
+(2, 2, 10, 'saSADSAD', '2024-07-27 05:38:25'),
+(3, 1, 1, 'dsaadasdasdasdasdasdasd', '2024-07-27 06:34:25'),
+(4, 1, 1, 'dsaadasdasdasdasdasdasd', '2024-07-27 06:34:55');
 
 -- --------------------------------------------------------
 
@@ -66,6 +90,7 @@ CREATE TABLE `contestproblems` (
 INSERT INTO `contestproblems` (`ContestID`, `ProblemID`) VALUES
 (1, 1),
 (1, 2),
+(1, 13),
 (2, 3),
 (2, 4),
 (3, 5);
@@ -91,11 +116,6 @@ CREATE TABLE `contests` (
 --
 
 INSERT INTO `contests` (`ContestID`, `Title`, `Description`, `StartTime`, `EndTime`, `Duration`, `CreatorID`) VALUES
-<<<<<<< Updated upstream
-(1, 'Monthly Challenge June', 'A programming contest to test your skills in various algorithms and data structures.', '2024-07-07 09:00:00', '2024-08-07 23:59:59', '30 Days', 1),
-=======
-(1, 'Monthly Challenge June', 'A programming contest to test your skills in various algorithms and data structures.', '2024-07-20 09:00:00', '2024-08-20 23:59:59', '30 Days', 1),
->>>>>>> Stashed changes
 (2, 'Weekly Coding Marathon', 'A week-long coding marathon to solve as many problems as possible.', '2024-06-07 00:00:00', '2024-06-13 23:59:59', '7 Days', 2),
 (3, 'Weekend Algorithm Sprint', 'A weekend contest focused on algorithmic challenges.', '2024-06-15 10:00:00', '2024-06-16 18:00:00', '1 Day', 3),
 (4, 'Summer Hackathon', 'Join us for a summer hackathon to build innovative projects.', '2024-08-01 08:00:00', '2024-08-07 20:00:00', '7 Days', 4),
@@ -104,8 +124,6 @@ INSERT INTO `contests` (`ContestID`, `Title`, `Description`, `StartTime`, `EndTi
 -- --------------------------------------------------------
 
 --
-<<<<<<< Updated upstream
-=======
 -- Table structure for table `contest_rankings`
 --
 
@@ -123,8 +141,6 @@ CREATE TABLE `contest_rankings` (
 --
 
 INSERT INTO `contest_rankings` (`RankingID`, `ContestID`, `UserID`, `problems_solved`, `total_penalty`, `rank`) VALUES
-(7, 1, 7, 2, 0, 1),
-(9, 1, 6, 2, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -149,15 +165,10 @@ CREATE TABLE `contest_submissions` (
 --
 
 INSERT INTO `contest_submissions` (`ContestSubmissionID`, `ContestID`, `UserID`, `ProblemID`, `SubmissionID`, `SubmissionTime`, `Status`, `attempts`, `penalty`) VALUES
-(11, 1, 7, 2, 81, '2024-08-12 00:43:27', 'Wrong Answer on testcase 1', 1, 32623),
-(12, 1, 7, 13, 82, '2024-08-12 00:47:46', 'Accepted', 1, 32627),
-(13, 1, 6, 13, 83, '2024-08-12 00:48:55', 'Wrong Answer on testcase 1', 1, 32628),
-(14, 1, 6, 13, 84, '2024-08-12 00:49:31', 'Wrong Answer on testcase 1', 1, 32629);
 
 -- --------------------------------------------------------
 
 --
->>>>>>> Stashed changes
 -- Table structure for table `courses`
 --
 
@@ -184,94 +195,20 @@ INSERT INTO `courses` (`id`, `title`, `description`, `image_url`, `created_at`, 
 (7, 'JavaScript Tutorial Full Course - Beginner to Pro (2024)', '\r\n✅ Don\'t worry if you\'re halfway through the course or finished the course, you can skip the lessons you already finished and take the final test to get your Certificate.\r\n❤️ Thanks for supporting SuperSimpleDev!', 'https://www.tutorialrepublic.com/lib/images/javascript-illustration.png', '2024-07-17 07:47:21', 10),
 (8, 'AJAX Tutorial', 'Using AJAX the data could be passed between the browser and server using XMLHttpRequest API without complete reload of the entire webpage', 'https://miro.medium.com/v2/resize:fit:1400/1*QuMR4e-gMbOomdrQQZXtUg.jpeg', '2024-07-17 07:50:03', 10),
 (9, 'Deep Learning for Computer Vision with Python and TensorFlow – Complete Course', 'Learn the basics of computer vision with deep learning and how to implement the algorithms using Tensorflow.', 'https://images.ctfassets.net/3viuren4us1n/14l8OD8yRKAV7hi6qiAH9r/56ab584206079397eaa939fd81315163/Computer_vision_3.jpg', '2024-07-17 07:52:43', 10),
-<<<<<<< Updated upstream
 (10, 'asdasda', 'dasdadasd', 'https://assets.skyfilabs.com/images/blog/what-is-computer-vision.webp', '2024-07-17 07:53:11', 10);
-=======
 (10, 'leet code', 'leet code', 'https://assets.skyfilabs.com/images/blog/what-is-computer-vision.webp', '2024-07-17 07:53:11', 10),
 (12, 'Computer vision!!', '<p>analyzing custom object</p>', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS0f-9qIc_Ymwu1hxLu4h2FS2D1DyMGOfB6A&s', '2024-08-13 14:19:08', 10);
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `posts`
---
 
-CREATE TABLE `posts` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `image_url` varchar(255) DEFAULT NULL,
-  `video_url` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `posts`
---
 
-INSERT INTO `posts` (`id`, `user_id`, `title`, `content`, `image_url`, `video_url`, `created_at`, `updated_at`) VALUES
-(2, 7, 'janina', 'blah blah', NULL, NULL, '2024-08-20 06:51:25', '2024-08-20 06:51:25'),
-(3, 6, 'dhuttturi', 'dhetteri', NULL, NULL, '2024-08-20 06:51:25', '2024-08-20 06:51:25'),
-(6, 7, 'janina', 'blah blah', NULL, NULL, '2024-08-20 06:51:55', '2024-08-20 06:51:55'),
-(7, 6, 'dhuttturi', 'dhetteri', NULL, NULL, '2024-08-20 06:51:55', '2024-08-20 06:51:55'),
-(10, 10, 'janiaa', 'dasdadasdasd', NULL, NULL, '2024-08-25 05:09:46', '2024-08-25 05:09:46'),
-(12, 10, 'dasd', 'dasdad', NULL, 'uploads/videos/66cac21de48f5.mp4', '2024-08-25 05:33:17', '2024-08-25 05:33:17'),
-(13, 10, 'dasdasd', '<p>asdadasd</p>', 'uploads/images/66cac282c2eb0.png', 'uploads/videos/66cac282c2f9f.mp4', '2024-08-25 05:34:58', '2024-08-25 05:34:58'),
-(15, 10, 'asdasdasdasd', '<p>dsaddasdasdasd</p>', 'uploads/images/66cac5396290a.png', 'uploads/videos/66cac53962a80.mp4', '2024-08-25 05:46:33', '2024-08-25 05:46:33'),
-(16, 10, 'asdd', 'dasdad', 'uploads/images/66cac5db443e3.png', 'uploads/videos/66cac5db444c4.mp4', '2024-08-25 05:49:15', '2024-08-25 05:49:15');
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `post_comments`
---
 
-CREATE TABLE `post_comments` (
-  `id` int(11) NOT NULL,
-  `post_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `post_comments`
---
-
-INSERT INTO `post_comments` (`id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
-(1, 6, 10, 'fsddsf', '2024-08-20 06:52:12'),
-(2, 6, 10, 'kokok', '2024-08-20 06:52:48'),
-(3, 6, 10, 'das', '2024-08-21 05:55:36'),
-(4, 6, 10, 'das', '2024-08-25 05:06:25'),
-(5, 6, 10, 'das', '2024-08-25 05:07:37');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `post_comment_replies`
---
-
-CREATE TABLE `post_comment_replies` (
-  `id` int(11) NOT NULL,
-  `comment_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `post_comment_replies`
---
-
-INSERT INTO `post_comment_replies` (`id`, `comment_id`, `user_id`, `content`, `created_at`) VALUES
-(1, 1, 10, 'dasda', '2024-08-20 06:52:15'),
-(2, 2, 10, 'lplplplp', '2024-08-20 06:52:56'),
-(3, 3, 10, 'dasdad', '2024-08-21 05:55:40'),
-(4, 4, 10, 'dasd', '2024-08-25 05:06:32'),
-(5, 5, 10, 'das', '2024-08-25 05:07:41');
->>>>>>> Stashed changes
 
 -- --------------------------------------------------------
 
@@ -299,29 +236,15 @@ CREATE TABLE `problems` (
 --
 
 INSERT INTO `problems` (`ProblemID`, `Name`, `PlmDescription`, `InputSpecification`, `OutputSpecification`, `ProblemNumber`, `Note`, `TimeLimit`, `MemoryLimit`, `RatedFor`, `AuthorID`, `sampleTestNo`) VALUES
-<<<<<<< Updated upstream
-(1, 'Sum of Two Numbers', 'Calculate the sum of two given numbers.', 'Two integers a and b.', 'A single integer representing the sum of a and b.', 'P001', 'Basic arithmetic problem.', 1, 128, 1000, 1, 1),
-(2, 'String Reversal', 'Reverse a given string.', 'A single string s.', 'A single string which is the reverse of s.', 'P002', 'String manipulation problem.', 2, 256, 1200, 2, 1),
-(3, 'Prime Number Check', 'Determine if a given number is prime.', 'An integer n.', 'A single line with \"YES\" or \"NO\".', 'P003', 'Number theory problem.', 1, 128, 1500, 1, 1),
-(4, 'Matrix Multiplication', 'Multiply two matrices.', 'Two matrices A and B.', 'Matrix C which is the product of A and B.', 'P004', 'Matrix algebra problem.', 5, 512, 1800, 3, 1),
-(5, 'Graph Traversal', 'Implement BFS and DFS on a graph.', 'A graph represented as an adjacency list.', 'The order of nodes visited in BFS and DFS.', 'P005', 'Graph theory problem.', 3, 1024, 2000, 4, 1),
-(6, 'Double Ended Queue', 'A queue is a data structure based on the principle of \'First In First Out\' (FIFO). There are two ends; one end can be used only to insert an item and the other end to remove an item. A Double Ended Queue is a queue where you can insert an item in both sides as well as you can delete an item from either side.\r\n\r\nThere are mainly four operations available to a double ended queue. They are:\r\n\r\n![Double Ended Queue](CDN_BASE_URL/6c444093f691ab00de2df3aef0808e5d?v=1720739565)\r\n\r\n1. `pushLeft()` inserts an item to the left end of the queue with the exception that the queue is not full.\r\n2. `pushRight()` inserts an item to the right end of the queue with the exception that the queue is not full.\r\n3. `popLeft()` removes an item from the left end of the queue with the exception that the queue is not empty.\r\n4. `popRight()` removes an item from the right end of the queue with the exception that the queue is not empty.\r\n\r\nNow you are given a queue and a list of commands, you have to report the behavior of the queue.', 'Input starts with an integer **T (&le; 20)**, denoting the number of test cases.Each case starts with a line containing two integers **n, m (1 &le; n &le; 10, 1 &le; m &le; 100)**, where **n** denotes the size of the queue and **m** denotes the number of commands. Each of the next **m** lines contains a command which is one of:\r\n\r\n| Operation | Action |\r\n|------------------|--------------------------------------------------------------------|\r\n| pushLeft  **x**  | pushes  **x (-100 &le; x &le; 100)**  to the left end of the queue |\r\n| pushRight **x** | pushes **x (-100 &le; x &le; 100)** to the right end of the queue |\r\n| popLeft               | pops an item from the left end of the queue |\r\n| popRight             | pops an item from the right end of the queue |', 'For each case, print the case number in a line. Then for each operation, show its corresponding output as shown in the sample. Be careful about spelling.', 'A', NULL, 1, 65536, 1000, 7, 1),
-(8, 'aaa', '<table style=\"border-collapse: collapse; width: 100%; border-width: 1px; background-color: #bfedd2; border-color: #000000;\" border=\"1\"><colgroup><col style=\"width: 49.958%;\"><col style=\"width: 49.958%;\"></colgroup>\r\n<tbody>\r\n<tr>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">adfadsfasf</td>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">sfaf</td>\r\n</tr>\r\n<tr>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">asfasfasf</td>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">asfasdfasf</td>\r\n</tr>\r\n</tbody>\r\n</table>', '<p>&sum;A<sub>3</sub></p>', '<p>sdgsdgsagdsdafg<br>DFWSD<br>FSD<br>FSD<br>F<br>SADF<br>ASDF</p>', '111', '<p>gsdfgdfghg</p>', 1, 123, 1000, 7, 1),
-(9, '12132', '<p>asdsfdsfasfafasf<br>SAFAF<br>AS<br><img src=\"https://study.com/cimages/videopreview/videopreview-full/uj16yqmbw4.jpg\" alt=\"\" width=\"715\" height=\"402\"></p>\r\n<p>fsdfsdfsdfsdfsd</p>\r\n<p>dfssd</p>\r\n<p>f</p>\r\n<p>sf</p>\r\n<p>sdf</p>\r\n<p>&nbsp;</p>\r\n<table style=\"border-collapse: collapse; width: 100%; border-width: 1px; background-color: #bfedd2; border-color: #000000;\" border=\"1\"><colgroup><col style=\"width: 49.958%;\"><col style=\"width: 49.958%;\"></colgroup>\r\n<tbody>\r\n<tr>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">adfadsfasf</td>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">sfaf</td>\r\n</tr>\r\n<tr>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">asfasfasf</td>\r\n<td style=\"border-width: 1px; border-color: rgb(0, 0, 0);\">asfasdfasf</td>\r\n</tr>\r\n</tbody>\r\n</table>', '<p style=\"text-align: center;\">wrqrfb eryt<a href=\"https://www.google.co.uk/\"><strong>eryER</strong></a><br><a href=\"https://www.google.co.uk/\"><strong>YGHRASDYDRYHG</strong></a><br><a href=\"https://www.google.co.uk/\"><strong>DRGYHDRF</strong></a><br><a href=\"https://www.google.co.uk/\"><strong>GYH</strong></a><br>GD<br>GF</p>\r\n<p>ef</p>\r\n<p>wedf</p>\r\n<p><span style=\"background-color: rgb(241, 196, 15);\">ewf</span></p>\r\n<p dir=\"rtl\"><span style=\"background-color: rgb(241, 196, 15);\">sedfsdfsdfsdfsdfsdfsdfsdfsdfsd</span></p>', '<p>ryhdfhhedrf</p>', '2113', '<p>dsgdfgbdfghdhdf</p>', 1, 1213, 1324, 7, 1),
-(12, 'waedfweffwe', '<p>aaa</p>', '<p>aaaa</p>', '<p>aaa</p>', '1234', '<p>aaaa</p>', 800, 1, 1200, 7, 1);
-=======
-(1, 'Sum of Two Numbers', 'Calculate the sum of two given numbers.', 'Two integers a and b.', 'A single integer representing the sum of a and b.', 'P001', 'Basic arithmetic problem.', 1, 512000, 1000, 1, 1),
 (2, 'String Reversal', '<p>Reverse a given string.</p>', '<p>A single string s.</p>', '<p>A single string which is the reverse of s.</p>', 'P002', '<p>String manipulation problem.</p>', 2, 512000, 1200, 7, 2),
 (3, 'Prime Number Check', 'Determine if a given number is prime.', 'An integer n.', 'A single line with \"YES\" or \"NO\".', 'P003', 'Number theory problem.', 1, 512000, 1500, 1, 1),
 (4, 'Matrix Multiplication', 'Multiply two matrices.', 'Two matrices A and B.', 'Matrix C which is the product of A and B.', 'P004', 'Matrix algebra problem.', 5, 512000, 1800, 3, 1),
 (5, 'Graph Traversal', 'Implement BFS and DFS on a graph.', 'A graph represented as an adjacency list.', 'The order of nodes visited in BFS and DFS.', 'P005', 'Graph theory problem.', 3, 512000, 2000, 4, 1),
-(13, 'Distinct Numbers', '<p>You are given a list of <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">nn</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span></span> integers, and your task is to calculate the number of <em>distinct</em> values in the list.</p>', '<p>The first input line has an integer&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>: the number of values.</p>\r\n<p>The second line has <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">nn</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span></span> integers <span class=\"math inline\"><span class=\"katex\"><em><span class=\"katex-mathml\" style=\"font-family: \'book antiqua\', palatino, serif;\">x<sub>1</sub>,x<sub>2</sub>,&hellip;,x<sub>n</sub></span></em><sub><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></sub></span></span>.</p>', '<p>Print one integer: the number of distinct values.</p>\r\n<h3 id=\"constraints\"><span style=\"font-family: arial, helvetica, sans-serif;\">Constraints</span></h3>\r\n<h3 id=\"constraints\"></h3>\r\n<ul>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> &le; 2&sdot;10<sup>5</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x<sub>i</sub></span></em><sub> </sub>&le; 10<sup>9</sup></span></span></span></li>\r\n</ul>', '1', '', 1, 512000, 800, 7, 1),
 (14, 'Ferris Wheel', '<p>There are <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>n</em></span> children who want to go to a Ferris wheel, and your task is to find a gondola for each child.</p>\r\n<p>Each gondola may have one or two children in it, and in addition, the total weight in a gondola may not exceed&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span>. You know the weight of every child.</p>\r\n<p>What is the minimum number of gondolas needed for the children?</p>', '<p>The first input line contains two integers&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span>&nbsp;and&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span>: the number of children and the maximum allowed weight.</p>\r\n<p>The next line contains&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>n</em></span>&nbsp;integers <span class=\"math inline\"><span class=\"katex\"><em><span class=\"katex-mathml\" style=\"font-family: \'book antiqua\', palatino, serif;\">p<sub>1</sub>,p<sub>2</sub>,&hellip;,p<sub>n</sub></span></em><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></span></span>: the weight of each child.</p>', '<p>Print one integer: the minimum number of gondolas.</p>\r\n<h3 id=\"constraints\"><span style=\"font-family: arial, helvetica, sans-serif;\">Constraints</span></h3>\r\n<ul>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>n </em></span>&le; 2&sdot;10<sup>5</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span> &le; 10<sup>9</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">p<sub>i </sub></span></em>&le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x</span></em></span></span></span></li>\r\n</ul>', '2', '', 1, 512000, 1000, 6, 1),
 (15, 'Dice Combinations', '<p>Your task is to count the number of ways to construct sum&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> by throwing a dice one or more times. Each throw produces an outcome between <span style=\"font-family: \'book antiqua\', palatino, serif;\">1 </span>and&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\">6</span>.</p>\r\n<p>For example, if <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\"><em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>=<span style=\"font-family: \'book antiqua\', palatino, serif;\">3</span></span></span></span>, there are&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\">4</span>&nbsp;ways:</p>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1+1+1</span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1+2</span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">2+1</span></span></span></li>\r\n<li><span style=\"font-family: \'book antiqua\', palatino, serif;\">3</span></li>\r\n</ul>\r\n<h1 id=\"input\"></h1>', '<p>The only input line has an integer&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>.</p>', '<p>Print the number of ways modulo<span style=\"font-family: \'book antiqua\', palatino, serif;\"> 10<sup>9</sup>+7.</span></p>\r\n<h3 id=\"constraints\">Constraints</h3>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; n &le; 10<sup>6</sup></span></span></span></li>\r\n</ul>', '3', '', 1, 512000, 1200, 6, 1),
 (16, 'Minimizing Coins', '<p>Consider a money system consisting of&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> coins. Each coin has a positive integer value. Your task is to produce a sum of money <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x</span></em>&nbsp;using the available coins in such a way that the number of coins is minimal.</p>\r\n<p>For example, if the coins are <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">{1,5,7}</span></span></span>&nbsp;and the desired sum is <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">11</span></span></span>, an optimal solution is <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">5+5+1</span></span></span> which requires&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\">3</span> coins.</p>', '<p>The first input line has two integers&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x</span></em>: the number of coins and the desired sum of money.</p>\r\n<p>The second line has&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>&nbsp;distinct integers <em><span style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">c<sub>1</sub>,c<sub>2</sub>,&hellip;,c<sub>n</sub></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></span></span>:</span></em> the value of each coin.</p>', '<p>Print one integer: the minimum number of coins. If it is not possible to produce the desired sum, print <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">&minus;1</span></span></span>.</p>\r\n<h3 id=\"constraints\">Constraints</h3>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; n &le; 100</span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; x &le; 10<sup>6</sup></span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; c<sub>i</sub> &le; 10<sup>6</sup></span></span></span></li>\r\n</ul>', '4', '', 1, 512000, 1200, 6, 1),
 (17, 'Labyrinth', '<p>You are given a map of a labyrinth, and your task is to find a path from start to end. You can walk left, right, up and down.</p>', '<p>The first input line has two integers&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">m</span></em>: the height and width of the map.</p>\r\n<p>Then there are <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">nn</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span></span> lines of <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">mm</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">m</span></span></span></span></span> characters describing the labyrinth. Each character is <code>.</code> (floor), <code>#</code> (wall), <code>A</code> (start), or <code>B</code> (end). There is exactly one <code>A</code> and one <code>B</code> in the input.</p>', '<p>First print \"YES\", if there is a path, and \"NO\" otherwise.</p>\r\n<p>If there is a path, print the length of the shortest such path and its description as a string consisting of characters <code>L</code> (left), <code>R</code> (right), <code>U</code> (up), and <code>D</code> (down). You can print any valid solution.</p>\r\n<h1 id=\"constraints\">Constraints</h1>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em>n,m</em> &le; 1000</span></span></span></li>\r\n</ul>', '5', '', 1, 512000, 1300, 6, 1),
 (18, 'Distance Queries', '<p>You are given a tree consisting of&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>&nbsp;nodes.</p>\r\n<p>Your task is to process&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">q</span></em>queries of the form: what is the distance between nodes&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">a</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">b</span></em>?</p>', '<p>The first input line contains two integers&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">q</span></em>: the number of nodes and queries. The nodes are numbered <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1,2,&hellip;,<em>n<sub>1</sub></em></span></span></span><em>.</em></p>\r\n<p>Then there are <em><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">n&minus;</span></span></span></em><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\"><span style=\"font-family: \'book antiqua\', palatino, serif;\">1</span></span></span></span> lines describing the edges. Each line contains two integers <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">a</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">b</span></em>: there is an edge between nodes&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">a</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">b</span></em>.</p>\r\n<p>Finally, there are&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">q</span></em> lines describing the queries. Each line contains two integer <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">a</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">b</span></em>: what is the distance between nodes&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">a</span></em> and <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>b</em></span>?</p>', '<p>Print <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">qq</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">q</span></span></span></span></span> integers: the answer to each query.</p>\r\n<h3>Constraints</h3>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em>n,q</em> &le; 2&sdot;10<sup>5</sup></span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le;&nbsp;<em>a,b</em> &le; <em>n</em></span></span></span></li>\r\n</ul>', '6', '', 1, 512000, 1400, 6, 1);
->>>>>>> Stashed changes
 
 -- --------------------------------------------------------
 
@@ -341,16 +264,50 @@ CREATE TABLE `problem_tags` (
 INSERT INTO `problem_tags` (`ProblemID`, `TagID`) VALUES
 (1, 1),
 (1, 2),
-(2, 1),
 (3, 3),
 (3, 4),
 (4, 2),
 (4, 3),
 (5, 1),
 (5, 2),
-(12, 3),
-(12, 29),
-(12, 62);
+(14, 12),
+(14, 13),
+(15, 3),
+(16, 3),
+(17, 5),
+(18, 6),
+(13, 1),
+(13, 12),
+(13, 13),
+(2, 1),
+(2, 63);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `questions`
+--
+
+CREATE TABLE `questions` (
+  `id` int(11) NOT NULL,
+  `video_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `code` text DEFAULT NULL,
+  `error_log` text DEFAULT NULL,
+  `problem_description` text NOT NULL,
+  `attempted_solutions` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `questions`
+--
+
+INSERT INTO `questions` (`id`, `video_id`, `user_id`, `title`, `code`, `error_log`, `problem_description`, `attempted_solutions`, `created_at`) VALUES
+(1, 1, 10, 'i dont know', '', '', 'sdadasdkjodyudijanhodiuashd', '', '2024-07-27 05:37:17'),
+(2, 1, 10, 'i dont know', 'sdaaaaadsadad', 'dasdasdasdasd', 'sdadasdkjodyudijanhodiuashd', 'ddasdada', '2024-07-27 05:38:13'),
+(3, 1, 10, 'having isssue with my life', '.qa-nav {\r\n			padding: 10px;\r\n		}\r\n\r\n		.tab-content {\r\n			padding: 20px;\r\n		}\r\n\r\n		.question, .answer {\r\n			border: 1px solid #ddd;\r\n			padding: 10px;\r\n			margin-bottom: 10px;\r\n			border-radius: 5px;\r\n		}\r\n		\r\n		pre code {\r\n			display: block;\r\n			background-color: #f8f9fa;\r\n			border: 1px solid #e9ecef;\r\n			border-radius: 4px;\r\n			padding: 10px;\r\n			white-space: pre-wrap;\r\n			word-wrap: break-word;\r\n		}', 'error: life not found', 'i am not finding my life', '- did a flip(failed missarebly)\r\n- jump off the roof(didnt got scared)', '2024-07-27 06:08:04');
 
 -- --------------------------------------------------------
 
@@ -414,7 +371,7 @@ CREATE TABLE `submissions` (
   `LanguageID` varchar(55) DEFAULT NULL,
   `SubmissionTime` datetime DEFAULT NULL,
   `JudgeTime` datetime DEFAULT NULL,
-  `TimeTaken` double DEFAULT NULL,
+  `TimeTaken` float DEFAULT NULL,
   `MemoryUsed` int(11) DEFAULT NULL,
   `Code` text DEFAULT NULL,
   `Status` varchar(255) DEFAULT NULL,
@@ -426,56 +383,6 @@ CREATE TABLE `submissions` (
 --
 
 INSERT INTO `submissions` (`SubmissionID`, `ProblemID`, `UserID`, `LanguageID`, `SubmissionTime`, `JudgeTime`, `TimeTaken`, `MemoryUsed`, `Code`, `Status`, `Score`) VALUES
-(1, 1, 1, '1', '2024-06-01 10:00:00', '2024-06-01 10:01:00', 1, 128, 'print(sum(map(int, input().split())))', 'Accepted', 100),
-(2, 2, 2, '2', '2024-06-01 11:00:00', '2024-06-01 11:01:30', 1, 256, 's = input()\nprint(s[::-1])', 'Accepted', 100),
-(3, 3, 3, '3', '2024-06-07 09:30:00', '2024-06-07 09:32:00', 2, 128, 'def is_prime(n):\n  if n <= 1: return False\n  for i in range(2, int(n**0.5) + 1):\n    if n % i == 0: return False\n  return True\nprint(\"YES\" if is_prime(int(input())) else \"NO\")', 'Accepted', 100),
-(4, 4, 4, '4', '2024-06-07 10:45:00', '2024-06-07 10:47:00', 5, 512, 'def matrix_mult(A, B):\n  return [[sum(a*b for a, b in zip(A_row, B_col)) for B_col in zip(*B)] for A_row in A]\nprint(matrix_mult(A, B))', 'Accepted', 100),
-(5, 1, 7, '1', '2024-06-15 10:15:00', '2024-06-15 10:17:00', 3, 1024, 'from collections import deque\n def bfs(graph, start):\n  visited = []\n  queue = deque([start])\n  while queue:\n    vertex = queue.popleft()\n    if vertex not in visited:\n      visited.append(vertex)\n      queue.extend(set(graph[vertex]) - set(visited))\n  return visited\nprint(bfs(graph, start))', 'Accepted', 100),
-(30, 1, 7, 'C++ (GCC 7.4.0)', '2024-07-25 07:26:04', '2024-07-25 07:26:04', 0, 884, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<a+b<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(31, 1, 7, 'C++ (GCC 7.4.0)', '2024-07-25 07:29:59', '2024-07-25 07:29:59', 0, 1068, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<a+b<<endl;\r\n    return 0;\r\n}', 'Accepted', 0),
-(32, 1, 7, 'C++ (GCC 7.4.0)', '2024-07-25 07:31:28', '2024-07-25 07:31:28', 0, 1008, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<a+b<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-<<<<<<< Updated upstream
-(33, 1, 7, 'C++ (GCC 7.4.0)', '2024-07-25 07:31:58', '2024-07-25 07:31:58', 0, 996, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<9<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on test', 100);
-=======
-(33, 1, 7, 'C++ (GCC 7.4.0)', '2024-07-25 07:31:58', '2024-07-25 07:31:58', 0, 996, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<9<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on test', 100),
-(34, 1, 7, 'C++ (GCC 7.4.0)', '2024-07-26 05:43:10', '2024-07-26 05:43:10', 0, 0, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<9<<endl;\r\n    return 0;\r\n}', 'Processing on testcase 2', 100),
-(35, 1, 7, 'C++ (GCC 7.4.0)', '2024-07-26 05:46:36', '2024-07-26 05:46:36', 0, 7888, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<9<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 2', 100),
-(36, 1, 7, 'C++ (GCC 7.4.0)', '2024-07-26 06:04:19', '2024-07-26 06:04:19', 0, 7576, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<9<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 2', NULL),
-(37, 1, 7, 'C++ (GCC 7.4.0)', '2024-07-26 06:09:25', '2024-07-26 06:09:25', 0, 984, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<9<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 2', 100),
-(38, 1, 7, 'C++ (GCC 7.4.0)', '2024-07-26 06:14:19', '2024-07-26 06:14:19', 0, 1000, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<9<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 2', 100),
-(47, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-02 06:29:33', '2024-08-02 06:29:33', 1, 11348, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    ff(j,n){\r\n        ff(i,10005){\r\n            a++;\r\n        }\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Time Limit Exceeded on testcase 2', 100),
-(48, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-02 06:30:27', '2024-08-02 06:30:27', 0, 10208, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(51, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-02 06:32:40', '2024-08-02 06:32:40', 0, 1560, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a[5];\r\n    ff(i,n){\r\n        int x;\r\n        cin>>a[x];\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 2', 100),
-(52, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-02 06:33:43', '2024-08-02 06:33:43', 0, 1292, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a[5];\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        a[1000000000]=x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Runtime Error (NZEC) on testcase 1', 100),
-(56, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-02 06:47:03', '2024-08-02 06:47:03', 0.128, 12196, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(57, 2, 7, 'C++ (GCC 7.4.0)', '2024-08-04 07:51:20', '2024-08-04 07:51:20', 0.003, 1296, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    string s;\r\n    cin>>s;\r\n    reverse(all(s));\r\n    cout<<s<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 2', 100),
-(58, 2, 7, 'C++ (GCC 7.4.0)', '2024-08-04 07:52:47', '2024-08-04 07:52:47', 0.003, 1024, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    string s;\r\n    cin>>s;\r\n    reverse(all(s));\r\n    cout<<s<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(59, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-06 17:38:33', '2024-08-06 17:38:33', 0.001, 1116, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(60, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-06 17:39:51', '2024-08-06 17:39:51', 0.003, 1252, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(61, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-06 17:50:04', '2024-08-06 17:50:04', 0.001, 968, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(62, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-06 17:50:39', '2024-08-06 17:50:39', 0.001, 1028, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(63, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-07 07:44:52', '2024-08-07 07:45:19', 0.1145, 16752, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(64, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-07 05:46:36', '2024-08-07 05:46:36', 0.232, 16704, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(65, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-07 11:49:10', '2024-08-07 11:49:29', 0.105, 5094, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(67, 13, 7, 'C++ (GCC 7.4.0)', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0.218, 10300, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(68, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-07 12:03:25', '2024-08-07 12:03:42', 0.265, 10160, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(69, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-07 12:24:38', '2024-08-07 12:25:00', 0.208, 10152, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(70, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-07 12:25:05', '2024-08-07 12:25:28', 0.002, 900, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()+1<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 1', 100),
-(71, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-08 14:39:37', '2024-08-08 14:39:41', 0.003, 1036, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(72, 2, 7, 'C++ (GCC 7.4.0)', '2024-08-08 14:41:10', '2024-08-08 14:41:32', 0.001, 1012, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 1', 100),
-(73, 2, 7, 'C++ (GCC 7.4.0)', '2024-08-08 14:41:32', '2024-08-08 14:41:54', 0.001, 1108, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 1', 100),
-(74, 2, 7, 'C++ (GCC 7.4.0)', '2024-08-08 14:41:54', '2024-08-08 14:42:04', 0.004, 7312, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    string s;\r\n    cin>>s;\r\n    reverse(all(s));\r\n    cout<<s<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(75, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-12 00:04:47', '2024-08-12 00:04:52', 0.003, 1172, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(76, 2, 6, 'C++ (GCC 7.4.0)', '2024-08-12 00:09:30', '2024-08-12 00:09:42', 0.003, 1780, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    string s;\r\n    cin>>s;\r\n    reverse(all(s));\r\n    cout<<s<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(77, 13, 6, 'C++ (GCC 7.4.0)', '2024-08-12 00:10:25', '2024-08-12 00:10:49', 0.003, 1504, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()+1<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 1', 100),
-(78, 13, 6, 'C++ (GCC 7.4.0)', '2024-08-12 00:11:32', '2024-08-12 00:11:35', 0.003, 1520, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(a);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(79, 2, 7, 'C++ (GCC 7.4.0)', '2024-08-12 00:14:29', '2024-08-12 00:14:53', 0.003, 1480, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    string s;\r\n    cin>>s;\r\n    reverse(all(s));\r\n    cout<<s<<0<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 1', 100),
-(80, 2, 7, 'C++ (GCC 7.4.0)', '2024-08-12 00:18:28', '2024-08-12 00:18:49', 0.003, 1144, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    string s;\r\n    cin>>s;\r\n    reverse(all(s));\r\n    cout<<s<<0<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 1', 100),
-(81, 2, 7, 'C++ (GCC 7.4.0)', '2024-08-12 00:43:06', '2024-08-12 00:43:27', 0.002, 1028, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    string s;\r\n    cin>>s;\r\n    reverse(all(s));\r\n    cout<<s<<0<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 1', 100),
-(82, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-12 00:47:42', '2024-08-12 00:47:46', 0.002, 1080, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
-(83, 13, 6, 'C++ (GCC 7.4.0)', '2024-08-12 00:48:30', '2024-08-12 00:48:55', 0.003, 1032, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()+1<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 1', 100),
-(84, 13, 6, 'C++ (GCC 7.4.0)', '2024-08-12 00:49:08', '2024-08-12 00:49:31', 0.001, 904, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()+1<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 1', 100);
->>>>>>> Stashed changes
 
 -- --------------------------------------------------------
 
@@ -553,7 +460,8 @@ INSERT INTO `tags` (`TagID`, `TagName`) VALUES
 (58, 'interactive problems'),
 (59, 'implementation'),
 (60, 'other'),
-(62, 'Digit Dp');
+(62, 'Digit Dp'),
+(63, 'Demo tag');
 
 -- --------------------------------------------------------
 
@@ -574,15 +482,9 @@ CREATE TABLE `testcases` (
 --
 
 INSERT INTO `testcases` (`ID`, `Input`, `Output`, `ProblemID`, `testCaseNo`) VALUES
-<<<<<<< Updated upstream
-(6, '4 5', '9', 1, 1),
-(10, '99 101', '200', 1, 4);
-=======
 (29, '../problems/13/input_1.txt', '../problems/13/output_1.txt', 13, 1),
 (32, '../problems/2/input_1.txt', '../problems/2/output_1.txt', 2, 1),
 (33, '../problems/2/input_2.txt', '../problems/2/output_2.txt', 2, 2),
-(34, '../problems/2/input_3.txt', '../problems/2/output_3.txt', 2, 3);
->>>>>>> Stashed changes
 
 -- --------------------------------------------------------
 
@@ -617,7 +519,7 @@ INSERT INTO `users` (`UserID`, `Handle`, `Name`, `Email`, `User_Password`, `Prof
 (3, 'bobjones', 'Bob Jones', 'bob.jones@example.com', 'password789', NULL, 'moderator', 0, '2024-03-22 14:45:00', 'Novice', NULL, 0, NULL, NULL),
 (4, 'alicebrown', 'Alice Brown', 'alice.brown@example.com', 'passwordabc', '/images/alicebrown.jpg', 'user', 0, '2023-11-10 09:05:00', 'Novice', NULL, 0, NULL, NULL),
 (5, 'charlieblack', 'Charlie Black', 'charlie.black@example.com', 'passworddef', NULL, 'user', 0, '2024-02-18 12:50:00', 'Novice', NULL, 0, NULL, NULL),
-(6, 'Taju366', 'Kazi Zannatul', 'kazizannatultajrin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'user', 0, NULL, 'Novice', NULL, 0, NULL, NULL),
+(6, 'Taju366', 'Kazi Zannatul', 'kazizannatultajrin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'admin', 0, NULL, 'Novice', NULL, 0, NULL, NULL),
 (7, 'AfnanRakib', 'Rakib Hasan', 'afnanrakib476@gmail.com', '202cb962ac59075b964b07152d234b70', '../images/uploads/profile_pictures/7.jpg', 'admin', 0, '2024-07-08 20:33:14', 'Novice', '2001-10-14', 0, 'AUST', 'male'),
 (9, 'rakib476', 'Afnan Rakib', 'rakib.cse.20210204027@aust.edu', '827ccb0eea8a706c4c34a16891f84e7b', NULL, 'user', 0, '2024-07-12 15:34:54', 'Novice', NULL, 0, NULL, NULL),
 (10, 'ditto', 'shahriar rahaman', 'diptobhuiyan1999@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', NULL, 'user', 0, '2024-07-14 20:25:58', 'Novice', NULL, 0, NULL, NULL);
@@ -655,11 +557,47 @@ INSERT INTO `videos` (`id`, `course_id`, `title`, `description`, `youtube_embed_
 (10, 1, 'Longest Common Subsequence: Dynamic Programming', 'In this video I discuss the Longest Common Subsequence.', 'https://www.youtube.com/embed/Q0o9sU1r0FY?list=PLauivoElc3gimdmLcIIpafEkzGs4tCQmi', '2024-07-12 13:06:12', 1),
 (16, 5, 'GPU bench-marking with image classification | Deep Learning Tutorial 17 (Tensorflow2.0, Python)', 'This video shows performance comparison of using a CPU vs NVIDIA TITAN RTX GPU for deep learning. We are using 60000 small images for classification. These images can be  classified in one of the 10 categories below,', 'https://www.youtube.com/embed/YmDaqXMIoeY?list=PLeo1K3hjS3us_ELKYSj_Fth2tIEkdKXvV', '2024-07-17 05:51:38', 10),
 (17, 6, 'PHP Full Course for non-haters 🐘 (2023)', 'PHP tutorial for beginners full course\r\nThis video will give you and introduction PHP in 4 hours. Afterwords I would recommend learning about: Object Oriented Programming, Exception Handling, and PDO.', 'https://www.youtube.com/embed/zZ6vybT1HQs', '2024-07-17 07:42:08', 10),
-(18, 10, 'leet code', 'hard kill me please', 'https://www.youtube.com/embed/aHZW7TuY_yo', '2024-07-17 07:54:01', 10);
+(18, 10, 'leet code !!', 'hard kill me please :(', 'https://www.youtube.com/embed/aHZW7TuY_yo', '2024-07-17 07:54:01', 10),
+(20, 12, 'not fsd', '<p>fsdf</p>', 'https://www.youtube.com/embed/aHZW7TuY_yo', '2024-08-13 14:28:46', 10),
+(22, 12, 'fsd!@', 'fsd', 'https://www.youtube.com/embed/YC4rQ5XZ1vA', '2024-08-13 15:57:51', 10),
+(23, 12, 'asd', '<p>dasd</p>', 'https://www.youtube.com/embed/2c8dnCy6xK4', '2024-08-13 16:02:12', 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `video_documents`
+--
+
+CREATE TABLE `video_documents` (
+  `id` int(11) NOT NULL,
+  `video_id` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `video_documents`
+--
+
+INSERT INTO `video_documents` (`id`, `video_id`, `content`, `created_at`, `updated_at`) VALUES
+(1, 1, 'ohe bondhu!!', '2024-07-29 07:31:57', '2024-07-29 07:31:57'),
+(5, 16, '<p>hello this is my first docs</p>', '2024-07-29 07:24:24', '2024-07-29 07:25:12'),
+(6, 2, 'ohe bondhu!!', '2024-07-29 07:32:33', '2024-07-29 07:32:33'),
+(0, 22, '<p>i don\'t know what to do</p>', '2024-08-20 06:41:56', '2024-08-20 06:41:56'),
+(0, 23, '<p>yuk</p>', '2024-08-20 06:42:43', '2024-08-20 06:42:43');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `answers`
+--
+ALTER TABLE `answers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `question_id` (`question_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `comments`
@@ -684,10 +622,50 @@ ALTER TABLE `contests`
   ADD KEY `CreatorID` (`CreatorID`);
 
 --
+-- Indexes for table `contest_rankings`
+--
+ALTER TABLE `contest_rankings`
+  ADD PRIMARY KEY (`RankingID`),
+  ADD UNIQUE KEY `contest_user` (`ContestID`,`UserID`);
+
+--
+-- Indexes for table `contest_submissions`
+--
+ALTER TABLE `contest_submissions`
+  ADD PRIMARY KEY (`ContestSubmissionID`),
+  ADD KEY `ContestID` (`ContestID`),
+  ADD KEY `UserID` (`UserID`),
+  ADD KEY `ProblemID` (`ProblemID`),
+  ADD KEY `SubmissionID` (`SubmissionID`);
+
+--
 -- Indexes for table `courses`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `post_comment_replies`
+--
+ALTER TABLE `post_comment_replies`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `comment_id` (`comment_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
@@ -703,6 +681,14 @@ ALTER TABLE `problems`
 ALTER TABLE `problem_tags`
   ADD KEY `ProblemID` (`ProblemID`),
   ADD KEY `TagID` (`TagID`);
+
+--
+-- Indexes for table `questions`
+--
+ALTER TABLE `questions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `video_id` (`video_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `ratinggraph`
@@ -765,6 +751,12 @@ ALTER TABLE `videos`
 --
 
 --
+-- AUTO_INCREMENT for table `answers`
+--
+ALTER TABLE `answers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
@@ -777,31 +769,50 @@ ALTER TABLE `contests`
   MODIFY `ContestID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
-<<<<<<< Updated upstream
-=======
 -- AUTO_INCREMENT for table `contest_rankings`
 --
 ALTER TABLE `contest_rankings`
-  MODIFY `RankingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `contest_submissions`
 --
 ALTER TABLE `contest_submissions`
-  MODIFY `ContestSubmissionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
->>>>>>> Stashed changes
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `post_comment_replies`
+--
+ALTER TABLE `post_comment_replies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `problems`
 --
 ALTER TABLE `problems`
-  MODIFY `ProblemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ProblemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ratinggraph`
@@ -819,19 +830,19 @@ ALTER TABLE `replies`
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `SubmissionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `SubmissionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `TagID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `TagID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `testcases`
 --
 ALTER TABLE `testcases`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -843,11 +854,18 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `answers`
+--
+ALTER TABLE `answers`
+  ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `answers_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
 --
 -- Constraints for table `comments`
@@ -861,7 +879,7 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `contestproblems`
   ADD CONSTRAINT `contestproblems_ibfk_1` FOREIGN KEY (`ContestID`) REFERENCES `contests` (`ContestID`),
-  ADD CONSTRAINT `contestproblems_ibfk_2` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`);
+  ADD CONSTRAINT `contestproblems_ibfk_2` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `contests`
@@ -870,23 +888,34 @@ ALTER TABLE `contests`
   ADD CONSTRAINT `contests_ibfk_1` FOREIGN KEY (`CreatorID`) REFERENCES `users` (`UserID`);
 
 --
+-- Constraints for table `contest_submissions`
+--
+ALTER TABLE `contest_submissions`
+  ADD CONSTRAINT `contest_submissions_ibfk_1` FOREIGN KEY (`ContestID`) REFERENCES `contests` (`ContestID`),
+  ADD CONSTRAINT `contest_submissions_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`),
+  ADD CONSTRAINT `contest_submissions_ibfk_3` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`),
+  ADD CONSTRAINT `contest_submissions_ibfk_4` FOREIGN KEY (`SubmissionID`) REFERENCES `submissions` (`SubmissionID`);
+
+--
 -- Constraints for table `courses`
 --
 ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
---
--- Constraints for table `problems`
---
-ALTER TABLE `problems`
-  ADD CONSTRAINT `problems_ibfk_1` FOREIGN KEY (`AuthorID`) REFERENCES `users` (`UserID`);
 
 --
 -- Constraints for table `problem_tags`
 --
 ALTER TABLE `problem_tags`
-  ADD CONSTRAINT `problem_tags_ibfk_1` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`),
+  ADD CONSTRAINT `problem_tags_ibfk_1` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`) ON DELETE CASCADE,
   ADD CONSTRAINT `problem_tags_ibfk_2` FOREIGN KEY (`TagID`) REFERENCES `tags` (`TagID`);
+
+--
+-- Constraints for table `questions`
+--
+ALTER TABLE `questions`
+  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`video_id`) REFERENCES `videos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
 --
 -- Constraints for table `ratinggraph`
@@ -907,7 +936,7 @@ ALTER TABLE `replies`
 -- Constraints for table `testcases`
 --
 ALTER TABLE `testcases`
-  ADD CONSTRAINT `testcases_ibfk_1` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`);
+  ADD CONSTRAINT `testcases_ibfk_1` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `videos`
@@ -916,66 +945,135 @@ ALTER TABLE `videos`
   ADD CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `videos_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
+
 --
--- Constraints for table `users`
+-- Table structure for table `posts`
 --
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`RatingID`) REFERENCES `ratings` (`RatingID`),
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`RatingCategory`) REFERENCES `ratingdistribution` (`RatingDistributionID`);
-=======
-CREATE TABLE `questions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `video_id` int(11) NOT NULL,
+CREATE TABLE `posts` (
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `code` text,
-  `error_log` text,
-  `problem_description` text NOT NULL,
-  `attempted_solutions` text,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`video_id`) REFERENCES `videos` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `questions` (`id`, `video_id`, `user_id`, `title`, `code`, `error_log`, `problem_description`, `attempted_solutions`, `created_at`) VALUES
-(1, 1, 10, 'i don\'t know', '', '', 'sdadasdkjodyudijanhodiuashd', '', '2024-07-27 05:37:17'),
-(2, 1, 10, 'i don\'t know', 'sdaaaaadsadad', 'dasdasdasdasd', 'sdadasdkjodyudijanhodiuashd', 'ddasdada', '2024-07-27 05:38:13'),
-(3, 1, 10, 'having isssue with my life', '.qa-nav {\r\n			padding: 10px;\r\n		}\r\n\r\n		.tab-content {\r\n			padding: 20px;\r\n		}\r\n\r\n		.question, .answer {\r\n			border: 1px solid #ddd;\r\n			padding: 10px;\r\n			margin-bottom: 10px;\r\n			border-radius: 5px;\r\n		}\r\n		\r\n		pre code {\r\n			display: block;\r\n			background-color: #f8f9fa;\r\n			border: 1px solid #e9ecef;\r\n			border-radius: 4px;\r\n			padding: 10px;\r\n			white-space: pre-wrap;\r\n			word-wrap: break-word;\r\n		}', 'error: life not found', 'i am not finding my life', '- did a flip(failed missarebly)\r\n- jump off the roof(didn\'t got scared)', '2024-07-27 06:08:04');
-
-CREATE TABLE `answers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `question_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
   `content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `answers` (`id`, `question_id`, `user_id`, `content`, `created_at`) VALUES
-(1, 1, 10, 'dasdadasdasd', '2024-07-27 05:37:26'),
-(2, 2, 10, 'saSADSAD', '2024-07-27 05:38:25'),
-(3, 1, 1, 'dsaadasdasdasdasdasdasd', '2024-07-27 06:34:25'),
-(4, 1, 1, 'dsaadasdasdasdasdasdasd', '2024-07-27 06:34:55');
-
-
-CREATE TABLE `video_documents` (
-  `id` int(11) NOT NULL,
-  `video_id` int(11) NOT NULL,
-  `content` text NOT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `video_url` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `video_documents`
+-- Dumping data for table `posts`
 --
 
-INSERT INTO `video_documents` (`id`, `video_id`, `content`, `created_at`, `updated_at`) VALUES
-(1, 1, 'ohe bondhu!!', '2024-07-29 07:31:57', '2024-07-29 07:31:57'),
-(5, 16, '<p>hello this is my first docs</p>', '2024-07-29 07:24:24', '2024-07-29 07:25:12'),
-(6, 2, 'ohe bondhu!!', '2024-07-29 07:32:33', '2024-07-29 07:32:33');
+INSERT INTO `posts` (`id`, `user_id`, `title`, `content`, `image_url`, `video_url`, `created_at`, `updated_at`) VALUES
+(2, 7, 'janina', 'blah blah', NULL, NULL, '2024-08-20 06:51:25', '2024-08-20 06:51:25'),
+(3, 6, 'dhuttturi', 'dhetteri', NULL, NULL, '2024-08-20 06:51:25', '2024-08-20 06:51:25'),
+(6, 7, 'janina', 'blah blah', NULL, NULL, '2024-08-20 06:51:55', '2024-08-20 06:51:55'),
+(7, 6, 'dhuttturi', 'dhetteri', NULL, NULL, '2024-08-20 06:51:55', '2024-08-20 06:51:55'),
+(10, 10, 'janiaa', 'dasdadasdasd', NULL, NULL, '2024-08-25 05:09:46', '2024-08-25 05:09:46'),
+(12, 10, 'dasd', 'dasdad', NULL, 'uploads/videos/66cac21de48f5.mp4', '2024-08-25 05:33:17', '2024-08-25 05:33:17'),
+(13, 10, 'dasdasd', '<p>asdadasd</p>', 'uploads/images/66cac282c2eb0.png', 'uploads/videos/66cac282c2f9f.mp4', '2024-08-25 05:34:58', '2024-08-25 05:34:58'),
+(15, 10, 'asdasdasdasd', '<p>dsaddasdasdasd</p>', 'uploads/images/66cac5396290a.png', 'uploads/videos/66cac53962a80.mp4', '2024-08-25 05:46:33', '2024-08-25 05:46:33'),
+(16, 10, 'asdd', 'dasdad', 'uploads/images/66cac5db443e3.png', 'uploads/videos/66cac5db444c4.mp4', '2024-08-25 05:49:15', '2024-08-25 05:49:15');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_comments`
+--
+
+CREATE TABLE `post_comments` (
+  `id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `post_comments`
+--
+
+INSERT INTO `post_comments` (`id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
+(1, 6, 10, 'fsddsf', '2024-08-20 06:52:12'),
+(2, 6, 10, 'kokok', '2024-08-20 06:52:48'),
+(3, 6, 10, 'das', '2024-08-21 05:55:36'),
+(4, 6, 10, 'das', '2024-08-25 05:06:25'),
+(5, 6, 10, 'das', '2024-08-25 05:07:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_comment_replies`
+--
+
+CREATE TABLE `post_comment_replies` (
+  `id` int(11) NOT NULL,
+  `comment_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `post_comment_replies`
+--
+
+INSERT INTO `post_comment_replies` (`id`, `comment_id`, `user_id`, `content`, `created_at`) VALUES
+(1, 1, 10, 'dasda', '2024-08-20 06:52:15'),
+(2, 2, 10, 'lplplplp', '2024-08-20 06:52:56'),
+(3, 3, 10, 'dasdad', '2024-08-21 05:55:40'),
+(4, 4, 10, 'dasd', '2024-08-25 05:06:32'),
+(5, 5, 10, 'das', '2024-08-25 05:07:41');
+--
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `post_comment_replies`
+--
+ALTER TABLE `post_comment_replies`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `comment_id` (`comment_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+ --
+-- Constraints for table `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
+
+--
+-- Constraints for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  ADD CONSTRAINT `post_comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `post_comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
+
+--
+-- Constraints for table `post_comment_replies`
+--
+ALTER TABLE `post_comment_replies`
+  ADD CONSTRAINT `post_comment_replies_ibfk_1` FOREIGN KEY (`comment_id`) REFERENCES `post_comments` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `post_comment_replies_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
+ 
+  
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
