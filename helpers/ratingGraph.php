@@ -40,7 +40,7 @@
         Chart.register(customBackgroundPlugin);
 
         // Data points with dates, ratings, and contest IDs
-        const contestData = [
+        contestData = [
             { id: 'C001', date: '2022-10-01', rating: 0 },
             { id: 'C002', date: '2022-11-15', rating: 300 },
             { id: 'C003', date: '2022-12-10', rating: 450 },
@@ -61,6 +61,30 @@
             { id: 'C019', date: '2024-10-25', rating: 1306 },
             { id: 'C020', date: '2025-12-10', rating: 1289 }
         ];
+
+        <?php
+        include 'config.php';
+        // Fetch rating data
+        $userID = 7; // Replace with the currently logged-in user ID
+        $sql = "SELECT * FROM ratinggraph WHERE UserID = $userID ORDER BY Date ASC";
+        $result = $conn->query($sql);
+
+        $graphData = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $graphData[] = [
+                    'id' => $row['ContestID'],
+                    'date' => $row['Date'],
+                    'rating' => $row['NewRating']
+                ];
+            }
+        }
+
+        $conn->close();
+        ?>
+
+        contestData = <?php echo json_encode($graphData); ?>;
 
         const labels = contestData.map(data => data.date);
         const ratings = contestData.map(data => data.rating);

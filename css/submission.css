@@ -7,3 +7,28 @@ h1 {
 .btn-primary ,#ClearButton {
     background-color: #00A859;
 }
+
+.status-accepted {
+    color: rgb(0, 184, 0);
+}
+
+.status-rejected {
+    color: red;
+}
+.pagination {
+    margin-top: 20px;
+}
+.pagination .page-item .page-link {
+    color: #00A859;
+}
+.pagination .page-item.active .page-link {
+    color:#ffffff;
+    background-color: #00A859;
+    border-color: #00A859;
+}
+
+.pagination .page-item .page-link:hover {
+    color:#ffffff;
+    background-color: #007d4c;
+    border-color: #007d4c;
+}

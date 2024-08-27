@@ -49,17 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($_POST['youtube_embed_url']) && !empty($_POST['youtube_embed_url'])) {
-        $input = $_POST['youtube_embed_url'];
-        $pattern = '/src="([^"]+)"/';
-        
-        if (preg_match($pattern, $input)) {
-            // It's a full embed code, so we need to extract the URL
-            $youtube_embed_url = extractYoutubeEmbedUrl($input);
-        } else {
-            // It's already just the URL, so we use it as is
-            $youtube_embed_url = $input;
-        }
-    
+        $youtube_embed_url = extractYoutubeEmbedUrl($_POST['youtube_embed_url']);
         if (!empty($youtube_embed_url)) {
             $updates[] = "youtube_embed_url = ?";
             $types .= "s";

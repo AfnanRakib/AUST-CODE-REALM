@@ -202,14 +202,6 @@ INSERT INTO `courses` (`id`, `title`, `description`, `image_url`, `created_at`, 
 -- --------------------------------------------------------
 
 
-
-
-
--- --------------------------------------------------------
-
-
-
-
 -- --------------------------------------------------------
 
 --
@@ -946,6 +938,7 @@ ALTER TABLE `videos`
   ADD CONSTRAINT `videos_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
 
+
 --
 -- Table structure for table `posts`
 --
@@ -1074,6 +1067,7 @@ ALTER TABLE `post_comment_replies`
   ADD CONSTRAINT `post_comment_replies_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
  
   
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

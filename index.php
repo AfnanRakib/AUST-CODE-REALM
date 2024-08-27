@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/footer.css">
     <title>AUST CODE REALM</title>
 </head>
 <body>
@@ -117,10 +119,7 @@
             </div>
         </div>
     </section>
-    <!-- Footer -->
-    <footer class="text-center py-4">
-        <p>&copy; 2024 AUST CODE REALM. All rights reserved.</p>
-    </footer>
+    <?php include'helpers/footer.php'?>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

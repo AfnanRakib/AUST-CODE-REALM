@@ -1,15 +1,13 @@
 <div class="row">
-    <div class="col problem-description overflow-auto" style="font-size: 20px; font-weight:500;">
+    <div class="col problem-description" style="font-size:larger;">
         <?php if ($problem): ?>
             <h2 style='text-align: center;color:#00A859;'><?php echo $problem['Name']; ?></h2>
             <h3>Problem description</h3>
-            <pre><?php echo $problem['PlmDescription']; ?></pre>
+            <?php echo $problem['PlmDescription']; ?>
             <h3>Input</h3>
-            <pre><?php echo $problem['InputSpecification']; ?></pre>
+            <?php echo $problem['InputSpecification']; ?>
             <h3>Output</h3>
-            <pre><?php echo $problem['OutputSpecification']; ?></pre>
-            <h3>Constraints</h3>
-            <pre></pre>
+            <?php echo $problem['OutputSpecification']; ?>
             <?php
                 $limit = $problem['sampleTestNo'];
                 $i = 0;
@@ -31,13 +29,9 @@
                     if ($i == $limit) break;
                 }
             ?>
-            <?php if (!empty($problem['Explanation'])): ?>
-                <h3>Explanation</h3>
-                <pre><?php echo $problem['Explanation']; ?></pre>;
-            <?php endif; ?>
             <?php if (!empty($problem['Note'])): ?>
                 <h3>Note</h3>
-                <pre><?php echo $problem['Note']; ?></pre>
+                <?php echo $problem['Note']; ?>
             <?php endif; ?>
             <div class="accordion" id="additionalInfo">
                 <div class="accordion-item">
@@ -47,7 +41,7 @@
                         </button>
                     </h2>
                     <div id="collapseMoreInfo" class="accordion-collapse collapse" aria-labelledby="headingMoreInfo" data-bs-parent="#additionalInfo">
-                        <div class="accordion-body">
+                        <div class="accordion-body" style="font-size:medium;">
                             <p><strong>Time Limit: </strong> <?php echo $problem['TimeLimit']; ?></p>
                             <p><strong>Memory Limit: </strong> <?php echo $problem['MemoryLimit']; ?></p>
                             <p><strong>Problem Rating: </strong> <?php echo $problem['RatedFor']; ?></p>

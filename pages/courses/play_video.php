@@ -326,37 +326,12 @@ $is_author = ($_SESSION['user']['UserID'] == $video['user_id']);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
-			const MIN_WIDTH = 100;  // pixels
-			const MIN_HEIGHT = 40;  // pixels
-
 			const floatingButton = document.getElementById('floatingButton');
 			const closeButton = document.getElementById('closeButton');
 			const resizeHandle = document.querySelector('.resize-handle');
 			const header = document.querySelector('.header');
 			const buttonContent = document.querySelector('.button-content');
 			const expandedContent = document.querySelector('.expanded-content');
-		
-			function initializeEditor() {
-				editor = ace.edit("editor");
-				editor.setTheme("ace/theme/monokai");
-				editor.session.setMode("ace/mode/python");
-				editor.setOptions({
-					fontSize: "12pt",
-					wrap: true,
-					scrollPastEnd: 0.5,
-					maxLines: Infinity
-				});
-				resizeEditor();
-			}
-
-			function resizeEditor() {
-				if (editor) {
-					editor.resize();
-				}
-			}
-
-			// Call this function after the DOM is loaded
-			document.addEventListener('DOMContentLoaded', initializeEditor);
 
 			let isDragging = false;
 			let isResizing = false;
@@ -368,10 +343,6 @@ $is_author = ($_SESSION['user']['UserID'] == $video['user_id']);
 			header.addEventListener('mousedown', startDragging);
 			resizeHandle.addEventListener('mousedown', (e) => {
 				isResizing = true;
-				startWidth = parseInt(document.defaultView.getComputedStyle(floatingButton).width, 10);
-				startHeight = parseInt(document.defaultView.getComputedStyle(floatingButton).height, 10);
-				startX = e.clientX;
-				startY = e.clientY;
 				document.addEventListener('mousemove', resize);
 				document.addEventListener('mouseup', stopResize);
 			});
@@ -388,14 +359,12 @@ $is_author = ($_SESSION['user']['UserID'] == $video['user_id']);
 				floatingButton.style.height = '800px'; // Expanded height
 				buttonContent.style.display = 'none';
 				expandedContent.style.display = 'flex';
-				
-				setTimeout(resizeEditor, 100); // Delay resize slightly to ensure DOM has updated
 			}
-			
+
 			function closeExpanded() {
 				floatingButton.classList.remove('expanded');
-				floatingButton.style.width = MIN_WIDTH + 'px';
-				floatingButton.style.height = MIN_HEIGHT + 'px';
+				floatingButton.style.width = '100px'; // Default width
+				floatingButton.style.height = '40px'; // Default height
 				buttonContent.style.display = 'flex';
 				expandedContent.style.display = 'none';
 			}
@@ -411,30 +380,24 @@ $is_author = ($_SESSION['user']['UserID'] == $video['user_id']);
 				if (isDragging) {
 					floatingButton.style.left = (e.clientX - startX) + 'px';
 					floatingButton.style.top = (e.clientY - startY) + 'px';
+				} else if (isResizing) {
+					const width = startWidth + (e.clientX - startX);
+					const height = startHeight + (e.clientY - startY);
+					floatingButton.style.width = width + 'px';
+					floatingButton.style.height = height + 'px';
 				}
 			}
 
 			function stopDragging() {
 				isDragging = false;
+				isResizing = false;
 			}
 
 			function resize(e) {
 				if (!isResizing) return;
-				
-				let newWidth = startWidth + (e.clientX - startX);
-				let newHeight = startHeight + (e.clientY - startY);
-				
-				// Enforce minimum dimensions
-				newWidth = Math.max(newWidth, MIN_WIDTH);
-				newHeight = Math.max(newHeight, MIN_HEIGHT);
-				
-				floatingButton.style.width = newWidth + 'px';
-				floatingButton.style.height = newHeight + 'px';
-				
-				// If using an editor that needs to be resized
-				if (typeof editor !== 'undefined' && editor.resize) {
-					editor.resize();
-				}
+				floatingButton.style.width = (e.clientX - floatingButton.offsetLeft) + 'px';
+				floatingButton.style.height = (e.clientY - floatingButton.offsetTop) + 'px';
+				editor.resize();
 			}
 
 			function stopResize() {

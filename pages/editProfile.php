@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/editProfile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/footer.css">
 </head>
 <body>
     <!-- Navbar -->
     <?php include '../helpers/navbar.php'; ?>
     <h2 style="text-align: center;color:#00A859;">Edit Profile</h2>
-    <div class="row col-lg-8 border rounded mx-auto mt-5 p-2 shadow-lg justify-content-center">
+    <div class="row col-lg-8 mx-auto mt-5 justify-content-center">
         <div class="profile-container">
             <form method="post" action="editProfile.php" enctype="multipart/form-data" class="mb-3">
                 <div class="profile-picture">
@@ -72,7 +74,9 @@
                 <button class="btn btn-primary float-end" name="save_profile">Save Changes</button>
             </form>
         </div>
+        <p></p>
     </div>
+    <?php include'../helpers/footer.php'?>
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script>
         function previewImage(event) {

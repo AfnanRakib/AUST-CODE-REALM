@@ -1,8 +1,35 @@
 <?php
 session_start();
+if (!isset($_SESSION['user']['UserID'])) {
+    header("Location: login.php");
+    exit();
+}
 $user = $_SESSION['user'];
 $profile_picture_src = empty($user['Profile_Picture']) ? '../images/uploads/profile_pictures/default.png' : $user['Profile_Picture'];
+
+include '../helpers/config.php';
+
+$userId = $_SESSION['user']['UserID'];
+$sql = "SELECT DATE_FORMAT(SubmissionTime, '%Y-%c-%e') as date, COUNT(*) as value FROM submissions WHERE UserID = ? GROUP BY DATE(SubmissionTime)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$submissions = array();
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $submissions[] = array('date' => $row['date'], 'value' => $row['value']);
+    }
+} else {
+    $submissions = [];
+}
+
+$stmt->close();
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,11 +40,13 @@ $profile_picture_src = empty($user['Profile_Picture']) ? '../images/uploads/prof
     <link rel="stylesheet" href="../css/ratingGraph.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/glanceyear.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <script src="../js/jquery-2.0.3.min.js"></script>
     <script src="../js/jquery.glanceyear.min.js"></script>
     <script src="../js/chart.js"></script>
     <script src="../js/chartjs-adapter-date-fns.js"></script>
-    <title>Profile - AUST CODE REALM</title>
+    <title><?php echo $user['Name']; ?> - AUST CODE REALM</title>
 </head>
 <body>
     <!-- Navbar -->
@@ -60,6 +89,7 @@ $profile_picture_src = empty($user['Profile_Picture']) ? '../images/uploads/prof
             </div>
         </div>
     </section>
+    <?php include'../helpers/footer.php'?>
     <script src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
