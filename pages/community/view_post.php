@@ -59,6 +59,21 @@ $comments_result = $comments_stmt->get_result();
             overflow: hidden;
             transform: none !important;
         }
+        .carousel-item img, .carousel-item video {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+        .carousel-control-prev, .carousel-control-next {
+            background-color: rgba(0,0,0,0.2);
+            width: 1px;
+            padding: 10px;
+        }
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 20%;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -79,14 +94,35 @@ $comments_result = $comments_stmt->get_result();
                     Posted on <?php echo date('F j, Y, g:i a', strtotime($post['created_at'])); ?>
                 </p>
                 <p class="card-text"><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
-                <?php if ($post['image_url']): ?>
-                    <img src="<?php echo htmlspecialchars($post['image_url']); ?>" class="img-fluid mb-2" alt="Post image">
+                <?php if ($post['image_url'] || $post['video_url']): ?>
+                    <div id="postMediaCarousel" class="carousel slide" data-bs-interval="false">
+                        <div class="carousel-inner">
+                            <?php if ($post['image_url']): ?>
+                                <div class="carousel-item active">
+                                    <img src="<?php echo htmlspecialchars($post['image_url']); ?>" class="d-block w-100" alt="Post image">
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($post['video_url']): ?>
+                                <div class="carousel-item <?php echo !$post['image_url'] ? 'active' : ''; ?>">
+                                    <video src="<?php echo htmlspecialchars($post['video_url']); ?>" class="d-block w-100" controls>
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php if ($post['image_url'] && $post['video_url']): ?>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#postMediaCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#postMediaCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        <?php endif; ?>
+                    </div>
                 <?php endif; ?>
-                <?php if ($post['video_url']): ?>
-                    <video src="<?php echo htmlspecialchars($post['video_url']); ?>" controls class="img-fluid mb-2">
-                        Your browser does not support the video tag.
-                    </video>
-                <?php endif; ?>
+
 
                 <?php if (isset($_SESSION['user']) && $_SESSION['user']['UserID'] == $post['user_id']): ?>
                     <div class="mt-3">
