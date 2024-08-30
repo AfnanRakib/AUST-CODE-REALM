@@ -117,6 +117,8 @@ CREATE TABLE `contests` (
 
 INSERT INTO `contests` (`ContestID`, `Title`, `Description`, `StartTime`, `EndTime`, `Duration`, `CreatorID`) VALUES
 (2, 'Weekly Coding Marathon', 'A week-long coding marathon to solve as many problems as possible.', '2024-06-07 00:00:00', '2024-06-13 23:59:59', '7 Days', 2),
+(1, 'Monthly Challenge June', 'A programming contest to test your skills in various algorithms and data structures.', '2024-08-10 09:00:00', '2024-08-20 23:59:59', '30 Days', 7),
+(2, 'Weekly Coding Marathon', 'A week-long coding marathon to solve as many problems as possible.', '2024-06-07 00:00:00', '2024-06-13 23:59:59', '7 Days', 7),
 (3, 'Weekend Algorithm Sprint', 'A weekend contest focused on algorithmic challenges.', '2024-06-15 10:00:00', '2024-06-16 18:00:00', '1 Day', 3),
 (4, 'Summer Hackathon', 'Join us for a summer hackathon to build innovative projects.', '2024-08-01 08:00:00', '2024-08-07 20:00:00', '7 Days', 4),
 (5, 'Beginner Bootcamp', 'A contest designed for beginners to get started with competitive programming.', '2024-06-10 12:00:00', '2024-06-10 18:00:00', '6 Hours', 1);
@@ -141,6 +143,8 @@ CREATE TABLE `contest_rankings` (
 --
 
 INSERT INTO `contest_rankings` (`RankingID`, `ContestID`, `UserID`, `problems_solved`, `total_penalty`, `rank`) VALUES
+(21, 1, 7, 2, 9015, 2),
+(22, 1, 6, 2, 8967, 1);
 
 -- --------------------------------------------------------
 
@@ -166,6 +170,12 @@ CREATE TABLE `contest_submissions` (
 
 INSERT INTO `contest_submissions` (`ContestSubmissionID`, `ContestID`, `UserID`, `ProblemID`, `SubmissionID`, `SubmissionTime`, `Status`, `attempts`, `penalty`) VALUES
 
+(24, 1, 7, 1, 100, '2024-08-13 11:42:40', 'Accepted', 2, 4532),
+(25, 1, 6, 1, 99, '2024-08-13 11:42:18', 'Accepted', 1, 4482),
+(26, 1, 6, 2, 101, '2024-08-13 11:43:02', 'Wrong Answer on testcase 1', 1, 0),
+(27, 1, 7, 2, 102, '2024-08-13 11:43:56', 'Accepted', 1, 4483),
+(28, 1, 7, 13, 103, '2024-08-13 11:45:35', 'Wrong Answer on testcase 1', 1, 0),
+(29, 1, 6, 13, 104, '2024-08-13 11:45:46', 'Accepted', 1, 4485);
 -- --------------------------------------------------------
 
 --
@@ -201,6 +211,85 @@ INSERT INTO `courses` (`id`, `title`, `description`, `image_url`, `created_at`, 
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `posts`
+--
+
+CREATE TABLE `posts` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `video_url` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `user_id`, `title`, `content`, `image_url`, `video_url`, `created_at`, `updated_at`) VALUES
+(2, 7, 'janina', 'blah blah', NULL, NULL, '2024-08-20 06:51:25', '2024-08-20 06:51:25'),
+(3, 6, 'dhuttturi', 'dhetteri', NULL, NULL, '2024-08-20 06:51:25', '2024-08-20 06:51:25'),
+(6, 7, 'janina', 'blah blah', NULL, NULL, '2024-08-20 06:51:55', '2024-08-20 06:51:55'),
+(7, 6, 'dhuttturi', 'dhetteri', NULL, NULL, '2024-08-20 06:51:55', '2024-08-20 06:51:55'),
+(10, 10, 'janiaa', 'dasdadasdasd', NULL, NULL, '2024-08-25 05:09:46', '2024-08-25 05:09:46'),
+(12, 10, 'dasd', 'dasdad', NULL, 'uploads/videos/66cac21de48f5.mp4', '2024-08-25 05:33:17', '2024-08-25 05:33:17'),
+(13, 10, 'dasdasd', '<p>asdadasd</p>', 'uploads/images/66cac282c2eb0.png', 'uploads/videos/66cac282c2f9f.mp4', '2024-08-25 05:34:58', '2024-08-25 05:34:58'),
+(15, 10, 'asdasdasdasd', '<p>dsaddasdasdasd</p>', 'uploads/images/66cac5396290a.png', 'uploads/videos/66cac53962a80.mp4', '2024-08-25 05:46:33', '2024-08-25 05:46:33'),
+(16, 10, 'asdd', 'dasdad', 'uploads/images/66cac5db443e3.png', 'uploads/videos/66cac5db444c4.mp4', '2024-08-25 05:49:15', '2024-08-25 05:49:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_comments`
+--
+
+CREATE TABLE `post_comments` (
+  `id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `post_comments`
+--
+
+INSERT INTO `post_comments` (`id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
+(1, 6, 10, 'fsddsf', '2024-08-20 06:52:12'),
+(2, 6, 10, 'kokok', '2024-08-20 06:52:48'),
+(3, 6, 10, 'das', '2024-08-21 05:55:36'),
+(4, 6, 10, 'das', '2024-08-25 05:06:25'),
+(5, 6, 10, 'das', '2024-08-25 05:07:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_comment_replies`
+--
+
+CREATE TABLE `post_comment_replies` (
+  `id` int(11) NOT NULL,
+  `comment_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `post_comment_replies`
+--
+
+INSERT INTO `post_comment_replies` (`id`, `comment_id`, `user_id`, `content`, `created_at`) VALUES
+(1, 1, 10, 'dasda', '2024-08-20 06:52:15'),
+(2, 2, 10, 'lplplplp', '2024-08-20 06:52:56'),
+(3, 3, 10, 'dasdad', '2024-08-21 05:55:40'),
+(4, 4, 10, 'dasd', '2024-08-25 05:06:32'),
+(5, 5, 10, 'das', '2024-08-25 05:07:41');
 
 -- --------------------------------------------------------
 
@@ -228,10 +317,12 @@ CREATE TABLE `problems` (
 --
 
 INSERT INTO `problems` (`ProblemID`, `Name`, `PlmDescription`, `InputSpecification`, `OutputSpecification`, `ProblemNumber`, `Note`, `TimeLimit`, `MemoryLimit`, `RatedFor`, `AuthorID`, `sampleTestNo`) VALUES
+(1, 'Sum of Two Numbers', 'Calculate the sum of two given numbers.', 'Two integers a and b.', 'A single integer representing the sum of a and b.', 'P001', 'Basic arithmetic problem.', 1, 512000, 1000, 7, 1),
 (2, 'String Reversal', '<p>Reverse a given string.</p>', '<p>A single string s.</p>', '<p>A single string which is the reverse of s.</p>', 'P002', '<p>String manipulation problem.</p>', 2, 512000, 1200, 7, 2),
 (3, 'Prime Number Check', 'Determine if a given number is prime.', 'An integer n.', 'A single line with \"YES\" or \"NO\".', 'P003', 'Number theory problem.', 1, 512000, 1500, 1, 1),
 (4, 'Matrix Multiplication', 'Multiply two matrices.', 'Two matrices A and B.', 'Matrix C which is the product of A and B.', 'P004', 'Matrix algebra problem.', 5, 512000, 1800, 3, 1),
 (5, 'Graph Traversal', 'Implement BFS and DFS on a graph.', 'A graph represented as an adjacency list.', 'The order of nodes visited in BFS and DFS.', 'P005', 'Graph theory problem.', 3, 512000, 2000, 4, 1),
+(13, 'Distinct Numbers', '<p>You are given a list of <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">nn</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span></span> integers, and your task is to calculate the number of <em>distinct</em> values in the list.</p>', '<p>The first input line has an integer&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>: the number of values.</p>\r\n<p>The second line has <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">nn</span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span></span> integers <span class=\"math inline\"><span class=\"katex\"><em><span class=\"katex-mathml\" style=\"font-family: \'book antiqua\', palatino, serif;\">x<sub>1</sub>,x<sub>2</sub>,&hellip;,x<sub>n</sub></span></em><sub><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></sub></span></span>.</p>', '<p>Print one integer: the number of distinct values.</p>\r\n<h3 id=\"constraints\"><span style=\"font-family: arial, helvetica, sans-serif;\">Constraints</span></h3>\r\n<h3 id=\"constraints\"></h3>\r\n<ul>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> &le; 2&sdot;10<sup>5</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x<sub>i</sub></span></em><sub> </sub>&le; 10<sup>9</sup></span></span></span></li>\r\n</ul>', 'P003', '', 1, 512000, 800, 7, 1),
 (14, 'Ferris Wheel', '<p>There are <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>n</em></span> children who want to go to a Ferris wheel, and your task is to find a gondola for each child.</p>\r\n<p>Each gondola may have one or two children in it, and in addition, the total weight in a gondola may not exceed&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span>. You know the weight of every child.</p>\r\n<p>What is the minimum number of gondolas needed for the children?</p>', '<p>The first input line contains two integers&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span>&nbsp;and&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span>: the number of children and the maximum allowed weight.</p>\r\n<p>The next line contains&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>n</em></span>&nbsp;integers <span class=\"math inline\"><span class=\"katex\"><em><span class=\"katex-mathml\" style=\"font-family: \'book antiqua\', palatino, serif;\">p<sub>1</sub>,p<sub>2</sub>,&hellip;,p<sub>n</sub></span></em><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></span></span>: the weight of each child.</p>', '<p>Print one integer: the minimum number of gondolas.</p>\r\n<h3 id=\"constraints\"><span style=\"font-family: arial, helvetica, sans-serif;\">Constraints</span></h3>\r\n<ul>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>n </em></span>&le; 2&sdot;10<sup>5</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <span style=\"font-family: \'book antiqua\', palatino, serif;\"><em>x</em></span> &le; 10<sup>9</sup></span></span></span></li>\r\n<li><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">p<sub>i </sub></span></em>&le; <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x</span></em></span></span></span></li>\r\n</ul>', '2', '', 1, 512000, 1000, 6, 1),
 (15, 'Dice Combinations', '<p>Your task is to count the number of ways to construct sum&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> by throwing a dice one or more times. Each throw produces an outcome between <span style=\"font-family: \'book antiqua\', palatino, serif;\">1 </span>and&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\">6</span>.</p>\r\n<p>For example, if <span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\"><em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>=<span style=\"font-family: \'book antiqua\', palatino, serif;\">3</span></span></span></span>, there are&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\">4</span>&nbsp;ways:</p>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1+1+1</span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1+2</span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">2+1</span></span></span></li>\r\n<li><span style=\"font-family: \'book antiqua\', palatino, serif;\">3</span></li>\r\n</ul>\r\n<h1 id=\"input\"></h1>', '<p>The only input line has an integer&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>.</p>', '<p>Print the number of ways modulo<span style=\"font-family: \'book antiqua\', palatino, serif;\"> 10<sup>9</sup>+7.</span></p>\r\n<h3 id=\"constraints\">Constraints</h3>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; n &le; 10<sup>6</sup></span></span></span></li>\r\n</ul>', '3', '', 1, 512000, 1200, 6, 1),
 (16, 'Minimizing Coins', '<p>Consider a money system consisting of&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> coins. Each coin has a positive integer value. Your task is to produce a sum of money <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x</span></em>&nbsp;using the available coins in such a way that the number of coins is minimal.</p>\r\n<p>For example, if the coins are <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">{1,5,7}</span></span></span>&nbsp;and the desired sum is <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">11</span></span></span>, an optimal solution is <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">5+5+1</span></span></span> which requires&nbsp;<span style=\"font-family: \'book antiqua\', palatino, serif;\">3</span> coins.</p>', '<p>The first input line has two integers&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em> and <em><span style=\"font-family: \'book antiqua\', palatino, serif;\">x</span></em>: the number of coins and the desired sum of money.</p>\r\n<p>The second line has&nbsp;<em><span style=\"font-family: \'book antiqua\', palatino, serif;\">n</span></em>&nbsp;distinct integers <em><span style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\"><span class=\"katex\"><span class=\"katex-mathml\">c<sub>1</sub>,c<sub>2</sub>,&hellip;,c<sub>n</sub></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist-s\">​</span></span></span></span></span></span></span></span></span>:</span></em> the value of each coin.</p>', '<p>Print one integer: the minimum number of coins. If it is not possible to produce the desired sum, print <span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">&minus;1</span></span></span>.</p>\r\n<h3 id=\"constraints\">Constraints</h3>\r\n<ul>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; n &le; 100</span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; x &le; 10<sup>6</sup></span></span></span></li>\r\n<li style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"math inline\" style=\"font-family: \'book antiqua\', palatino, serif;\"><span class=\"katex\"><span class=\"katex-mathml\">1 &le; c<sub>i</sub> &le; 10<sup>6</sup></span></span></span></li>\r\n</ul>', '4', '', 1, 512000, 1200, 6, 1),
@@ -326,6 +417,10 @@ INSERT INTO `ratinggraph` (`ID`, `UserID`, `PrevRating`, `NewRating`, `ChangedRa
 (3, 3, 1400, 1500, 100, 2, '2024-06-13'),
 (4, 4, 2100, 2200, 100, 2, '2024-06-13'),
 (5, 5, 1900, 2000, 100, 3, '2024-06-16');
+(55, 6, 0, 150, 150, 1, '2024-08-16'),
+(56, 7, 0, 50, 50, 1, '2024-08-16'),
+(57, 7, 0, 0, 0, NULL, '2024-07-08'),
+(58, 7, 50, 189, 139, 2, '2024-09-08');
 
 -- --------------------------------------------------------
 
@@ -375,6 +470,14 @@ CREATE TABLE `submissions` (
 --
 
 INSERT INTO `submissions` (`SubmissionID`, `ProblemID`, `UserID`, `LanguageID`, `SubmissionTime`, `JudgeTime`, `TimeTaken`, `MemoryUsed`, `Code`, `Status`, `Score`) VALUES
+(98, 1, 7, 'C++ (GCC 7.4.0)', '2024-08-13 11:41:48', '2024-08-13 11:42:04', 0.003, 1016, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<a+b-1<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 1', 100),
+(99, 1, 6, 'C++ (GCC 7.4.0)', '2024-08-13 11:42:08', '2024-08-13 11:42:18', 0.004, 1040, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<a+b<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
+(100, 1, 7, 'C++ (GCC 7.4.0)', '2024-08-13 11:42:32', '2024-08-13 11:42:40', 0.003, 1248, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int a,b;\r\n    cin>>a>>b;\r\n    cout<<a+b<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
+(101, 2, 6, 'C++ (GCC 7.4.0)', '2024-08-13 11:42:47', '2024-08-13 11:43:02', 0.003, 1048, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    string s;\r\n    cin>>s;\r\n    reverse(all(s));\r\n    cout<<s<<0<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 1', 100),
+(102, 2, 7, 'C++ (GCC 7.4.0)', '2024-08-13 11:43:41', '2024-08-13 11:43:56', 0.003, 30096, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    string s;\r\n    cin>>s;\r\n    reverse(all(s));\r\n    cout<<s<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
+(103, 13, 7, 'C++ (GCC 7.4.0)', '2024-08-13 11:45:18', '2024-08-13 11:45:35', 0.003, 1032, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(x);\r\n    }\r\n    cout<<s.size()+1<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 1', 100),
+(104, 13, 6, 'C++ (GCC 7.4.0)', '2024-08-13 11:45:41', '2024-08-13 11:45:46', 0.003, 1096, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    int n;\r\n    cin>>n;\r\n    set<int> s;\r\n    int a=0;\r\n    ff(i,n){\r\n        int x;\r\n        cin>>x;\r\n        s.insert(a);\r\n    }\r\n    cout<<s.size()<<endl;\r\n    return 0;\r\n}', 'Accepted', 100),
+(105, 2, 7, 'C++ (GCC 7.4.0)', '2024-08-16 21:27:54', '2024-08-16 21:28:13', 0.002, 4364, '#include<bits/stdc++.h>\r\nusing namespace std;\r\n#define M        1000000007\r\n#define INF      1e18+9\r\n#define PI       acos(-1.0)\r\n#define ll       long long int\r\n#define ull      unsigned long long int\r\n#define all(x)   (x).begin(), (x).end()\r\n#define pb       push_back\r\n#define tc         \\\r\n        int tcase,tno; \\\r\n        cin >> tcase;  \\\r\n        for(tno=1;tno<=tcase;tno++)\r\n#define pcn         cout<<\"Case \"<<tno<<\":\"<<endl;\r\n#define ff(i,n)     for(ll i=0;i<n;i++)\r\n\r\n\r\nint main(){\r\n    ios_base:: sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);\r\n    string s;\r\n    cin>>s;\r\n    reverse(all(s));\r\n    s=\"aaaaaa\";\r\n    cout<<s<<endl;\r\n    return 0;\r\n}', 'Wrong Answer on testcase 2', 100);
 
 -- --------------------------------------------------------
 
@@ -477,6 +580,10 @@ INSERT INTO `testcases` (`ID`, `Input`, `Output`, `ProblemID`, `testCaseNo`) VAL
 (29, '../problems/13/input_1.txt', '../problems/13/output_1.txt', 13, 1),
 (32, '../problems/2/input_1.txt', '../problems/2/output_1.txt', 2, 1),
 (33, '../problems/2/input_2.txt', '../problems/2/output_2.txt', 2, 2),
+(34, '../problems/2/input_3.txt', '../problems/2/output_3.txt', 2, 3),
+(36, '../problems/1/input_1.txt', '../problems/1/output_1.txt', 1, 1),
+(37, '../problems/1/input_2.txt', '../problems/1/output_2.txt', 1, 2);
+
 
 -- --------------------------------------------------------
 
@@ -764,11 +871,13 @@ ALTER TABLE `contests`
 -- AUTO_INCREMENT for table `contest_rankings`
 --
 ALTER TABLE `contest_rankings`
+  MODIFY `RankingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `contest_submissions`
 --
 ALTER TABLE `contest_submissions`
+  MODIFY `ContestSubmissionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -894,6 +1003,25 @@ ALTER TABLE `contest_submissions`
 ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
+--
+-- Constraints for table `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
+
+--
+-- Constraints for table `post_comments`
+--
+ALTER TABLE `post_comments`
+  ADD CONSTRAINT `post_comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `post_comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
+
+--
+-- Constraints for table `post_comment_replies`
+--
+ALTER TABLE `post_comment_replies`
+  ADD CONSTRAINT `post_comment_replies_ibfk_1` FOREIGN KEY (`comment_id`) REFERENCES `post_comments` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `post_comment_replies_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
 
 --
 -- Constraints for table `problem_tags`
@@ -936,138 +1064,6 @@ ALTER TABLE `testcases`
 ALTER TABLE `videos`
   ADD CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `videos_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
-
-
-
---
--- Table structure for table `posts`
---
-CREATE TABLE `posts` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `image_url` varchar(255) DEFAULT NULL,
-  `video_url` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `posts`
---
-
-INSERT INTO `posts` (`id`, `user_id`, `title`, `content`, `image_url`, `video_url`, `created_at`, `updated_at`) VALUES
-(2, 7, 'janina', 'blah blah', NULL, NULL, '2024-08-20 06:51:25', '2024-08-20 06:51:25'),
-(3, 6, 'dhuttturi', 'dhetteri', NULL, NULL, '2024-08-20 06:51:25', '2024-08-20 06:51:25'),
-(6, 7, 'janina', 'blah blah', NULL, NULL, '2024-08-20 06:51:55', '2024-08-20 06:51:55'),
-(7, 6, 'dhuttturi', 'dhetteri', NULL, NULL, '2024-08-20 06:51:55', '2024-08-20 06:51:55'),
-(10, 10, 'janiaa', 'dasdadasdasd', NULL, NULL, '2024-08-25 05:09:46', '2024-08-25 05:09:46'),
-(12, 10, 'dasd', 'dasdad', NULL, 'uploads/videos/66cac21de48f5.mp4', '2024-08-25 05:33:17', '2024-08-25 05:33:17'),
-(13, 10, 'dasdasd', '<p>asdadasd</p>', 'uploads/images/66cac282c2eb0.png', 'uploads/videos/66cac282c2f9f.mp4', '2024-08-25 05:34:58', '2024-08-25 05:34:58'),
-(15, 10, 'asdasdasdasd', '<p>dsaddasdasdasd</p>', 'uploads/images/66cac5396290a.png', 'uploads/videos/66cac53962a80.mp4', '2024-08-25 05:46:33', '2024-08-25 05:46:33'),
-(16, 10, 'asdd', 'dasdad', 'uploads/images/66cac5db443e3.png', 'uploads/videos/66cac5db444c4.mp4', '2024-08-25 05:49:15', '2024-08-25 05:49:15');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `post_comments`
---
-
-CREATE TABLE `post_comments` (
-  `id` int(11) NOT NULL,
-  `post_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `post_comments`
---
-
-INSERT INTO `post_comments` (`id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
-(1, 6, 10, 'fsddsf', '2024-08-20 06:52:12'),
-(2, 6, 10, 'kokok', '2024-08-20 06:52:48'),
-(3, 6, 10, 'das', '2024-08-21 05:55:36'),
-(4, 6, 10, 'das', '2024-08-25 05:06:25'),
-(5, 6, 10, 'das', '2024-08-25 05:07:37');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `post_comment_replies`
---
-
-CREATE TABLE `post_comment_replies` (
-  `id` int(11) NOT NULL,
-  `comment_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `post_comment_replies`
---
-
-INSERT INTO `post_comment_replies` (`id`, `comment_id`, `user_id`, `content`, `created_at`) VALUES
-(1, 1, 10, 'dasda', '2024-08-20 06:52:15'),
-(2, 2, 10, 'lplplplp', '2024-08-20 06:52:56'),
-(3, 3, 10, 'dasdad', '2024-08-21 05:55:40'),
-(4, 4, 10, 'dasd', '2024-08-25 05:06:32'),
-(5, 5, 10, 'das', '2024-08-25 05:07:41');
---
--- Indexes for table `posts`
---
-ALTER TABLE `posts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `post_comments`
---
-ALTER TABLE `post_comments`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `post_id` (`post_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `post_comment_replies`
---
-ALTER TABLE `post_comment_replies`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `comment_id` (`comment_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- AUTO_INCREMENT for table `posts`
---
-ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
- --
--- Constraints for table `posts`
---
-ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
-
---
--- Constraints for table `post_comments`
---
-ALTER TABLE `post_comments`
-  ADD CONSTRAINT `post_comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `post_comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
-
---
--- Constraints for table `post_comment_replies`
---
-ALTER TABLE `post_comment_replies`
-  ADD CONSTRAINT `post_comment_replies_ibfk_1` FOREIGN KEY (`comment_id`) REFERENCES `post_comments` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `post_comment_replies_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
- 
-  
-
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
