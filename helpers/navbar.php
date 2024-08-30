@@ -51,7 +51,7 @@ if (isset($_GET['logout'])) {
             </div>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                 <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/profilePage.php"><img src="<?php echo $basePath; ?>images/icons/profile.png" alt="Profile Icon" class="dropdown-icon"> Profile</a></li>
-                <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/submissions.php"><img src="<?php echo $basePath; ?>images/icons/list.png" alt="Profile Icon" class="dropdown-icon">My Submissions</a></li>
+                <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/submissions.php"><img src="<?php echo $basePath; ?>images/icons/list1.png" alt="Profile Icon" class="dropdown-icon">My Submissions</a></li>
             <?php if(($isLoggedIn) && $_SESSION['user']['User_Role']=='admin'): ?>
                 <li class="nav-item">
                     <li><a class="dropdown-item" href="<?php echo $basePath; ?>admin/userCreatedProblems.php">
