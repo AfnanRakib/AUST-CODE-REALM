@@ -117,6 +117,7 @@ CREATE TABLE `contests` (
 
 INSERT INTO `contests` (`ContestID`, `Title`, `Description`, `StartTime`, `EndTime`, `Duration`, `CreatorID`) VALUES
 (2, 'Weekly Coding Marathon', 'A week-long coding marathon to solve as many problems as possible.', '2024-06-07 00:00:00', '2024-06-13 23:59:59', '7 Days', 2),
+(1, 'Monthly Challenge June', 'A programming contest to test your skills in various algorithms and data structures.', '2024-08-10 09:00:00', '2024-08-20 23:59:59', '30 Days', 7),
 (3, 'Weekend Algorithm Sprint', 'A weekend contest focused on algorithmic challenges.', '2024-06-15 10:00:00', '2024-06-16 18:00:00', '1 Day', 3),
 (4, 'Summer Hackathon', 'Join us for a summer hackathon to build innovative projects.', '2024-08-01 08:00:00', '2024-08-07 20:00:00', '7 Days', 4),
 (5, 'Beginner Bootcamp', 'A contest designed for beginners to get started with competitive programming.', '2024-06-10 12:00:00', '2024-06-10 18:00:00', '6 Hours', 1);
@@ -165,7 +166,12 @@ CREATE TABLE `contest_submissions` (
 --
 
 INSERT INTO `contest_submissions` (`ContestSubmissionID`, `ContestID`, `UserID`, `ProblemID`, `SubmissionID`, `SubmissionTime`, `Status`, `attempts`, `penalty`) VALUES
-
+(24, 1, 7, 1, 100, '2024-08-13 11:42:40', 'Accepted', 2, 4532),
+(25, 1, 6, 1, 99, '2024-08-13 11:42:18', 'Accepted', 1, 4482),
+(26, 1, 6, 2, 101, '2024-08-13 11:43:02', 'Wrong Answer on testcase 1', 1, 0),
+(27, 1, 7, 2, 102, '2024-08-13 11:43:56', 'Accepted', 1, 4483),
+(28, 1, 7, 13, 103, '2024-08-13 11:45:35', 'Wrong Answer on testcase 1', 1, 0),
+(29, 1, 6, 13, 104, '2024-08-13 11:45:46', 'Accepted', 1, 4485);
 -- --------------------------------------------------------
 
 --
@@ -326,6 +332,10 @@ INSERT INTO `ratinggraph` (`ID`, `UserID`, `PrevRating`, `NewRating`, `ChangedRa
 (3, 3, 1400, 1500, 100, 2, '2024-06-13'),
 (4, 4, 2100, 2200, 100, 2, '2024-06-13'),
 (5, 5, 1900, 2000, 100, 3, '2024-06-16');
+(55, 6, 0, 150, 150, 1, '2024-08-16'),
+(56, 7, 0, 50, 50, 1, '2024-08-16'),
+(57, 7, 0, 0, 0, NULL, '2024-07-08'),
+(58, 7, 50, 189, 139, 2, '2024-09-08');
 
 -- --------------------------------------------------------
 
