@@ -46,7 +46,7 @@ $posts_result = $conn->query($posts_sql);
         }
         .carousel-item img, .carousel-item video {
             width: 100%;
-            height: 500px;
+            height: 100%;
             object-fit: cover;
         }
         .carousel-control-prev, .carousel-control-next {

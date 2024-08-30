@@ -61,7 +61,7 @@ $comments_result = $comments_stmt->get_result();
         }
         .carousel-item img, .carousel-item video {
             width: 100%;
-            height: 500px;
+            height: 100%;
             object-fit: cover;
         }
         .carousel-control-prev, .carousel-control-next {
