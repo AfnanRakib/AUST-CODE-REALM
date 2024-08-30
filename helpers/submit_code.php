@@ -176,6 +176,7 @@ try {
         $attempts = $row['attempts'] + 1;
         $stmt->close();
 
+
         foreach ($testcases as $index => $testcase) {
             $stdin = $testcase['Input'];
             $expected_output = $testcase['Output'];
@@ -205,9 +206,8 @@ try {
             $memoryTaken = max($memoryTaken, $result['memory']);
 
             if ($status_description !== 'Accepted') {
-                $cnt = $index + 1;
                 $isAccepted = false;
-                $status = "$status_description on testcase $cnt";
+                $status = "$status_description on testcase {$testcase['testCaseNo']}";
                 break;
             }
         }

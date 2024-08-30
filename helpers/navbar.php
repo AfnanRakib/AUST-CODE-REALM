@@ -10,6 +10,13 @@ $isLoggedIn = isset($_SESSION['user']);
 $handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
 $serverTime = time(); // Get server's current time in seconds since the Unix Epoch
 $gmtOffset = date('P'); // Get server's GMT offset
+
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: {$basePath}index.php");
+    exit();
+}
+
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -32,14 +39,7 @@ $gmtOffset = date('P'); // Get server's GMT offset
                 <a class="nav-link" href="<?php echo $basePath; ?>pages/courses/courses.php">Courses</a>
             </li>
             <li class="nav-item">
-
                 <a class="nav-link" href="<?php echo $basePath; ?>pages/community/community.php">Community</a>
-
-            </li>
-            <li class="nav-item">
-
-                <a class="nav-link" href="<?php echo $basePath; ?>admin/userCreatedProblems.php">Admin Panel</a>
-
             </li>
         </ul>
     </div>
@@ -51,6 +51,16 @@ $gmtOffset = date('P'); // Get server's GMT offset
             </div>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                 <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/profilePage.php"><img src="<?php echo $basePath; ?>images/icons/profile.png" alt="Profile Icon" class="dropdown-icon"> Profile</a></li>
+                <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/submissions.php"><img src="<?php echo $basePath; ?>images/icons/list.png" alt="Profile Icon" class="dropdown-icon">My Submissions</a></li>
+            <?php if(($isLoggedIn) && $_SESSION['user']['User_Role']=='admin'): ?>
+                <li class="nav-item">
+                    <li><a class="dropdown-item" href="<?php echo $basePath; ?>admin/userCreatedProblems.php">
+                    <img src="<?php echo $basePath; ?>images/icons/document.png" alt="Settings Icon" class="dropdown-icon">My Problems</a></li>
+                <li class="nav-item">
+                    <li><a class="dropdown-item" href="<?php echo $basePath; ?>admin/manageContest.php">
+                    <img src="<?php echo $basePath; ?>images/icons/calendar.png" alt="Settings Icon" class="dropdown-icon">My Contests</a>
+                </li>
+            <?php endif; ?>
                 <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/editProfile.php"><img src="<?php echo $basePath; ?>images/icons/settings.png" alt="Settings Icon" class="dropdown-icon"> Edit Profile</a></li>
                 <li><a class="dropdown-item" href="<?php echo $basePath; ?>index.php?logout=true"><img src="<?php echo $basePath; ?>images/icons/logout.png" alt="Logout Icon" class="dropdown-icon"> Logout</a></li>
             </ul>
@@ -59,13 +69,7 @@ $gmtOffset = date('P'); // Get server's GMT offset
         <a class="btn btn-primary" id="loginbtn" href="<?php echo $basePath; ?>pages/login.php">Login</a>
     <?php endif; ?>
 </nav>
-<?php
-if (isset($_GET['logout'])) {
-    session_destroy();
-    header("Location: {$basePath}index.php");
-    exit();
-}
-?>
+
 <a id="toggleClockBtn" href="javascript:void(0)" onclick="toggleClock()" class="text-center">
     <div id="toggle-btn" class="text-center">〉</div>
 </a>
