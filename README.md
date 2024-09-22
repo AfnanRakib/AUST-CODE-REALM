@@ -21,12 +21,12 @@ Those who want to learn different programming languages or acquire CSE-related s
 
 ## Technologies Used
 
-•	HTML: For structuring the web pages.
-•	CSS: For styling the web pages.
-•	PHP: For server-side scripting.
-•	MySQL: For database management.
-•	Visual Studio Code: As the integrated development environment (IDE).
-•	XAMPP: For local development and testing of the PHP and MySQL environment.
+- HTML: For structuring the web pages.
+- CSS: For styling the web pages.
+- PHP: For server-side scripting.
+- MySQL: For database management.
+- Visual Studio Code: As the integrated development environment (IDE).
+- XAMPP: For local development and testing of the PHP and MySQL environment.
 
 
 ## Live Demo and Video
