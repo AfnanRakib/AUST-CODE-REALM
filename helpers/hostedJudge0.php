@@ -1,6 +1,10 @@
 <?php
 $base= 'http://localhost:2358/';
-
+/* Step for active server
+1) docker theke run kore rakhbo
+2) terminal theke cloudflared tunnel --url http://localhost:2358 diye firste tunnel kore link pabo
+   oi link ta base hisebe use korbo(laste ekta / thakbe) terminal close kora jabe na.
+*/
 function createSubmission($DATA, $cpu_time_limit = 5, $memory_limit = 128000, $max_file_size = 10240, $stdin = null, $expected_output = null) {
     global $API_KEY;
     global $base;

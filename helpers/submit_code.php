@@ -91,18 +91,7 @@ function saveContestSubmission($conn, $contestId, $userId, $problemId, $submissi
             )";
     $stmt = $conn->prepare($sql);
     //$stmt->bind_param("iiiiiiiiii",$contestId,$userId,$contestId,$userId,$contestId,$userId,$contestId,$userId,$contestId,$userId);
-    $stmt->bind_param("iiiiiiiiii", 
-        $contestId, 
-        $userId, 
-        $contestId,
-        $userId,
-        $contestId,
-        $userId,
-        $contestId,
-        $userId,
-        $contestId,
-        $userId
-    );
+    $stmt->bind_param("iiiiiiiiii",$contestId, $userId, $contestId,$userId, $contestId,  $userId,  $contestId, $userId,  $contestId,  $userId );
     $stmt->execute();
     $stmt->close();
 

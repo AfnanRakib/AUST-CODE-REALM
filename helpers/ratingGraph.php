@@ -65,7 +65,7 @@
         <?php
         include 'config.php';
         // Fetch rating data
-        $userID = 7; // Replace with the currently logged-in user ID
+        $userID = $userId;
         $sql = "SELECT * FROM ratinggraph WHERE UserID = $userID ORDER BY Date ASC";
         $result = $conn->query($sql);
 

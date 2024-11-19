@@ -10,6 +10,15 @@
     margin-right: 10px;
     margin-top: 10px;
 }
+#runButton:hover {
+    background-color: #007d4c;
+}
+#submitButton:hover {
+    background-color: #007d4c;
+}
+#copyButton:hover {
+    background-color: #007d4c;
+}
 .nav-tabs .nav-link.active {
     background-color: #00A859;
     color: white;

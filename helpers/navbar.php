@@ -2,6 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 date_default_timezone_set('Asia/Dhaka'); // Set timezone
 $tz=date_default_timezone_get();
 $ini_tz=ini_get('date.timezone');
@@ -16,7 +17,6 @@ if (isset($_GET['logout'])) {
     header("Location: {$basePath}index.php");
     exit();
 }
-
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -50,18 +50,19 @@ if (isset($_GET['logout'])) {
                 <p class="handle"><?php echo $handle;?></p>
             </div>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/profilePage.php"><img src="<?php echo $basePath; ?>images/icons/profile.png" alt="Profile Icon" class="dropdown-icon"> Profile</a></li>
+                <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/profilePage.php?id=<?php echo $_SESSION['user']['UserID']; ?>"><img src="<?php echo $basePath; ?>images/icons/profile.png" alt="Profile Icon" class="dropdown-icon"> Profile</a></li>
                 <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/submissions.php"><img src="<?php echo $basePath; ?>images/icons/list1.png" alt="Profile Icon" class="dropdown-icon">My Submissions</a></li>
-            <?php if(($isLoggedIn) && $_SESSION['user']['User_Role']=='admin'): ?>
-                <li class="nav-item">
-                    <li><a class="dropdown-item" href="<?php echo $basePath; ?>admin/userCreatedProblems.php">
-                    <img src="<?php echo $basePath; ?>images/icons/document.png" alt="Settings Icon" class="dropdown-icon">My Problems</a></li>
-                <li class="nav-item">
-                    <li><a class="dropdown-item" href="<?php echo $basePath; ?>admin/manageContest.php">
-                    <img src="<?php echo $basePath; ?>images/icons/calendar.png" alt="Settings Icon" class="dropdown-icon">My Contests</a>
-                </li>
-            <?php endif; ?>
+                <?php if(($isLoggedIn) && $_SESSION['user']['User_Role']=='admin'): ?>
+                    <li class="nav-item">
+                        <li><a class="dropdown-item" href="<?php echo $basePath; ?>admin/userCreatedProblems.php">
+                        <img src="<?php echo $basePath; ?>images/icons/document.png" alt="Settings Icon" class="dropdown-icon">My Problems</a></li>
+                    <li class="nav-item">
+                        <li><a class="dropdown-item" href="<?php echo $basePath; ?>admin/manageContest.php">
+                        <img src="<?php echo $basePath; ?>images/icons/calendar.png" alt="Settings Icon" class="dropdown-icon">My Contests</a>
+                    </li>
+                <?php endif; ?>
                 <li><a class="dropdown-item" href="<?php echo $basePath; ?>pages/editProfile.php"><img src="<?php echo $basePath; ?>images/icons/settings.png" alt="Settings Icon" class="dropdown-icon"> Edit Profile</a></li>
+                <li><a class="dropdown-item" href="javascript:void(0)" onclick="openSearchUserModal()"><img src="<?php echo $basePath; ?>images/icons/follower.png" alt="Search Profile Icon" class="dropdown-icon"> Search User</a></li>
                 <li><a class="dropdown-item" href="<?php echo $basePath; ?>index.php?logout=true"><img src="<?php echo $basePath; ?>images/icons/logout.png" alt="Logout Icon" class="dropdown-icon"> Logout</a></li>
             </ul>
         </div>
@@ -69,6 +70,59 @@ if (isset($_GET['logout'])) {
         <a class="btn btn-primary" id="loginbtn" href="<?php echo $basePath; ?>pages/login.php">Login</a>
     <?php endif; ?>
 </nav>
+
+<!-- Search User Modal -->
+<div id="searchUserModal" class="search-user-modal">
+    <div class="search-user-modal-content">
+        <span class="search-user-close" onclick="closeSearchUserModal()">&times;</span>
+        <h2>Search User</h2>
+        <input type="text" id="searchUserInput" placeholder="Enter username">
+        <button class="search-user-button" onclick="searchUser()">Search</button>
+    </div>
+</div>
+
+<script>
+    function openSearchUserModal() {
+        document.getElementById('searchUserModal').style.display = 'block';
+    }
+
+    function closeSearchUserModal() {
+        document.getElementById('searchUserModal').style.display = 'none';
+    }
+
+    function searchUser() {
+        var username = document.getElementById('searchUserInput').value;
+        if (username.trim() === '') {
+            alert('Please enter a username to search.');
+            return;
+        }
+
+        // AJAX request to search user
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '<?php echo $basePath; ?>helpers/searchUserHandler.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    try {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            window.location.href = '<?php echo $basePath; ?>pages/profilePage.php?id=' + response.userId;
+                        } else {
+                            alert('No such user exists.');
+                        }
+                    } catch (e) {
+                        alert('An error occurred while processing your request. Please try again.');
+                    }
+                } else {
+                    alert('An error occurred: ' + xhr.status);
+                }
+            }
+        };
+        xhr.send('username=' + encodeURIComponent(username));
+    }
+</script>
+
 
 <a id="toggleClockBtn" href="javascript:void(0)" onclick="toggleClock()" class="text-center">
     <div id="toggle-btn" class="text-center">〉</div>
@@ -122,5 +176,3 @@ if (isset($_GET['logout'])) {
     updateClock();
     setInterval(updateClock, 1000);
 </script>
-
-

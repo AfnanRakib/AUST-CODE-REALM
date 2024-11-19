@@ -1,15 +1,26 @@
 <?php
-session_start();
-if (!isset($_SESSION['user']['UserID'])) {
-    header("Location: login.php");
-    exit();
-}
-$user = $_SESSION['user'];
-$profile_picture_src = empty($user['Profile_Picture']) ? '../images/uploads/profile_pictures/default.png' : $user['Profile_Picture'];
+$userId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 include '../helpers/config.php';
 
-$userId = $_SESSION['user']['UserID'];
+// Fetch user data from the database using UserID
+$sql = "SELECT * FROM users WHERE UserID = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $user = $result->fetch_assoc();
+} else {
+    // User not found, redirect to login
+    header("Location: login.php");
+    exit();
+}
+
+$profile_picture_src = empty($user['Profile_Picture']) ? '../images/uploads/profile_pictures/default.png' : $user['Profile_Picture'];
+
+// Fetch submission data for the user
 $sql = "SELECT DATE_FORMAT(SubmissionTime, '%Y-%c-%e') as date, COUNT(*) as value FROM submissions WHERE UserID = ? GROUP BY DATE(SubmissionTime)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $userId);
@@ -66,7 +77,7 @@ $conn->close();
                         <?php if (!empty($user['Institution'])): ?>
                             <p><strong>Institution:</strong> <?php echo $user['Institution']; ?></p>
                         <?php endif; ?>
-                        <?php if (!empty($user['DateOfBirth'])): ?>
+                        <?php if (!empty($user['Gender'])): ?>
                             <p><strong>Gender:</strong> <?php echo $user['Gender']; ?></p>
                         <?php endif; ?>
                         <?php if (!empty($user['DateOfBirth'])): ?>
