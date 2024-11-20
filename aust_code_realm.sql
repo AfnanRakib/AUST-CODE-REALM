@@ -675,7 +675,7 @@ INSERT INTO `video_documents` (`id`, `video_id`, `content`, `created_at`, `updat
 (1, 1, 'ohe bondhu!!', '2024-07-29 07:31:57', '2024-07-29 07:31:57'),
 (5, 16, '<p>hello this is my first docs</p>', '2024-07-29 07:24:24', '2024-07-29 07:25:12'),
 (6, 2, 'ohe bondhu!!', '2024-07-29 07:32:33', '2024-07-29 07:32:33'),
-(0, 22, '<p>i don\'t know what to do</p>', '2024-08-20 06:41:56', '2024-08-20 06:41:56'),
+(0, 22, '<p>i dont know what to do</p>', '2024-08-20 06:41:56', '2024-08-20 06:41:56'),
 (0, 23, '<p>yuk</p>', '2024-08-20 06:42:43', '2024-08-20 06:42:43');
 
 --
@@ -966,19 +966,6 @@ ALTER TABLE `answers`
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`video_id`) REFERENCES `videos` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`UserID`);
-
---
--- Constraints for table `contestproblems`
---
-ALTER TABLE `contestproblems`
-  ADD CONSTRAINT `contestproblems_ibfk_1` FOREIGN KEY (`ContestID`) REFERENCES `contests` (`ContestID`),
-  ADD CONSTRAINT `contestproblems_ibfk_2` FOREIGN KEY (`ProblemID`) REFERENCES `problems` (`ProblemID`) ON DELETE CASCADE;
-
---
--- Constraints for table `contests`
---
-ALTER TABLE `contests`
-  ADD CONSTRAINT `contests_ibfk_1` FOREIGN KEY (`CreatorID`) REFERENCES `users` (`UserID`);
 
 --
 -- Constraints for table `contest_submissions`
