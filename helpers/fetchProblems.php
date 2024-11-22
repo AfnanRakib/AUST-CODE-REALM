@@ -1,7 +1,9 @@
 <?php
 header('Content-Type: application/json');
-
 include 'config.php';
+
+// Set timezone to Asia/Dhaka
+date_default_timezone_set('Asia/Dhaka');
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -11,7 +13,7 @@ $tags = isset($_GET['tags']) ? $_GET['tags'] : '';
 $limit = 10;
 $offset = ($page - 1) * $limit;
 
-// Get the current time
+// Get the current time based on PHP timezone
 $currentTime = date('Y-m-d H:i:s');
 
 // Main query to fetch problems and filter them based on contest status
@@ -24,25 +26,43 @@ $query = "SELECT problems.*, GROUP_CONCAT(tags.TagName SEPARATOR ', ') AS Tags
               problems.ProblemID NOT IN (
                   SELECT ProblemID FROM contestproblems cp
                   INNER JOIN contests c ON cp.ContestID = c.ContestID
-                  WHERE c.EndTime > '$currentTime'
+                  WHERE c.EndTime > ?
               )
           )"; // Exclude problems from contests that have not yet finished
 
 // Apply filters
 if ($search != '') {
-    $query .= " AND problems.Name LIKE '%" . $conn->real_escape_string($search) . "%'";
+    $query .= " AND problems.Name LIKE ?";
 }
 if ($rating != '') {
-    $query .= " AND problems.RatedFor = " . intval($rating);
+    $query .= " AND problems.RatedFor = ?";
 }
 if ($tags != '') {
-    $query .= " AND problems.ProblemID IN (SELECT ProblemID FROM problem_tags WHERE TagID = '" . $conn->real_escape_string($tags) . "')";
+    $query .= " AND problems.ProblemID IN (SELECT ProblemID FROM problem_tags WHERE TagID = ?)";
 }
 
 $query .= " GROUP BY problems.ProblemID";
 
-// Get the total number of filtered problems for pagination
-$totalProblemsResult = $conn->query($query);
+// Prepare and bind parameters for secure filtering
+$stmt = $conn->prepare($query);
+$params = [$currentTime];
+
+if ($search != '') {
+    $params[] = '%' . $search . '%';
+}
+if ($rating != '') {
+    $params[] = intval($rating);
+}
+if ($tags != '') {
+    $params[] = intval($tags);
+}
+
+// Dynamically bind parameters
+$types = str_repeat('s', count($params));
+$stmt->bind_param($types, ...$params);
+$stmt->execute();
+
+$totalProblemsResult = $stmt->get_result();
 if (!$totalProblemsResult) {
     die(json_encode(["error" => "Query failed: " . $conn->error]));
 }
@@ -52,7 +72,11 @@ $totalPages = ceil($totalProblems / $limit);
 
 // Add pagination to the query
 $query .= " LIMIT $limit OFFSET $offset";
-$result = $conn->query($query);
+$stmt = $conn->prepare($query);
+$stmt->bind_param($types, ...$params);
+$stmt->execute();
+
+$result = $stmt->get_result();
 if (!$result) {
     die(json_encode(["error" => "Query failed: " . $conn->error]));
 }

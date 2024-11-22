@@ -72,48 +72,49 @@
     <script src="../js/jquery-3.1.1.min.js"></script>
     <script>
     $(document).ready(function(){
-        var currentPage = 1;
+    var currentPage = 1;
 
-        function fetchProblems(page, search, rating, tags) {
-            $.ajax({
-                url: '../helpers/fetchProblems.php',
-                type: 'GET',
-                data: {
-                    page: page,
-                    search: search,
-                    rating: rating,
-                    tags: tags
-                },
-                success: function(response) {
-                    $('tbody').html(response.problems);
-                    $('.pagination .page-item').not(':first,:last').remove(); // Remove existing page numbers
-                    for (var i = 1; i <= response.totalPages; i++) {
-                        $('<li class="page-item"><a class="page-link" href="#" data-page="' + i + '">' + i + '</a></li>').insertBefore('.pagination .page-item:last');
-                    }
-                    currentPage = page;
+    function fetchProblems(page, search, rating, tags) {
+        $.ajax({
+            url: '../helpers/fetchProblems.php',
+            type: 'GET',
+            data: {
+                page: page,
+                search: search,
+                rating: rating,
+                tags: tags
+            },
+            success: function(response) {
+                $('tbody').html(response.problems);
+                $('.pagination .page-item').not(':first,:last').remove(); // Remove existing page numbers
+                for (var i = 1; i <= response.totalPages; i++) {
+                    $('<li class="page-item"><a class="page-link" href="#" data-page="' + i + '">' + i + '</a></li>').insertBefore('.pagination .page-item:last');
                 }
-            });
-        }
-
-        // Initial fetch
-        fetchProblems(currentPage, '', '', '');
-
-        // Filter and pagination event handlers
-        $('#search, #rating, #tags').on('change', function() {
-            fetchProblems(1, $('#search').val(), $('#rating').val(), $('#tags').val());
-        });
-
-        $('.pagination').on('click', 'a', function(e) {
-            e.preventDefault();
-            var page = $(this).data('page');
-            if (page === 'previous' && currentPage > 1) {
-                page = currentPage - 1;
-            } else if (page === 'next') {
-                page = currentPage + 1;
+                currentPage = page;
             }
-            fetchProblems(page, $('#search').val(), $('#rating').val(), $('#tags').val());
         });
+    }
+
+    // Initial fetch
+    fetchProblems(currentPage, '', '', '');
+
+    // Filter and pagination event handlers
+    $('#search, #rating, #tags').on('change', function() {
+        fetchProblems(1, $('#search').val(), $('#rating').val(), $('#tags').val());
     });
+
+    $('.pagination').on('click', 'a', function(e) {
+        e.preventDefault();
+        var page = $(this).data('page');
+        if (page === 'previous' && currentPage > 1) {
+            page = currentPage - 1;
+        } else if (page === 'next') {
+            page = currentPage + 1;
+        }
+        fetchProblems(page, $('#search').val(), $('#rating').val(), $('#tags').val());
+    });
+});
+
     </script>
     <script src="../js/bootstrap.bundle.min.js"></script>
 </body>

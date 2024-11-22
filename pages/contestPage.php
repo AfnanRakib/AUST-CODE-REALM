@@ -47,63 +47,64 @@
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script>
     $(document).ready(function() {
-        var contestId = new URLSearchParams(window.location.search).get('id');
+    var contestId = new URLSearchParams(window.location.search).get('id');
 
-        function fetchContestDetails() {
-            $.ajax({
-                url: '../helpers/fetchContestDetails.php',
-                type: 'GET',
-                data: { id: contestId },
-                success: function(response) {
-                    $('#contestTitle').text(response.title);
-                    $('#startTime').text(response.startTime);
-                    $('#endTime').text(response.endTime);
-                    $('#duration').text(response.duration);
-                    $('#description').text(response.description);
-                    
+    function fetchContestDetails() {
+        $.ajax({
+            url: '../helpers/fetchContestDetails.php',
+            type: 'GET',
+            data: { id: contestId },
+            success: function(response) {
+                $('#contestTitle').text(response.title);
+                $('#startTime').text(response.startTime);
+                $('#endTime').text(response.endTime);
+                $('#duration').text(response.duration);
+                $('#description').text(response.description);
+
+                // Use server time for the countdown
+                var serverTime = new Date(response.serverTime).getTime(); // Add serverTime field if needed
+                var startTime = new Date(response.startTime).getTime();
+                var endTime = new Date(response.endTime).getTime();
+
+                function updateClock() {
                     var currentTime = new Date().getTime();
-                    var startTime = new Date(response.startTime).getTime();
-                    var endTime = new Date(response.endTime).getTime();
-                    
-                    function updateClock() {
-                        currentTime = new Date().getTime();
-                        if (currentTime < startTime) {
-                            $('#clockLabel').text(formatTime(startTime - currentTime));
-                            $('#clockText').text('Contest starts in: ');
-                        } else if (currentTime < endTime) {
-                            $('#clockLabel').text(formatTime(endTime - currentTime));
-                            $('#clockText').text('Contest ends in: ');
-
-                        } else {
-                            $('#clockText').text('Contest Finished');
-                        }
+                    if (currentTime < startTime) {
+                        $('#clockLabel').text(formatTime(startTime - currentTime));
+                        $('#clockText').text('Contest starts in: ');
+                    } else if (currentTime < endTime) {
+                        $('#clockLabel').text(formatTime(endTime - currentTime));
+                        $('#clockText').text('Contest ends in: ');
+                    } else {
+                        $('#clockText').text('Contest Finished');
                     }
-
-                    updateClock();
-                    setInterval(updateClock, 1000);
-
-                    $('#problemList').empty();
-                    response.problems.forEach(function(problem) {
-                        $('#problemList').append('<li class="list-group-item"><a href="problemPage.php?id=' + problem.ProblemID + '">' + problem.Name + '</a></li>');
-                    });
                 }
-            });
-        }
 
-        function formatTime(ms) {
-            var seconds = Math.floor((ms / 1000) % 60);
-            var minutes = Math.floor((ms / (1000 * 60)) % 60);
-            var hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
-            var days = Math.floor(ms / (1000 * 60 * 60 * 24));
-            return " " + days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s";
-        }
+                updateClock();
+                setInterval(updateClock, 1000);
 
-        fetchContestDetails();
-
-        $('#rankingButton').on('click', function() {
-            window.location.href = 'rankingPage.php?id=' + contestId;
+                $('#problemList').empty();
+                response.problems.forEach(function(problem) {
+                    $('#problemList').append('<li class="list-group-item"><a href="problemPage.php?id=' + problem.ProblemID + '">' + problem.Name + '</a></li>');
+                });
+            }
         });
+    }
+
+    function formatTime(ms) {
+        var seconds = Math.floor((ms / 1000) % 60);
+        var minutes = Math.floor((ms / (1000 * 60)) % 60);
+        var hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
+        var days = Math.floor(ms / (1000 * 60 * 60 * 24));
+        return " " + days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s";
+    }
+
+    fetchContestDetails();
+
+    $('#rankingButton').on('click', function() {
+        window.location.href = 'rankingPage.php?id=' + contestId;
     });
+});
+
     </script>
 </body>
 </html>

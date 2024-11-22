@@ -11,43 +11,61 @@ if (!isset($_SESSION['user']['UserID'])) {
     header("Location: login.php");
     exit();
 }
+
+// Set PHP timezone to Asia/Dhaka
 date_default_timezone_set('Asia/Dhaka');
+
 include 'config.php';
 
 $userId = $_SESSION['user']['UserID'];
 
 require_once '../helpers/judge0.php';
 
+function convertToDhakaTimezone($dateTime) {
+    $date = new DateTime($dateTime, new DateTimeZone('Asia/Dhaka'));
+    return $date->format('Y-m-d H:i:s'); // Format as MySQL DATETIME
+}
+
+
 function saveSubmission($conn, $submissionData, $problemId, $userId, $code, $score) {
-    $sql = "INSERT INTO submissions (ProblemID, UserID, LanguageID, SubmissionTime, JudgeTime, TimeTaken, MemoryUsed, Code, Status, Score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // Ensure submission times are converted to Asia/Dhaka
+    $submissionTime = convertToDhakaTimezone($submissionData['submission_time']);
+    $judgeTime = convertToDhakaTimezone($submissionData['judge_time']);
+
+    $sql = "INSERT INTO submissions (ProblemID, UserID, LanguageID, SubmissionTime, JudgeTime, TimeTaken, MemoryUsed, Code, Status, Score) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iisssdissi", $problemId, $userId, $submissionData['language_id'], $submissionData['submission_time'], $submissionData['judge_time'], $submissionData['time'], $submissionData['memory'], $code, $submissionData['status'], $score);
+    $stmt->bind_param("iisssdissi", $problemId, $userId, $submissionData['language_id'], $submissionTime, $judgeTime, $submissionData['time'], $submissionData['memory'], $code, $submissionData['status'], $score);
     $stmt->execute();
     $submissionId = $stmt->insert_id;
     $stmt->close();
     return $submissionId;
 }
 
+
 function saveContestSubmission($conn, $contestId, $userId, $problemId, $submissionId, $status, $attempts, $penalty) {
-    // Get the contest start time
+    // Get contest start time and convert to Asia/Dhaka
     $sql = "SELECT StartTime FROM contests WHERE ContestID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $contestId);
     $stmt->execute();
     $result = $stmt->get_result();
     $contest = $result->fetch_assoc();
-    $startTime = new DateTime($contest['StartTime']);
-    $submissionTime = new DateTime();
-    
-    // Calculate time since contest start in minutes
+    $startTime = new DateTime($contest['StartTime'], new DateTimeZone('Asia/Dhaka'));
+
+    // Current submission time in Asia/Dhaka
+    $submissionTime = new DateTime('now', new DateTimeZone('Asia/Dhaka'));
+
+    // Calculate the time difference
     $timeDiff = $startTime->diff($submissionTime);
     $minutesSinceStart = $timeDiff->days * 24 * 60 + $timeDiff->h * 60 + $timeDiff->i;
+
     // Calculate penalty
     $penalty = 0;
     if ($status == 'Accepted') {
-        $penalty = $minutesSinceStart + ($attempts - 1) * 50;
+        $penalty = $minutesSinceStart * 2 + ($attempts - 1) * 50;  //per Minute taken * 2 + 50 per failed attempt
     } else {
-        $penalty = ($attempts - 1) * 50; // Only add 50 minutes per failed attempt
+        $penalty = ($attempts - 1) * 50; // Only add 50 per failed attempt
     }
 
     $sql = "SELECT * FROM contest_submissions WHERE ContestID = ? AND UserID = ? AND ProblemID = ?";
@@ -59,16 +77,18 @@ function saveContestSubmission($conn, $contestId, $userId, $problemId, $submissi
     if ($result->num_rows > 0) {
         // Update existing record
         $sql = "UPDATE contest_submissions SET 
-                SubmissionID = ?, SubmissionTime = NOW(), Status = ?, attempts = attempts + 1, penalty = penalty + ?
+                SubmissionID = ?, SubmissionTime = ?, Status = ?, attempts = attempts + 1, penalty = penalty + ?
                 WHERE ContestID = ? AND UserID = ? AND ProblemID = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("issiii", $submissionId, $status, $penalty, $contestId, $userId, $problemId);
+        $submissionTimeStr = $submissionTime->format('Y-m-d H:i:s');
+        $stmt->bind_param("issiiii", $submissionId, $submissionTimeStr, $status, $penalty, $contestId, $userId, $problemId);
     } else {
         // Insert new record
         $sql = "INSERT INTO contest_submissions (ContestID, UserID, ProblemID, SubmissionID, SubmissionTime, Status, attempts, penalty) 
-                VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)";
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iiiisii", $contestId, $userId, $problemId, $submissionId, $status, $attempts, $penalty);
+        $submissionTimeStr = $submissionTime->format('Y-m-d H:i:s');
+        $stmt->bind_param("iiiissii", $contestId, $userId, $problemId, $submissionId, $submissionTimeStr, $status, $attempts, $penalty);
     }
     $stmt->execute();
     $stmt->close();
@@ -112,19 +132,42 @@ function saveContestSubmission($conn, $contestId, $userId, $problemId, $submissi
     $stmt->close();
 }
 
-function getSubmissionWithPolling($token, $maxAttempts = 5, $interval = 2) {
-    sleep(1);
+function getSubmissionWithPolling($token, $maxAttempts = 10, $baseInterval = 2, $maxInterval = 10) {
     $attempts = 0;
+    $interval = $baseInterval; // Start with the base interval
+
     while ($attempts < $maxAttempts) {
+        // Fetch the submission result
         $result = getSubmission($token);
-        if (isset($result['status']['description']) && $result['status']['description'] == 'Accepted') {
+
+        // Check if the execution is completed
+        if (isset($result['status']['description']) && $result['status']['description'] === 'Accepted') {
+            return $result; // Execution successful
+        }
+
+        if (isset($result['status']['id']) && $result['status']['id'] >= 3) {
+            // Status ID >= 3 typically means the execution is finished (Judge0 API logic)
             return $result;
         }
+
+        // Increment attempts
         $attempts++;
+
+        // Increase the interval for the next poll, but cap it at maxInterval
+        $interval = min($interval + $baseInterval, $maxInterval);
+
+        // Wait before polling again
         sleep($interval);
     }
-    return $result;
+
+    // If we exit the loop, execution did not complete in time
+    return [
+        'status' => [
+            'description' => 'Execution timeout or incomplete'
+        ]
+    ];
 }
+
 
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -185,6 +228,11 @@ try {
             }
 
             $result = getSubmissionWithPolling($token);
+
+            if ($result['status']['description'] === 'Execution timeout or incomplete') {
+                // Handle timeout gracefully, e.g., log the issue or retry the submission
+                throw new Exception('Execution did not complete within the allowed time.');
+            }
 
             $stdout = base64_decode($result['stdout'] ?? '');
             $stderr = base64_decode($result['stderr'] ?? '');

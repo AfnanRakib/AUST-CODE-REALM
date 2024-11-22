@@ -3,14 +3,14 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-date_default_timezone_set('Asia/Dhaka'); // Set timezone
-$tz=date_default_timezone_get();
-$ini_tz=ini_get('date.timezone');
+date_default_timezone_set('Asia/Dhaka'); // Set PHP timezone
 $basePath = 'http://localhost/AUST%20CODE%20REALM/';
 $isLoggedIn = isset($_SESSION['user']);
 $handle = $isLoggedIn ? $_SESSION['user']['Handle'] : 'Guest User';
-$serverTime = time(); // Get server's current time in seconds since the Unix Epoch
-$gmtOffset = date('P'); // Get server's GMT offset
+
+// Server time and offset
+$serverTime = time(); // Server's current time (seconds since Unix Epoch)
+$gmtOffset = date('P'); // Server's GMT offset (e.g., "+06:00")
 
 if (isset($_GET['logout'])) {
     session_destroy();
@@ -136,32 +136,25 @@ if (isset($_GET['logout'])) {
 </a>
 <script>
     var serverTime = <?php echo $serverTime; ?> * 1000; // Server time in milliseconds
-    var clientOffset = new Date().getTime() - serverTime; // Calculate client's offset from the server
     var gmtOffset = "<?php echo $gmtOffset; ?>"; // Server's GMT offset
+    var clientOffset = new Date().getTime() - serverTime; // Calculate client-side offset from server time
 
     function updateClock() {
-        var now = new Date().getTime() - clientOffset; // Adjust client time to server time
+        var now = new Date(new Date().getTime() - clientOffset); // Adjust client time to server time
         var date = new Date(now);
 
-        var day = date.getDate();
-        var month = date.toLocaleString('default', { month: 'short' });
-        var year = date.getFullYear();
-        var formattedDate = `${day} ${month}, ${year}`;
-
-        var hours = String(date.getHours()).padStart(2, '0');
-        var minutes = String(date.getMinutes()).padStart(2, '0');
-        var seconds = String(date.getSeconds()).padStart(2, '0');
-        var timeString = hours + ":" + minutes + ":" + seconds;
+        var formattedDate = `${date.getDate()} ${date.toLocaleString('default', { month: 'short' })}, ${date.getFullYear()}`;
+        var timeString = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
 
         document.getElementById('clock-text').textContent = timeString;
-        document.getElementById('gmt-offset').textContent = '('+gmtOffset+')';
+        document.getElementById('gmt-offset').textContent = '(' + gmtOffset + ')';
         document.getElementById('date').textContent = formattedDate;
     }
 
     function toggleClock() {
         var clock = document.getElementById('clock');
         var toggleBtn = document.getElementById('toggle-btn');
-        
+
         if (clock.style.transform === "translateX(160px)") {
             clock.style.transform = "translateX(0)";
             toggleBtn.style.transform = "translateX(0)";

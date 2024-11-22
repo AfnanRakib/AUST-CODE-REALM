@@ -9,6 +9,9 @@ if (!isset($_SESSION['user']['UserID'])) {
 
 include '../helpers/config.php';
 
+// Set PHP timezone
+date_default_timezone_set('Asia/Dhaka');
+
 $contestID = $_GET['id'] ?? null;
 $message = '';
 $messageClass = '';
@@ -31,6 +34,32 @@ if ($result->num_rows === 0) {
 }
 
 $contest = $result->fetch_assoc();
+
+// Handle updating contest details
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'], $_POST['description'], $_POST['start_time'], $_POST['end_time'], $_POST['duration'])) {
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $startTime = $_POST['start_time'];
+    $endTime = $_POST['end_time'];
+    $duration = $_POST['duration'];
+
+    // Update contest details in the database
+    $updateQuery = "UPDATE contests SET Title = ?, Description = ?, StartTime = ?, EndTime = ?, Duration = ? WHERE ContestID = ? AND CreatorID = ?";
+    $updateStmt = $conn->prepare($updateQuery);
+    $updateStmt->bind_param("sssssii", $title, $description, $startTime, $endTime, $duration, $contestID, $_SESSION['user']['UserID']);
+
+    if ($updateStmt->execute()) {
+        $message = "Contest details updated successfully.";
+        $messageClass = 'alert-success';
+
+        // Refresh the contest details after updating
+        $stmt->execute();
+        $contest = $stmt->get_result()->fetch_assoc();
+    } else {
+        $message = "Failed to update contest details.";
+        $messageClass = 'alert-danger';
+    }
+}
 
 // Fetch existing problems for the contest
 $problemQuery = "SELECT * FROM contestproblems WHERE ContestID = ?";
@@ -78,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_problem'])) {
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
