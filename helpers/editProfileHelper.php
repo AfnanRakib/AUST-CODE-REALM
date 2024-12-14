@@ -63,8 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } elseif (in_array($profile_picture['type'], $allowed_types)) {
                 $target_dir = "../images/uploads/profile_pictures/";
                 $target_file = $target_dir . $user['UserID'] . "." . pathinfo($profile_picture["name"], PATHINFO_EXTENSION);
+                $dbLoc = "http://localhost/AUST%20CODE%20REALM/images/uploads/profile_pictures/" . $user['UserID'] . "." . pathinfo($profile_picture["name"], PATHINFO_EXTENSION);
                 if (move_uploaded_file($profile_picture["tmp_name"], $target_file)) {
-                    $sql = "UPDATE users SET Profile_Picture='$target_file' WHERE UserID=" . $user['UserID'];
+                    $sql = "UPDATE users SET Profile_Picture='$dbLoc' WHERE UserID=" . $user['UserID'];
                     if ($conn->query($sql) === TRUE) {
                         $_SESSION['user']['Profile_Picture'] = $target_file;
                         $alertMessage = "Profile picture updated successfully.";

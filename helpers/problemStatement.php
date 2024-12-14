@@ -42,8 +42,8 @@
                     </h2>
                     <div id="collapseMoreInfo" class="accordion-collapse collapse" aria-labelledby="headingMoreInfo" data-bs-parent="#additionalInfo">
                         <div class="accordion-body" style="font-size:medium;">
-                            <p><strong>Time Limit: </strong> <?php echo $problem['TimeLimit']; ?></p>
-                            <p><strong>Memory Limit: </strong> <?php echo $problem['MemoryLimit']; ?></p>
+                            <p><strong>Time Limit: </strong> <?php echo $problem['TimeLimit']; ?> s</p>
+                            <p><strong>Memory Limit: </strong> <?php echo $problem['MemoryLimit']; ?> kb</p>
                             <p><strong>Problem Rating: </strong> <?php echo $problem['RatedFor']; ?></p>
                         </div>
                     </div>

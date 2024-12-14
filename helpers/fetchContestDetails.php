@@ -39,7 +39,8 @@ $problems = [];
 if ($currentTime >= $startTime) {
     $query = "SELECT p.* FROM problems p
               INNER JOIN contestproblems cp ON p.ProblemID = cp.ProblemID
-              WHERE cp.ContestID = ?";
+              WHERE cp.ContestID = ?
+              ORDER BY p.ProblemNumber";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $contestId);
     $stmt->execute();

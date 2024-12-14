@@ -59,8 +59,8 @@
                     <input type="number" class="form-control" id="memoryLimit" name="memoryLimit" value="<?= $problem['MemoryLimit'] ?>" required>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12">
-                    <label for="timeLimit" class="form-label">Time Limit (ms)</label>
-                    <input type="number" class="form-control" id="timeLimit" name="timeLimit" value="<?= $problem['TimeLimit'] ?>" required>
+                    <label for="timeLimit" class="form-label">Time Limit (s)</label>
+                    <input type="text" class="form-control" id="timeLimit" name="timeLimit" value="<?= $problem['TimeLimit'] ?>" required>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <label for="ratedFor" class="form-label">Rated For</label>
